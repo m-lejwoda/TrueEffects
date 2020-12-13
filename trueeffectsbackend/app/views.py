@@ -9,10 +9,11 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
+
 @api_view(['POST'])
 def registration_view(request):
     if request.method == 'POST':
-        serializer = RegistrationSerializer(data=request.data)
+        serializer = UserSerializer(data=request.data)
         data = {}
         if serializer.is_valid():
             data['response'] = "Poprawnie zarejestrowano użytkownika"
