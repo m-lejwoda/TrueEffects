@@ -1,9 +1,18 @@
 from django.db import models
-
+from django.contrib.auth.models import User
+from django.conf import settings
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from rest_framework.authtoken.models import Token
 # Create your models here.
-class User(models.Model):
-    name = models.CharField(max_length=200)
-    email = models.EmailField()
+# class User(models.Model):
+#     name = models.CharField(max_length=200)
+#     email = models.EmailField()
+
+
+
+
+
 class Person(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE,primary_key=True)
 class PersonalDimensions(models.Model):
@@ -46,3 +55,8 @@ class Training(models.Model):
     name = models.CharField(max_length=100)
     training = models.ForeignKey(PersonalExercise, on_delete=models.CASCADE)
     rest = models.IntegerField()
+
+@receiver(post_save,sender=User)
+def create_auth_token(sender,instance=None,created=False,**kwargs):
+    if created:
+        Token.objects.create(user=instance)
