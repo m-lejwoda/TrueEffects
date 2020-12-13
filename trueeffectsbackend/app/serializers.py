@@ -1,4 +1,5 @@
 from .models import *
+from rest_framework import serializers
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -19,10 +20,10 @@ class PersonalResultsSerializer(serializers.ModelSerializer):
     class Meta:
         model = PersonalResults
         fields = ['__all__']
-class ExerciseSerializer(serializers.ModelsSerializer):
+class ExerciseSerializer(serializers.ModelSerializer):
     class Meta:
-        model = ExerciseSerializer
-        fields = ['__all__']
+        model = Exercise
+        fields = ['name']
 
 class OwnExerciseSerializer(serializers.ModelSerializer):
     class Meta:
@@ -36,5 +37,5 @@ class PersonalExerciseSerializer(serializers.ModelSerializer):
 
 class TrainingSerializer(serializers.ModelSerializer):
     class Meta:
-        model = TrainingSerializer
+        model = Training
         fields = ['__all__']
