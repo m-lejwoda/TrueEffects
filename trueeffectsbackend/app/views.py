@@ -65,7 +65,6 @@ def exerciseCreate(request):
 def createpersonalDimensions(request):
     user = request.user
     print(user)
-    #user = Token.objects.get(key='token string').user
     serializer = PersonalDimensionsSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
