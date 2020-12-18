@@ -44,14 +44,14 @@ class UserSerializer(serializers.ModelSerializer):
             user.save()
 
         return user
-class PersonSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Person
-        fields=['__all__']
+# class PersonSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Person
+#         fields=['__all__']
 class PersonalDimensionsSerializer(serializers.ModelSerializer):
     class Meta:
         model = PersonalDimensions
-        fields = ['__all__']
+        fields = '__all__'
 class PersonalGoalsSerializer(serializers.ModelSerializer):
     class Meta:
         model = PersonalGoals

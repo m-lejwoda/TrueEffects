@@ -3,7 +3,7 @@ from .models import *
 
 # Register your models here.
 
-admin.site.register(Person)
+#admin.site.register(Person)
 admin.site.register(PersonalDimensions)
 admin.site.register(PersonalResults)
 admin.site.register(PersonalGoals)

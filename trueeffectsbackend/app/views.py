@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from rest_framework.decorators import  api_view
+from rest_framework.decorators import  api_view,permission_classes
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from .models import *
 from django.contrib.auth import get_user_model
@@ -46,6 +47,7 @@ def apiOverview(request):
     return Response("Api Base Point", safe=False)
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated,])
 def exerciseView(request):
     exercises = Exercise.objects.all()
     serializer = ExerciseSerializer(exercises,many=True)
@@ -54,7 +56,30 @@ def exerciseView(request):
 @api_view(['POST'])
 def exerciseCreate(request):
     serializer = ExerciseSerializer(data=request.data)
-    print(serializer)
     if serializer.is_valid():
         serializer.save()
     return Response(serializer.data)
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated,])
+def createpersonalDimensions(request):
+    user = request.user
+    print(user)
+    #user = Token.objects.get(key='token string').user
+    serializer = PersonalDimensionsSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+    return Response(serializer.data)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated,])
+def displaypersonalDimensions(request):
+    #user = Token.objects.get(key=request.auth.key).user
+    user= request.user
+    personalDimensions = PersonalDimensions.objects.filter(user=user)
+    serializer = PersonalDimensionsSerializer(personalDimensions,many=True)
+    return Response(serializer.data)
+class Logout(APIView):
+    def get(self, request, format=None):
+        request.user.auth_token.delete()
+        return Response(status=status.HTTP_200_OK)
