@@ -70,12 +70,12 @@ class OwnExerciseSerializer(serializers.ModelSerializer):
         model = OwnExercise
         fields = ['__all__']
 
-class PersonalExerciseSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = PersonalExercise
-        fields = ['__all__']    
-
-# class TrainingSerializer(serializers.ModelSerializer):
+# class PersonalExerciseSerializer(serializers.ModelSerializer):
 #     class Meta:
-#         model = Training
-#         fields = ['__all__']
+#         model = PersonalExercise
+#         fields = ['__all__']    
+
+class TrainingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Training
+        fields = ['__all__']

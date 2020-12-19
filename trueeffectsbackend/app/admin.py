@@ -10,5 +10,5 @@ admin.site.register(PersonalGoals)
 admin.site.register(Exercise)
 admin.site.register(OwnExercise)
 admin.site.register(PersonalExercise)
-# admin.site.register(Training)
+admin.site.register(Training)
 
