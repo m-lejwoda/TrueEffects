@@ -132,13 +132,13 @@ def createOwnExercise(request):
         serializer.save()
     return Response(serializer.data)
 
-@api_view(['GET'])
-@permission_classes([IsAuthenticated,])
-def displayTraining(request):
-    user= request.user
-    Training = Training.objects.filter(user=user)
-    serializer = TrainingSerializer(Training,many=True)
-    return Response(serializer.data)
+# @api_view(['GET'])
+# @permission_classes([IsAuthenticated,])
+# def displayTraining(request):
+#     user= request.user
+#     Training = Training.objects.filter(user=user)
+#     serializer = TrainingSerializer(Training,many=True)
+#     return Response(serializer.data)
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated,])

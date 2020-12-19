@@ -18,9 +18,6 @@ urlpatterns=[
     path('display_personal_goals',views.displayPersonalGoals,name="display_personal_goals"),
     path('create_personal_goals',views.createPersonalResults,name="create_personal_results"),
     path('display_personal_goals',views.displayPersonalResults,name="display_personal_results"),
-
-
-
 ]
 
 

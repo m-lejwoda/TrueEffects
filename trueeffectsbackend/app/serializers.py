@@ -75,7 +75,7 @@ class PersonalExerciseSerializer(serializers.ModelSerializer):
         model = PersonalExercise
         fields = ['__all__']    
 
-class TrainingSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Training
-        fields = ['__all__']
+# class TrainingSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Training
+#         fields = ['__all__']
