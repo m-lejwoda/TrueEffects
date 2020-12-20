@@ -1,0 +1,34 @@
+$pink : #E90B33;
+.authenticatelogo{
+    display:flex;
+    width:50%;
+    background-color:$pink;
+    position:relative;
+    &__circle1{
+        position:absolute;
+        top:50%;
+        left:70%;
+        width:30%;
+        height:30%;
+        border-radius: 50%;
+        background-color:green;
+    }
+    &__circle2{
+        position:absolute;
+        top:10%;
+        width:20%;
+        height:20%;
+        left:70%;
+        border-radius: 50%;
+        background-color:yellow;
+    }
+    &__circle3{
+        position:absolute;
+        top:70%;
+        width:20%;
+        height:20%;
+        border-radius: 50%;
+        background-color:red;
+    }
+
+}
