@@ -2,9 +2,10 @@ import React from 'react';
 import '../sass/login.scss';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowLeft } from '@fortawesome/fontawesome-free-solid'
-import AuthenticateLogo from './AuthenticateLogo'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft,faArrowRight } from '@fortawesome/fontawesome-free-solid';
+import AuthenticateLogo from './AuthenticateLogo';
+
 const useStyles = makeStyles((theme) => ({
     root: {
       '& .MuiTextField-root': {
@@ -27,9 +28,15 @@ const Login = () => {
             {/* <div className="login__firstcontainer"></div> */}
             <div className="login__secondcontainer">
                 
-                <div className="login__secondcontainer__back">
-                    <div className="login__secondcontainer__back-icon"><FontAwesomeIcon icon={faArrowLeft} /></div>
-                    <div className="login__secondcontainer__back-title">Cofnij</div>
+            <div className="login__secondcontainer__top">
+                <div className="login__secondcontainer__top__back">
+                    <div className="login__secondcontainer__top__back-icon"><FontAwesomeIcon icon={faArrowLeft} /></div>
+                    <div className="login__secondcontainer__top__back-title">Cofnij</div>
+                </div>
+                <div className="login__secondcontainer__top__forward">
+                    <div className="login__secondcontainer__top__forward-title">Zarejestruj się</div>
+                    <div className="login__secondcontainer__top__forward-icon"><FontAwesomeIcon icon={faArrowRight} /></div>
+                </div>
                 </div>
                 <div className="login__secondcontainer__form">
                     <form className={classes.root} noValidate autoComplete="off">

@@ -1,5 +1,5 @@
 $pink : #E90B33;
-.login{
+.register{
     margin:0;
     padding:0;
     display:flex;
@@ -51,19 +51,33 @@ $pink : #E90B33;
                 cursor:pointer;
             }
         }
+        
         &__form{
             display:flex;
             height:90%;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            &__username{
-                &-password{
-                    margin-bottom:3rem;
-                }
-                &-input{
-                    margin-bottom:1rem;
+            &__allinputs{
+                margin-bottom:3rem;
             }
+            &__username{
+                // &-password{
+                //     //margin-bottom:3rem;
+                // }
+                &-input{
+                    margin-bottom:1.5rem;
+                }
+                &-email{
+                    margin-bottom:1.5rem;
+                }
+                &-password{
+                    margin-bottom:1.5rem;
+                }
+                &-password2{
+                    margin-bottom:1.5rem;
+                }
+
             }
             &__title{
                 font-size:36px;
@@ -76,7 +90,7 @@ $pink : #E90B33;
                 margin-bottom:3rem;
             }
             &__button{
-                &-login{
+                &-register{
                     padding:1rem;
                     background-color: $pink;
                     color:white;
@@ -85,7 +99,7 @@ $pink : #E90B33;
                     width:100%;
 
                 }
-                &-login:hover{
+                &-register:hover{
                     cursor:pointer;
 
                 }
