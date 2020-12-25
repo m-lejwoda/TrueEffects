@@ -10,7 +10,7 @@ const AuthenticateLogo = () => {
                     <div className="authenticatelogo__block__circle3"></div>
                     <div className="authenticatelogo__block__circle4">
                         <div className="authenticatelogo__block__circle4-logo">
-                            <img src={logo}  />
+                            <img src={logo} alt="logo"  />
                         </div>
                     </div>
                 </div>
