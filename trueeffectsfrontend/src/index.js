@@ -17,30 +17,12 @@ import { makeStyles } from '@material-ui/core/styles';
 // Be sure to include styles at some point, probably during your bootstraping
 import '@trendmicro/react-sidenav/dist/react-sidenav.css';
 import './sass/index.scss';
-
-// import DefaultContainer from '../components/DefaultContainer';
 ReactDOM.render(
-  // <BrowserRouter >
-  // <>
-  // <Navbar />
-  // <Navbar2 />
-  //   <main>
-  //     <Route exact path="/" component={ App }/>
-  //     <Route path="/login/" component={ Login }/>
-  //     <Route path="/register/" component={ Register }/>
-  //     <Route path="/navbar/" component={App} />
-  //     </main>
-  //     </>
-  // </BrowserRouter>,
   <BrowserRouter>
   <Switch>
-  {/* <div className="App"> */}
-    
     <Route exact path="/(login)" component={LoginContainer}/>
     <Route exact path="/(register)" component={LoginContainer}/>
     <Route component={DefaultContainer} />
-  {/* </div> */}
-    
   </Switch>
 </BrowserRouter>,
   document.getElementById('root')

@@ -1,0 +1,247 @@
+$pink: #E90B33;
+$pink1: #FF5A5A;
+.homepage{
+    width:100%;
+    height:100%;
+    display:flex;
+    //flex-direction: row;
+    flex-wrap:wrap;
+    background-color: $pink;
+    color: white;
+    justify-content: space-around;
+    &__container{
+        width:100%;
+        height:100%;
+        display:flex;
+        flex-direction: row;
+        justify-content: space-around;
+        -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+        -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+        box-sizing: border-box;
+        background-color:$pink;
+    }
+    &__firstcontainer{
+        display:flex;
+        flex-direction: column;
+        justify-content: center;
+        width:30%;
+        min-width:350px;
+        // padding:2rem;
+    }
+    &__title{
+        display:flex;
+        width:100%;
+        height:100px;
+        justify-content:center;
+        align-items: center;
+        font-size:2rem;
+
+    }
+    &__goalscontainer{
+        display:flex;
+        flex-direction: column;
+        // justify-content: center;
+        width:100%;
+        height:300px;
+        background-color:$pink1;
+        margin-bottom: 3rem;
+        &-title{
+            display:flex;
+            justify-content: center;
+            font-size: 1.7rem;
+            padding:1rem;
+            font-weight: 800;
+        }
+        &-add{
+            display:flex;
+            justify-content: end;
+            margin-right: 2rem;
+            button{
+                font-size:1rem;
+                background-color:$pink1;
+                color: white;
+                border:none;
+                font-weight: 700;
+
+            }
+            button:hover{
+                cursor:pointer;
+                color:$pink;
+            }
+        }
+        &__elements{
+            padding:1rem;
+            &__element{
+                margin-bottom:2rem;
+                &-name{
+                    display:flex;
+                    justify-content:center;
+                    font-size:1.5rem;
+                    font-weight: 600;
+                }
+                &__time{
+                    display:flex;
+                    flex-direction: row;
+                    font-size:1.2rem;
+                    justify-content: end;
+                    margin-top:1rem;
+                    font-weight: 600;
+                    &-description{
+                        margin-right: 1rem;
+                    }
+                    &-number{
+                        margin-right: 1rem;
+                        color:green;
+                        font-weight: 800;
+                    }
+                    &-data{
+                        margin-right: 1rem;
+                        color:green;
+                        font-weight: 800;
+                    }
+                }
+            }
+        }
+    }
+    &__measurementcontainer{
+        display:flex;
+        flex-direction: column;
+        justify-content: center;
+        width:100%;
+        height:350px;
+        background-color:$pink1;
+        
+        
+        &-title{
+            display:flex;
+            justify-content: center;
+            font-size:1.7rem;
+            font-weight: 700;
+        }
+        &-data{
+            
+            display:flex;
+            justify-content: end;
+            margin-top:1.0rem;
+            font-size: 1.3rem;
+            padding-right:2rem;
+            font-weight: 600;
+            
+        }
+        &__container{
+            display:flex;
+            flex-direction: column;
+            margin-top:1rem;
+            font-weight: 700;
+            &__element{
+                display:flex;
+                font-size:1.1rem;
+                justify-content: space-evenly;
+                &-name{
+                    width:180px;
+                }
+                &-result{
+                    width:70px;
+                }
+            }
+        }
+        &-add{
+            display:flex;
+            justify-content: end;
+            padding-right: 2rem;
+            margin-top:1rem;
+            button{
+                font-size:1rem;
+                background-color:$pink1;
+                color: white;
+                border:none;
+                font-weight: 700;
+
+            }
+            button:hover{
+                cursor:pointer;
+                color:$pink;
+            }
+        }
+    }
+    &__lasttrainingscontainer{
+        display:flex;
+        flex-direction: column;
+        width:40%;
+        height: 700px;
+        background-color:$pink1;
+        padding: 2rem;
+        &-title{
+            display:flex; 
+            justify-content: center;
+            font-size:1.7rem;
+
+        }
+        &-add{
+            display:flex; 
+            justify-content: end;
+            button{
+                font-size:1rem;
+                background-color:$pink1;
+                color: white;
+                border:none;
+                font-weight: 700;
+
+            }
+            button:hover{
+                cursor:pointer;
+                color:$pink;
+            }
+        }
+        &__container{
+            display:flex;
+            flex-direction: column;
+            &__element{
+                padding-top:1rem;
+                width: 100%;
+                border-bottom:2px solid white;
+                &__top{
+                    display:flex;
+                    flex-wrap:wrap;
+                    &-databutton{
+                        display:flex;
+                        flex-direction: row;
+                        justify-content: space-between;
+                        width:100%;
+                    }
+                    &-data{
+                        font-size: 1.1rem;
+                        font-weight: 600;
+                    }
+                    &-button{
+                        button{
+                            font-size:1rem;
+                            background-color:$pink1;
+                            color: white;
+                            border:none;
+                            font-weight: 700;
+            
+                        }
+                        button:hover{
+                            cursor:pointer;
+                            color:$pink;
+                        }
+                    }
+                    &-title{
+                        display:flex;
+                        justify-content: center;
+                        font-size: 1.5rem;
+                        font-weight:700;
+                        width:100%;
+                    }
+                }
+                &__bottom{
+                    margin-top:1rem;
+                    font-size:1.2rem;
+                    font-weight: 500;
+                }
+            }
+            
+        }
+    }
+}

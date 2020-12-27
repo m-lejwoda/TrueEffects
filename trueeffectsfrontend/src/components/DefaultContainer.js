@@ -1,25 +1,19 @@
 import { BrowserRouter, Route,Redirect } from 'react-router-dom';
 import Navbar from './Navbar';
 import Navbar2 from './Navbar2';
-import App from '../App';
 import Training from './Training';
-
+import Schedule from './Schedule';
+import Homepage from './Homepage';
 import '../sass/defaultcontainer.scss';
 const DefaultContainer = () => (
-    <div>
-    {/* <Header toggleAlert={this.toggleAlert} /> */}
+    
     <div className="containerdefault">
       <Navbar />
       <Navbar2 />
-      <Route exact path="/" component={ App }/>
+      <Route exact path="/" component={ Homepage }/>
       <Route path="/training" component={Training}/>
-      {/* <Route path="/main" component={Main} />
-      <Route path="/user" component={User} />
-      <Route path="/hw-setting" component={Setting} />
-      <Route path="/hw-detail/:id" component={HwDetail} />
-      <Route path="/gas-detail/:id" component={GasDetail} />
-      {this.state.isAlertOpen ? <Alert /> : null} */}
+      <Route path="/schedule" component={Schedule}/>
     </div>
-    </div>
+    
  )
 export default DefaultContainer
