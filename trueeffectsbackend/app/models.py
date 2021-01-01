@@ -10,6 +10,41 @@ from rest_framework.authtoken.models import Token
 #     email = models.EmailField()
 # class Person(models.Model):
 #     user = models.OneToOneField(User,on_delete=models.CASCADE,primary_key=True)
+
+class Exercise(models.Model):
+    name = models.CharField(max_length=100)
+    def __str__(self):
+        return self.name
+    
+
+class AssumedReps(models.Model):
+    assumedreps = models.IntegerField()
+    def __str__(self):
+        return str(self.assumedreps)
+class Reps(models.Model):
+    reps = models.IntegerField()
+    def __str__(self):
+        return str(self.reps)
+
+class AllSeries(models.Model):
+    #series = models.ManyToManyField(SingleSeries)
+    number_of_series = models.IntegerField()
+    rest_after = models.IntegerField()
+    #training2 = models.ForeignKey(Training,on_delete=models.CASCADE)
+
+class PersonalExercise(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE,default=None)
+    name = models.ForeignKey(Exercise,on_delete=models.CASCADE)
+    # ownexercisename = models.ForeignKey(OwnExercise,on_delete=models.CASCADE,default=None)
+    reps = models.IntegerField()
+    predicted_weight = models.FloatField(default=0,null=True)
+    weight = models.FloatField(default=0)
+    concentric_phase = models.IntegerField(default=0)
+    eccentric_phase = models.IntegerField(default=0)
+    pause_after_concentric_phase = models.IntegerField()
+    pause_after_eccentric_phase = models.IntegerField()
+    rest = models.IntegerField(default=60)
+
 class PersonalDimensions(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE,default=None)
     left_biceps = models.FloatField()
@@ -25,39 +60,39 @@ class PersonalResults(models.Model):
     Dips = models.IntegerField()
     Pushups = models.IntegerField()
     Squats = models.IntegerField()
+    
 class PersonalGoals(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE,default=None)
     Pullups = models.IntegerField()
     Dips = models.IntegerField()
     Pushups = models.IntegerField()
     Other = models.CharField(max_length=255)
-class Exercise(models.Model):
-    name = models.CharField(max_length=100)
-    
 class OwnExercise(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE,default=None)
     name = models.CharField(max_length=100)
-    
-class PersonalExercise(models.Model):
-    user = models.ForeignKey(User,on_delete=models.CASCADE,default=None)
-    name = models.ForeignKey(Exercise,on_delete=models.CASCADE)
-    ownexercisename = models.ForeignKey(OwnExercise,on_delete=models.CASCADE,default=None)
-    reps = models.IntegerField()
-    predicted_weight = models.FloatField(default=0,null=True)
-    weight = models.FloatField(default=0)
+    def __str__(self):
+        return self.name
+
+class SingleSeries(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    exercise = models.ForeignKey(Exercise,on_delete=models.CASCADE,default=None,null = True)
+    ownexercise = models.ForeignKey(OwnExercise,on_delete=models.CASCADE,default=None,null = True)
+    weight = models.FloatField()
+    rest = models.IntegerField()
     concentric_phase = models.IntegerField(default=0)
     eccentric_phase = models.IntegerField(default=0)
     pause_after_concentric_phase = models.IntegerField()
     pause_after_eccentric_phase = models.IntegerField()
-    rest = models.IntegerField(default=60)
+    reps = models.ManyToManyField(Reps)
+
 class Training(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE,default=None)
     name = models.CharField(max_length=100)
-    training = models.ForeignKey(PersonalExercise, on_delete=models.CASCADE,default=None)
-    rest = models.IntegerField()
-    def __str__(self):
-        return self.name
-
+    training = models.ManyToManyField(SingleSeries)
+    date = models.DateField(null=True)
+    description = models.CharField(max_length=255,default='',null=True)
+    time = models.TimeField(auto_now=False, auto_now_add=False,null=True,default='00:00:00')
+    
 @receiver(post_save,sender=User)
 def create_auth_token(sender,instance=None,created=False,**kwargs):
     if created:

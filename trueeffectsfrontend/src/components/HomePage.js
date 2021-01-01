@@ -1,8 +1,17 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import '../sass/homepage.scss';
-const Homepage = () => {
+import {connect} from 'react-redux';
+import {postLogin} from '../redux/actions/authenticationActions';
+import {getMeasurements,postTraining,getTrainings} from '../redux/actions/trainingActions';
+
+const Homepage = (props) => {
+    // useEffect(()=>{
+    //     console.log("Homepage")
+    //     props.postLogin();
+    //     props.getMeasurements();
+    //     props.getTrainings();
+    // },[])
     return (
-        
         <div className="homepage">
             <div className="homepage__title">
                 Strona Domowa
@@ -105,15 +114,17 @@ const Homepage = () => {
                     </div>
                     </div>
                 </div>
-                
             </div>
             </div>
-            
-
-            
         </div>
         
     );
 };
 
-export default Homepage;     
+const mapStateToProps = (state) => {
+    return{
+        trainings: state.training,
+        loadedtrainings: state.training.loadedtrainings
+    }
+}
+export default connect(mapStateToProps,{postLogin,getMeasurements,getTrainings})(Homepage);     

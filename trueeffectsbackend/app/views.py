@@ -14,6 +14,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework import status
 from rest_framework import permissions
 from rest_framework.generics import CreateAPIView
+from rest_framework import viewsets
 
 
 class Logout(APIView):
@@ -47,7 +48,7 @@ def registration_view(request):
         return Response(data)
 @api_view(['GET'])
 def apiOverview(request):
-    return Response("Api Base Point", safe=False)
+    return Response("Api Base Point")
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated,])
@@ -61,12 +62,14 @@ def exerciseCreate(request):
     serializer = ExerciseSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
+    else:
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     return Response(serializer.data)
 
 @api_view(['POST'])
-@permission_classes([IsAuthenticated,])
+#@permission_classes([IsAuthenticated,])
 def createpersonalDimensions(request):
-    user = request.user
+    #user = request.user
     serializer = PersonalDimensionsSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
@@ -90,7 +93,7 @@ def displayPersonalResults(request):
     return Response(serializer.data)
 
 @api_view(['POST'])
-@permission_classes([IsAuthenticated,])
+# @permission_classes([IsAuthenticated,])
 def createPersonalResults(request):
     user = request.user
     serializer = PersonalResultsSerializer(data=request.data)
@@ -115,6 +118,45 @@ def createPersonalGoals(request):
         serializer.save()
     return Response(serializer.data)
 
+
+@api_view(['POST'])
+#@permission_classes([IsAuthenticated,])
+def createOwnExercise(request):
+    user = request.user
+    serializer = OwnExerciseSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+    else:
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+#@permission_classes([IsAuthenticated,])
+def displayTraining(request):
+    example = Training.objects.all()
+    serializer = TrainingSerializer(example,many=True)
+    return Response(serializer.data)
+
+@api_view(['POST'])
+#@permission_classes([IsAuthenticated,])
+def createTraining(request):
+    serializer = TrainingSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+    else:
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    return Response(serializer.data)
+
+@api_view(['POST'])
+#@permission_classes([IsAuthenticated,])
+def createTraining2(request):
+    serializer = TrainingSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+    else:
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    return Response(serializer.data)
+
 @api_view(['GET'])
 @permission_classes([IsAuthenticated,])
 def displayOwnExercise(request):
@@ -123,31 +165,24 @@ def displayOwnExercise(request):
     serializer = OwnExerciseSerializer(OwnExercise,many=True)
     return Response(serializer.data)
 
-@api_view(['POST'])
-@permission_classes([IsAuthenticated,])
-def createOwnExercise(request):
-    user = request.user
-    serializer = OwnExerciseSerializer(data=request.data)
-    if serializer.is_valid():
-        serializer.save()
-    return Response(serializer.data)
-
 @api_view(['GET'])
 @permission_classes([IsAuthenticated,])
-def displayTraining(request):
+def displaySingleSeries(request):
     user= request.user
-    Training = Training.objects.filter(user=user)
-    serializer = TrainingSerializer(Training,many=True)
+    elements = SingleSeries.objects.all()
+    serializer = SingleSeriesSerializer(elements,many=True)
     return Response(serializer.data)
 
 @api_view(['POST'])
-@permission_classes([IsAuthenticated,])
-def createTraining(request):
-    user = request.user
-    serializer = TrainingSerializer(data=request.data)
+def createSingleSeries(request):
+    print(request.data)
+    serializer = SingleSeriesSerializer(data = request.data)
     if serializer.is_valid():
         serializer.save()
+    else:
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     return Response(serializer.data)
+
 
 #createTraining
 #displayTraining

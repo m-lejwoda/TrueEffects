@@ -11,4 +11,7 @@ admin.site.register(Exercise)
 admin.site.register(OwnExercise)
 admin.site.register(PersonalExercise)
 admin.site.register(Training)
+admin.site.register(SingleSeries)
+admin.site.register(AllSeries)
+admin.site.register(Reps)
 
