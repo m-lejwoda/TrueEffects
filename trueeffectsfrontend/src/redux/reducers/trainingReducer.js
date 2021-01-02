@@ -10,7 +10,6 @@ const initialState = {
     loadedmeasurements: false,
     loadinggoals: false,
     loadedgoals:false,
-    
 };
 export default function trainreducer(state=initialState,action){
     switch(action.type){
