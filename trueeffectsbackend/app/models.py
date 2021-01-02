@@ -60,7 +60,11 @@ class PersonalResults(models.Model):
     Dips = models.IntegerField()
     Pushups = models.IntegerField()
     Squats = models.IntegerField()
-    
+class DescriptionGoals(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE,default=None)
+    description = models.CharField(max_length=100)
+    date = models.DateField(null=True)
+    completed = models.BooleanField(default=False)
 class PersonalGoals(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE,default=None)
     Pullups = models.IntegerField()

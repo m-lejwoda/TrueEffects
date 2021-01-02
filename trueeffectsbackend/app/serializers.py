@@ -70,11 +70,10 @@ class OwnExerciseSerializer(serializers.ModelSerializer):
         model = OwnExercise
         fields = '__all__'
 
-# class PersonalExerciseSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = PersonalExercise
-#         fields = ['__all__']    
-
+class DescriptionGoalsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DescriptionGoals
+        fields = '__all__'
 
 class RepsSerializer(serializers.ModelSerializer):
 

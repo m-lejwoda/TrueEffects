@@ -165,6 +165,8 @@ def displayOwnExercise(request):
     serializer = OwnExerciseSerializer(OwnExercise,many=True)
     return Response(serializer.data)
 
+
+
 @api_view(['GET'])
 @permission_classes([IsAuthenticated,])
 def displaySingleSeries(request):
@@ -183,7 +185,12 @@ def createSingleSeries(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     return Response(serializer.data)
 
-
+@api_view(['GET'])
+def displayDescriptionGoals(request):
+    user= request.user
+    description_data = DescriptionGoals.objects.filter()
+    serializer = DescriptionGoalsSerializer(description_data,many=True)
+    return Response(serializer.data)
 #createTraining
 #displayTraining
 #createOwnExercise

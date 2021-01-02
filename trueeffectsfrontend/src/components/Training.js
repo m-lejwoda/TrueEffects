@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState,useRef} from 'react';
 import ReactStopwatch from 'react-stopwatch';
 import '../sass/training.scss';
 import logo from '../images/logo.png';
@@ -7,6 +7,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Checkbox from '@material-ui/core/Checkbox';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft,faArrowRight } from '@fortawesome/fontawesome-free-solid';
+
 const useStyles = makeStyles({
   root: {
     '&:hover': {
@@ -52,7 +53,6 @@ const useStyles = makeStyles({
 });
 function StyledCheckbox(props) {
   const classes = useStyles();
-
   return (
     <Checkbox
       className={classes.root}
@@ -65,7 +65,38 @@ function StyledCheckbox(props) {
     />
   );
 }
-const Training = () => {
+const Training = (props) => {
+    const {training} = props.location
+    console.log(training)
+    const [series, setSeries] = useState(0);
+    const [singleSeries,setSingleSeries] = useState(0)
+    const [endtraining,setEndTraining] = useState(false)
+    const [input,setInput] = useState('')
+    const inputRef = useRef()
+    const buttonRef = useRef()
+    const goNext = () =>{
+      let value = parseInt(inputRef.current.value)
+      if(Number.isInteger(value)){
+      inputRef.current.value = ''
+      if(singleSeries+1 < training.training[series].reps.length){
+      setSingleSeries(singleSeries+1)
+    }else{
+      if(series+1>=training.training.length){
+        setEndTraining(true)
+      }
+      else{
+      setSeries(series+1)
+      setSingleSeries(0)
+      }
+    }}
+    else{
+      console.log("błąd")
+    }
+  }
+  const handleInput = () => {
+    console.log("handle input")
+    setInput(inputRef.current.value)
+  }
     return (
         <div className="training">
             <div className="training__top">
@@ -99,12 +130,14 @@ const Training = () => {
                 </div>
                 <div className="training__middle__series">
                     <div className="training__middle__series__checkboxes">
-                      <StyledCheckbox defaultChecked/>
+                      
+                      {/* <StyledCheckbox defaultChecked/>
                       <StyledCheckbox defaultChecked />
                       <StyledCheckbox disabled />
                       <StyledCheckbox defaultChecked />
-                      <StyledCheckbox defaultChecked /></div>
-                    <div className="training__middle__series-title">Seria 1/5</div>
+                      <StyledCheckbox defaultChecked /> */}
+                      </div>
+                    <div className="training__middle__series-title">Seria {singleSeries+1}/{training.training[`${series}`].reps.length}</div>
                 </div>
             </div>
             <div className="training__bottom">
@@ -114,23 +147,23 @@ const Training = () => {
                 <div className="training__bottom__phase">
                     <div className="training__bottom__phase-title">Fazy(w sekundach)</div>
                     <div className="training__bottom__phase__allphases">
-                        <div className="training__bottom__phase__allphases-phase">4</div>
+                        <div className="training__bottom__phase__allphases-phase">{training.training[`${series}`].concentric_phase}</div>
                         <div className="training__bottom__phase__allphases-/">/</div>
-                        <div className="training__bottom__phase__allphases-phase">0</div>
+                        <div className="training__bottom__phase__allphases-phase">{training.training[`${series}`].pause_after_concentric_phase}</div>
                         <div className="training__bottom__phase__allphases-/">/</div>
-                        <div className="training__bottom__phase__allphases-phase">4</div>
+                        <div className="training__bottom__phase__allphases-phase">{training.training[`${series}`].eccentric_phase}</div>
                         <div className="training__bottom__phase__allphases-/">/</div>
-                        <div className="training__bottom__phase__allphases-phase">0</div>
+                        <div className="training__bottom__phase__allphases-phase">{training.training[`${series}`].pause_after_eccentric_phase}</div>
                     </div>
                     <div className="training__bottom__phase-title2">Ile powtórzeń wykonałeś w serii</div>
                     <div className="training__bottom__phase__reps">
-                        <div className="training__bottom__phase__reps-actualreps"><input id="actualreps" min="0" max="10000" /></div>
+                        <div className="training__bottom__phase__reps-actualreps"><input ref={inputRef} onChange={handleInput} id="actualreps" min="0" max="10000" /></div>
                         <div className="training__bottom__phase__reps-/">/</div>
-                        <div className="training__bottom__phase__reps-assumedreps">15</div>
+                        <div className="training__bottom__phase__reps-assumedreps">{training.training[`${series}`].reps[`${singleSeries}`]['reps']}</div>
                     </div>
                 </div>
                 <div className="training__bottom__rightbutton">
-                    <button id="nextexercise">Przejdź dalej</button>
+                    <button ref={buttonRef} style={{visibility: endtraining ? 'hidden' : 'visible' }} onClick={goNext} id="nextexercise">Przejdź dalej</button>
                 </div>
             </div>
             

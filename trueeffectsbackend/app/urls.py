@@ -20,6 +20,7 @@ urlpatterns=[
     path('display_personal_goals/',views.displayPersonalResults,name="display_personal_results"),
     path('display_single_series/',views.displaySingleSeries,name="display_single_series"),
     path('create_single_series/',views.createSingleSeries,name="create_single_series"),
+    path('display_description_goals/',views.displayDescriptionGoals,name="display_description_goals"),
     path('overview/',views.apiOverview),
 ]
 #createTraining

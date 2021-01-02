@@ -6,7 +6,7 @@ import Training from './Training';
 import Schedule from './Schedule';
 import Homepage from './Homepage';
 import {connect} from 'react-redux';
-import {getMeasurements,postTraining,getTrainings} from '../redux/actions/trainingActions';
+import {getMeasurements,postTraining,getTrainings,getGoals} from '../redux/actions/trainingActions';
 //import MeasurementsNotification from './MeasurementsNotification';
 import DisplayMeasurements from './DisplayMeasurements'
 import AddMeasurements from './AddMeasurements';
@@ -17,15 +17,14 @@ const DefaultContainer = (props) => {
     console.log("Homepage")
     props.getMeasurements();
     props.getTrainings();
+    props.getGoals();
   },[])
-  console.log(props.trainings)
-  console.log(props.loadedtrainings)
 return(
     <div className="containerdefault">
-      {props.loadedtrainings ?  <>
+      {props.loadedtrainings && props.loadedgoals && props.loadedmeasurements ?  <>
       <Navbar />
       <Navbar2 />
-      <Route exact path="/" component={ Homepage }/>
+      <Route exact path="/" component={Homepage}/>
       <Route path="/training" component={Training}/>
       <Route path="/schedule" component={Schedule}/>
       <Route path="/addmeasurements" component={AddMeasurements}/>
@@ -36,8 +35,10 @@ return(
  )}
  const mapStateToProps = (state) => {
   return{
-      trainings: state.training,
+      
       loadedtrainings: state.training.loadedtrainings,
+      loadedmeasurements: state.training.loadedmeasurements,
+      loadedgoals: state.training.loadedgoals
   }
 }
-export default connect(mapStateToProps,{getMeasurements,getTrainings})(DefaultContainer);   
+export default connect(mapStateToProps,{getMeasurements,getTrainings,getGoals})(DefaultContainer);   
