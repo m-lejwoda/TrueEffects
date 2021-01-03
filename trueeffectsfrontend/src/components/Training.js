@@ -7,7 +7,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Checkbox from '@material-ui/core/Checkbox';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft,faArrowRight } from '@fortawesome/fontawesome-free-solid';
-
+import ReactTimerStopwatch from 'react-stopwatch-timer';
 const useStyles = makeStyles({
   root: {
     '&:hover': {
@@ -67,13 +67,14 @@ function StyledCheckbox(props) {
 }
 const Training = (props) => {
     const {training} = props.location
-    console.log(training)
     const [series, setSeries] = useState(0);
     const [singleSeries,setSingleSeries] = useState(0)
     const [endtraining,setEndTraining] = useState(false)
     const [input,setInput] = useState('')
+    const [startStoper,setStartStoper] = useState(false)
     const inputRef = useRef()
     const buttonRef = useRef()
+    const fromTime = new Date(0, 0, 0, 0, 0, 0, 0);
     const goNext = () =>{
       let value = parseInt(inputRef.current.value)
       if(Number.isInteger(value)){
@@ -93,10 +94,15 @@ const Training = (props) => {
       console.log("błąd")
     }
   }
+  const handleStoper = () => {
+    console.log("handle stoper")
+    setStartStoper(!startStoper)
+  }
   const handleInput = () => {
     console.log("handle input")
     setInput(inputRef.current.value)
   }
+  console.log(startStoper)
     return (
         <div className="training">
             <div className="training__top">
@@ -117,7 +123,9 @@ const Training = (props) => {
                       <img src={logo} alt="logo"  />
                     </div>
                     <div className="training__middle__logotime-time">
-                    <ReactStopwatch seconds={0} minutes={0} hours={0} limit="24:00:00"
+                    <ReactTimerStopwatch isOn={true} className="react-stopwatch-timer__table" watchType="stopwatch"
+                             displayCircle={true} color="gray" hintColor="red" fromTime={fromTime}/>
+                    {/* <ReactStopwatch autoStart={startStoper} seconds={0} minutes={0} hours={0} limit="24:00:00"
                     render={({ formatted }) => {
                     return (
                       <div>
@@ -125,7 +133,7 @@ const Training = (props) => {
                           {formatted}
                         </p>
                       </div>
-                    );}}/>
+                    );}}/> */}
                   </div>
                 </div>
                 <div className="training__middle__series">
@@ -142,7 +150,7 @@ const Training = (props) => {
             </div>
             <div className="training__bottom">
                 <div className="training__bottom__leftbutton">
-                    <button id="endtraining">Zakończ trening X</button>
+                    <button id="endtraining" onClick={handleStoper}>Zakończ trening X</button>
                 </div>
                 <div className="training__bottom__phase">
                     <div className="training__bottom__phase-title">Fazy(w sekundach)</div>
