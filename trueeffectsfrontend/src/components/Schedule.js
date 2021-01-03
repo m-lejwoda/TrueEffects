@@ -14,15 +14,25 @@ export class Schedule extends React.Component {
       modalopen:false,
       training:null,
       test:false,
+      date: null,
+      time: null,
+      description: '',
+      title: ''
     }
     handleSelectEvent = (e) =>{
+      console.log("cały e")
       console.log(e)
       console.log("kliknąłeś na event")
       console.log(e.data)
       this.setState({
         modalopen:true,
         training:e.data,
-        test: !this.state.test
+        test: !this.state.test,
+        date : e.date,
+        time: e.time,
+        description: e.description,
+        title: e.title,
+        alldata: e.all
       })
     }
     handleBacktoSchedule = () => {
@@ -33,15 +43,20 @@ export class Schedule extends React.Component {
     }
     
     render() {
+      console.log(this.props.trainings)
       const {modalopen,training} = this.state
       let events = []
       this.props.trainings.map((e)=>{
-        console.log(e)
+        console.log(e.training)
         events.push({
           'title': e.name,
           'start': Date.parse(e.date),
           'end': Date.parse(e.date),
-          'data': e.training
+          'data': e.training,
+          'date': e.date,
+          'time': e.time,
+          'description': e.description,
+          'all': e
         })
         })
         const localizer = momentLocalizer(moment)
@@ -49,7 +64,7 @@ export class Schedule extends React.Component {
         <>
       <div className="schedule">
         <Calendar events={events} onSelectEvent={this.handleSelectEvent} localizer={localizer} style={{ height: 500,width: '95%' }}/>
-        {modalopen && <ModalDisplayTraining back ={this.handleBacktoSchedule} open={this.state.modalopen} training={this.state.training}/>}
+        {modalopen && <ModalDisplayTraining back ={this.handleBacktoSchedule} allprops={this.props} open={this.state.modalopen} training={this.state.training} date={this.state.date} time={this.state.time} description={this.state.description} title={this.state.title} alldata={this.state.alldata}/>}
 
       </div>
       

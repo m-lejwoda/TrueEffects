@@ -1,0 +1,96 @@
+.modaldisplaytraining{
+    &__data{
+        &-title{
+            display:flex;
+            font-size:1.8rem;
+            color:white;
+            font-weight: 800;
+            justify-content: center;
+        }
+        &__datetime{
+            display:flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+        &__buttons{
+            display:flex;
+            justify-content: end;
+        }
+        &-close{
+            display:flex;
+            justify-content: flex-end;
+        }
+        &__elements{
+            background-color:#457B9D;
+            display:flex;
+            flex-direction: column;
+            &__element{
+                display:flex;
+                flex-direction: row;
+                font-size: 2rem;
+                color:white;
+
+                &-name{
+                    margin-right:0.5rem;
+                }
+                &-reps{
+                    margin-right:0.5rem;
+                }
+                &-rest{
+                    margin-right:0.5rem;
+                }
+                &-weight{
+                    margin-right:0.5rem;
+                }
+                // &-phases{
+                //     margin-right:0.5rem;
+                // }
+            }
+        }
+    }
+}
+// table{
+//     #training{
+//     font-family: Arial, Helvetica, sans-serif;
+//     border-collapse: collapse;
+//     width: 1300px;
+//     color:white;
+//     font-size: 1.3rem;
+//   }
+// }
+table, td, th {
+    border: 1px solid white;
+  }
+#training{
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 1300px;
+    color:white;
+    font-size: 1.3rem;
+    
+    th{
+        background-color:#db3d44;
+    }
+    td{
+        text-align: center;
+    }
+    tr{
+        border: 1px solid white;
+    }
+
+  }
+  #training tr:nth-child(even){background-color: #1d3557;}
+// table{
+//     color:white;
+//     font-size: 1.3rem;
+//     width:1300px;
+//     th{
+//         background-color:#db3d44;
+//     }
+//     tr{
+//         width:1200px;
+//     }
+//     td{
+//         text-align: center;
+//     }
+// }
