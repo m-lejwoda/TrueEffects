@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     bar: {
       paddingLeft: 64,
       paddingRight: 100,
-      background: '#E90B33',
+      background: '#db3d44',
     },
   }));
 const Navbar = () => {

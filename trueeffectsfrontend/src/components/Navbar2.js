@@ -1,31 +1,48 @@
 import React from 'react';
 import '../sass/navbar.scss';
-import SideNav, { Toggle, Nav, NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
+import { useHistory } from "react-router-dom";
+import SideNav, {NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome,faClipboardList,faWeight,faGavel } from '@fortawesome/fontawesome-free-solid';
-import { makeStyles } from '@material-ui/core/styles';
-const Navbar2 = () => {
+// import { makeStyles } from '@material-ui/core/styles';
+const Navbar2 = (props) => {
+    const history = useHistory()
+    const handleMovetoHome = () =>{
+        history.push("/");
+    }
+    const handleMovetoScheduler = () =>{
+        history.push("/schedule");
+    }
+    const handleMovetoCreator = () =>{
+        history.push("/createtraining");
+    }
+    const handleMovetoMeasurements = () =>{
+        history.push("/addmeasurements");
+    }
+    const handleMovetoAllMeasurements = () =>{
+        history.push("/displaymeasurements");
+    }
     return (
         <SideNav>
                 <SideNav.Toggle />
                 <SideNav.Nav defaultSelected="home">
-                    <NavItem eventKey="home">
-                        <NavIcon>
+                    <NavItem onClick={handleMovetoHome} eventKey="home">
+                        <NavIcon >
                           <FontAwesomeIcon icon={faHome} />
                         </NavIcon>
                         <NavText>
                             Strona Domowa
                         </NavText>
                     </NavItem>
-                    <NavItem eventKey="clipboard">
-                        <NavIcon>
+                    <NavItem onClick={handleMovetoScheduler} eventKey="clipboard">
+                        <NavIcon >
                           <FontAwesomeIcon icon={faClipboardList} />
                         </NavIcon>
                         <NavText>
                             Kalendarz treningów
                         </NavText>
                     </NavItem>
-                    <NavItem eventKey="gavel">
+                    <NavItem onClick={handleMovetoCreator} eventKey="gavel">
                         <NavIcon>
                           <FontAwesomeIcon icon={faGavel} />
                         </NavIcon>
@@ -33,7 +50,7 @@ const Navbar2 = () => {
                             Kreator trening
                         </NavText>
                     </NavItem>
-                    <NavItem eventKey="weight">
+                    <NavItem  onClick={handleMovetoMeasurements} eventKey="weight">
                         <NavIcon>
                          <FontAwesomeIcon icon={faWeight} />
                         </NavIcon>
@@ -41,7 +58,7 @@ const Navbar2 = () => {
                             Dodaj pomiary
                         </NavText>
                     </NavItem>
-                    <NavItem eventKey="weightall">
+                    <NavItem onClick={handleMovetoAllMeasurements} eventKey="weightall">
                         <NavIcon>
                           <FontAwesomeIcon icon={faWeight} />
                         </NavIcon>
