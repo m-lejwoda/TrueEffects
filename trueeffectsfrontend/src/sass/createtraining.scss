@@ -1,0 +1,137 @@
+$maincolor: #1D3557;
+$secondcolor: #457B9D;
+.createtraining{
+    padding:1rem;
+    background-color:$maincolor;
+    width: 100%;
+    height:100%;
+    &-title{
+        display:flex;
+        justify-content: center;
+        color:white;
+        font-size:2rem;
+    }
+
+    &__containers{
+        display:flex;
+        justify-content: space-around;
+
+        
+        &__first{
+            display:flex;
+            flex-direction: column;
+            padding:1rem;
+            width:500px;
+            background-color: $secondcolor;
+            color:white;
+            &__trainingdata{
+                display:flex;
+                flex-direction: column;
+                margin-top:1rem;
+                font-size:1.3rem;
+                span::after{
+                    content: '';
+                    display:block;
+                    width:40px;
+                    background-color:white;
+                    height:2px;
+
+                }
+                input{
+                    width:40px;
+                    background-color: $secondcolor;
+                    border:none;
+                    text-align: center;
+                    color:white;
+                    font-size:1.1rem;
+                }
+                &__series{
+                    display:flex;
+                    justify-content: space-between;
+                    margin-bottom:1rem;     
+                }
+                &__singleseries{
+                    display:flex;
+                    justify-content: space-between;     
+                    margin-bottom:1rem;  
+                }
+                &__rest{
+                    display:flex;
+                    justify-content: space-between;     
+                    margin-bottom:1rem;  
+                }
+                &__weight{
+                    display:flex;
+                    justify-content: space-between;     
+                    margin-bottom:1rem;  
+                }
+                &__concentricphase{
+                    display:flex;
+                    justify-content: space-between;     
+                    margin-bottom:1rem;  
+                }
+                &__pauseafterconcentricphase{
+                    display:flex;
+                    justify-content: space-between;     
+                    margin-bottom:1rem; 
+                }
+                &__eccentricphase{
+                    display:flex;
+                    justify-content: space-between;     
+                    margin-bottom:1rem;  
+                }
+                &__pauseaftereccentricphase{
+                    display:flex;
+                    justify-content: space-between;     
+                    margin-bottom:1rem; 
+                }
+            }
+            &__selectors{
+                display:flex;
+                padding-bottom:1rem;
+                border-bottom: 1px solid white;
+                margin-bottom: 1rem;
+                &-globalexercise{
+                    display:flex;
+                    width:50%;
+                    justify-content: center;
+                    border-right:1px solid white;
+                }
+                &-globalexercise:hover{
+                    cursor: pointer;
+                }
+                &-myexercise{
+                    display:flex;
+                    width:50%;
+                    justify-content: center;
+                }
+                &-myexercise:hover{
+                    cursor: pointer;
+                }
+            }
+            &-input{
+                display:flex;
+                justify-content: center;
+                font-size: 1.4rem;
+            }
+            &__exercises{
+                padding-top:1rem;
+                font-size: 1.6rem;
+                &__element{
+                    border-bottom: 1px solid white;
+                    padding-top:1rem;
+                    padding-bottom: 1rem;
+                }
+                &__element:hover{
+                    cursor:pointer;
+                }
+
+            }
+        }
+        &__third{
+            background-color: $secondcolor;
+            color:white;
+            width:500px;
+        }
+    }
+}

@@ -10,6 +10,7 @@ import {getMeasurements,postTraining,getTrainings,getGoals} from '../redux/actio
 //import MeasurementsNotification from './MeasurementsNotification';
 import DisplayMeasurements from './DisplayMeasurements'
 import AddMeasurements from './AddMeasurements';
+import CreateTraining from './CreateTraining';
 import '../sass/defaultcontainer.scss';
 import { BoxLoading } from 'react-loadingg';
 const DefaultContainer = (props) => {
@@ -29,6 +30,8 @@ return(
       <Route path="/schedule" component={Schedule}/>
       <Route path="/addmeasurements" component={AddMeasurements}/>
       <Route path="/displaymeasurements" component={DisplayMeasurements}/>
+      <Route path="/createtraining" component={CreateTraining}/>
+
       </>
       : <BoxLoading />}
     </div>  
