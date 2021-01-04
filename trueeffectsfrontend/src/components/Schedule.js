@@ -20,6 +20,9 @@ export class Schedule extends React.Component {
       description: '',
       title: ''
     }
+    handleSelect = () =>{
+      console.log("select")
+    }
     handleSelectEvent = (e) =>{
       console.log("cały e")
       console.log(e)
@@ -64,7 +67,8 @@ export class Schedule extends React.Component {
       return(
         <>
       <div className="schedule">
-        <Calendar culture='pl-PL' views={['month']}  events={events} onSelectEvent={this.handleSelectEvent} localizer={localizer} style={{ height: 500,width: '95%' }}/>
+        <Calendar culture='pl-PL' views={['month']} selectable={true} onSelectSlot={(slot) => {console.log("slot select: ", slot);
+          }}  events={events} onSelectEvent={this.handleSelectEvent} localizer={localizer} style={{ height: 500,width: '95%' }}/>
         {modalopen && <ModalDisplayTraining back ={this.handleBacktoSchedule} allprops={this.props} open={this.state.modalopen} training={this.state.training} date={this.state.date} time={this.state.time} description={this.state.description} title={this.state.title} alldata={this.state.alldata}/>}
 
       </div>
