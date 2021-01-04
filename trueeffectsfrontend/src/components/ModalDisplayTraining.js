@@ -30,7 +30,7 @@ const ModalDisplayTraining = props => {
     return ReactDOM.createPortal(
         <div className="modaldisplaytraining" style={OVERLAY_STYLES}>
             <div className="modaldisplaytraining__data" style={MODAL_STYLES}>
-            <div className="modaldisplaytraining__data-close" ><FontAwesomeIcon onClick={()=>props.back()} icon={faTimes}/></div>
+            <div className="modaldisplaytraining__data-close" ><span><FontAwesomeIcon onClick={()=>props.back()} icon={faTimes}/></span></div>
             <div className="modaldisplaytraining__data-title">{props.title}</div>
             <div className="modaldisplaytraining__data__datetime">
                 <div className="modaldisplaytraining__data__datetime-time">Czas trwania treningu : {props.time}</div>

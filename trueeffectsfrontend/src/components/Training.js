@@ -1,5 +1,6 @@
 import React,{useState,useRef} from 'react';
 import ReactStopwatch from 'react-stopwatch';
+import MyStopwatch from './MyStopwatch';
 import '../sass/training.scss';
 import logo from '../images/logo.png';
 import clsx from 'clsx';
@@ -72,9 +73,12 @@ const Training = (props) => {
     const [endtraining,setEndTraining] = useState(false)
     const [input,setInput] = useState('')
     const [startStoper,setStartStoper] = useState(false)
+    const [stopStoper,setStopStoper] = useState(false)
     const inputRef = useRef()
     const buttonRef = useRef()
+    const endbuttonRef = useRef()
     const fromTime = new Date(0, 0, 0, 0, 0, 0, 0);
+
     const goNext = () =>{
       let value = parseInt(inputRef.current.value)
       if(Number.isInteger(value)){
@@ -102,6 +106,13 @@ const Training = (props) => {
     console.log("handle input")
     setInput(inputRef.current.value)
   }
+  const handlePause = (pause) =>{
+    console.log("handle pause")
+    pause()
+}
+  const handleEndTraining = ()=>{
+    setStopStoper(true)
+  }
   console.log(startStoper)
     return (
         <div className="training">
@@ -123,17 +134,7 @@ const Training = (props) => {
                       <img src={logo} alt="logo"  />
                     </div>
                     <div className="training__middle__logotime-time">
-                    <ReactTimerStopwatch isOn={true} className="react-stopwatch-timer__table" watchType="stopwatch"
-                             displayCircle={true} color="gray" hintColor="red" fromTime={fromTime}/>
-                    {/* <ReactStopwatch autoStart={startStoper} seconds={0} minutes={0} hours={0} limit="24:00:00"
-                    render={({ formatted }) => {
-                    return (
-                      <div>
-                        <p>
-                          {formatted}
-                        </p>
-                      </div>
-                    );}}/> */}
+                    <MyStopwatch endbuttonref={endbuttonRef} stopstoper={stopStoper} setStopStoper={setStopStoper}/>
                   </div>
                 </div>
                 <div className="training__middle__series">
@@ -150,7 +151,7 @@ const Training = (props) => {
             </div>
             <div className="training__bottom">
                 <div className="training__bottom__leftbutton">
-                    <button id="endtraining" onClick={handleStoper}>Zakończ trening X</button>
+                    <button id="endtraining" ref={endbuttonRef} onClick={()=>setStopStoper(true)}>Zakończ trening X</button>
                 </div>
                 <div className="training__bottom__phase">
                     <div className="training__bottom__phase-title">Fazy(w sekundach)</div>

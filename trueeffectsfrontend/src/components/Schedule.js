@@ -3,11 +3,12 @@ import Scheduler from 'react-scheduler-calendar';
 import {Calendar , momentLocalizer  } from 'react-big-calendar' 
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import moment from 'moment';
-import 'moment/locale/pl';
+
 import {connect} from 'react-redux';
 import {getMeasurements,postTraining,getTrainings,getGoals} from '../redux/actions/trainingActions';
 import ModalDisplayTraining from './ModalDisplayTraining';
-
+import 'moment/locale/pl';
+require('moment/locale/pl.js')
 
 export class Schedule extends React.Component {
     state = {
@@ -63,7 +64,7 @@ export class Schedule extends React.Component {
       return(
         <>
       <div className="schedule">
-        <Calendar events={events} onSelectEvent={this.handleSelectEvent} localizer={localizer} style={{ height: 500,width: '95%' }}/>
+        <Calendar culture='pl-PL' views={['month']}  events={events} onSelectEvent={this.handleSelectEvent} localizer={localizer} style={{ height: 500,width: '95%' }}/>
         {modalopen && <ModalDisplayTraining back ={this.handleBacktoSchedule} allprops={this.props} open={this.state.modalopen} training={this.state.training} date={this.state.date} time={this.state.time} description={this.state.description} title={this.state.title} alldata={this.state.alldata}/>}
 
       </div>
