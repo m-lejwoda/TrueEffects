@@ -69,16 +69,17 @@ def exerciseCreate(request):
 @api_view(['POST'])
 #@permission_classes([IsAuthenticated,])
 def createpersonalDimensions(request):
-    #user = request.user
+    request.data['user']= request.user.id
     serializer = PersonalDimensionsSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
+    else:
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     return Response(serializer.data)
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated,])
 def displaypersonalDimensions(request):
-    #user = Token.objects.get(key=request.auth.key).user
     user= request.user
     personalDimensions = PersonalDimensions.objects.filter(user=user)
     serializer = PersonalDimensionsSerializer(personalDimensions,many=True)

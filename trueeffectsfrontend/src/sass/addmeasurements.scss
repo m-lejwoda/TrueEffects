@@ -62,6 +62,7 @@ $pink1: #FF5A5A;
                     justify-content: space-between;
                     &-result{
                         width:70px;
+                        text-align:center;
                     }
                     &-result::after{
                         content: '';
@@ -152,6 +153,7 @@ $pink1: #FF5A5A;
                     }
                     &-result{
                         width:150px;
+                        
                         
                         input{
                             width: 100%;

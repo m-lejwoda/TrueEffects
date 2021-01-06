@@ -13,6 +13,7 @@ import AddMeasurements from './AddMeasurements';
 import CreateTraining from './CreateTraining';
 import '../sass/defaultcontainer.scss';
 import { BoxLoading } from 'react-loadingg';
+import AddMeasurementsSummary from './AddMeasurementsSummary';
 const DefaultContainer = (props) => {
   useEffect(()=>{
     console.log("Homepage")
@@ -31,6 +32,7 @@ return(
       <Route path="/addmeasurements" component={AddMeasurements}/>
       <Route path="/displaymeasurements" component={DisplayMeasurements}/>
       <Route path="/createtraining" component={CreateTraining}/>
+      <Route path="/measurementsummary" component={AddMeasurementsSummary} />
 
       </>
       : <BoxLoading />}

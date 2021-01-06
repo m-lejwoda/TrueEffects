@@ -4,13 +4,6 @@ from django.conf import settings
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
-# Create your models here.
-# class User(models.Model):
-#     name = models.CharField(max_length=200)
-#     email = models.EmailField()
-# class Person(models.Model):
-#     user = models.OneToOneField(User,on_delete=models.CASCADE,primary_key=True)
-
 class Exercise(models.Model):
     name = models.CharField(max_length=100)
     def __str__(self):
@@ -47,6 +40,9 @@ class PersonalExercise(models.Model):
 
 class PersonalDimensions(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE,default=None)
+    date = models.DateField(null=True)
+    weight = models.FloatField(default =0)
+    growth = models.FloatField(default =0)
     left_biceps = models.FloatField()
     right_biceps = models.FloatField()
     left_forearm = models.FloatField()

@@ -1,4 +1,5 @@
-import {GET_MEASUREMENTS,GET_MEASUREMENTS_SUCCESS,POST_TRAINING,GET_TRAININGS,GET_TRAININGS_FAILURE,GET_TRAININGS_SUCCESS,GET_GOALS,GET_GOALS_SUCCESS} from '../actions/types';
+import {GET_MEASUREMENTS,GET_MEASUREMENTS_SUCCESS,POST_TRAINING,GET_TRAININGS,GET_TRAININGS_FAILURE,GET_TRAININGS_SUCCESS,
+    GET_GOALS,GET_GOALS_SUCCESS,POST_MEASUREMENT,POST_MEASUREMENT_SUCCESS} from '../actions/types';
 
 const initialState = {
     measurements: [],
@@ -52,6 +53,10 @@ export default function trainreducer(state=initialState,action){
 
             }
         case POST_TRAINING:
+            return{
+                ...state
+            }
+        case POST_MEASUREMENT:
             return{
                 ...state
             }
