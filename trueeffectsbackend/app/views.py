@@ -38,7 +38,6 @@ def registration_view(request):
         if serializer.is_valid():
             user = serializer.save()
             data['response'] = "Poprawnie zarejestrowano użytkownika"
-            #data['email']= 'email'
             data['email'] = user.email
             data['username'] = user.username
             token = Token.objects.get(user=user).key

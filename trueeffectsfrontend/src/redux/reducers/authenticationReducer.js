@@ -1,7 +1,8 @@
-import {POST_LOGIN,LOGIN_ERROR} from '../actions/types';
+import {POST_LOGIN,LOGIN_ERROR,POST_REGISTER, REGISTER_ERROR} from '../actions/types';
 const initialState = {
     token: '',
-    error: ''
+    error: '',
+    error_register: ''
 };
 
 export default function authreducer(state=initialState,action){
@@ -16,6 +17,16 @@ export default function authreducer(state=initialState,action){
             return{
                 ...state,
                 error:action.payload
+            }
+        case POST_REGISTER:
+            return{
+                ...state,
+                token:action.payload
+            }
+        case REGISTER_ERROR:
+            return{
+                ...state,
+                error_register:action.payload
             }
         default: 
             return state;

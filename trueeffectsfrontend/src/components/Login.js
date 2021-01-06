@@ -25,6 +25,12 @@ const useStyles = makeStyles((theme) => ({
   }));
 
 const Login = (props) => {
+    const handleMoveToRegister = () => {
+        props.history.push('/register')
+    }
+    const handleMovetoBack = () => {
+        props.history.goBack()
+    }
     console.log(props)
     const [login,setLogin] = useState("")
     const [password,setPassword] = useState("")
@@ -48,11 +54,11 @@ const Login = (props) => {
             <div className="login__secondcontainer">
                 
             <div className="login__secondcontainer__top">
-                <div className="login__secondcontainer__top__back">
+                <div className="login__secondcontainer__top__back" onClick={handleMovetoBack}>
                     <div className="login__secondcontainer__top__back-icon"><FontAwesomeIcon icon={faArrowLeft} /></div>
                     <div className="login__secondcontainer__top__back-title">Cofnij</div>
                 </div>
-                <div className="login__secondcontainer__top__forward">
+                <div className="login__secondcontainer__top__forward" onClick={handleMoveToRegister}>
                     <div className="login__secondcontainer__top__forward-title">Zarejestruj się</div>
                     <div className="login__secondcontainer__top__forward-icon"><FontAwesomeIcon icon={faArrowRight} /></div>
                 </div>
