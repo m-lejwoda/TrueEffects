@@ -1,6 +1,6 @@
 // $pink: #E90B33;
-// $pink1: #FF5A5A;
-$pink1: #E90B33;
+// $pink2: #FF5A5A;
+$pink2: #db3d44;
 //$pink: #FF5A5A;
 $pink: #1D3557;
 $pink2:#457B9D;
@@ -62,7 +62,7 @@ $pink2:#457B9D;
             margin-right: 2rem;
             button{
                 font-size:1rem;
-                background-color:$pink1;
+                background-color:$pink2;
                 color: white;
                 border:none;
                 font-weight: 700;
@@ -70,7 +70,7 @@ $pink2:#457B9D;
             }
             button:hover{
                 cursor:pointer;
-                color:$pink;
+                color:#db3d44;
             }
         }
         &__elements{
@@ -113,9 +113,15 @@ $pink2:#457B9D;
         justify-content: center;
         width:100%;
         height:350px;
-        background-color:$pink1;
+        background-color:$pink2;
         
-        
+        &__title{
+            display:flex;
+            flex-direction: column;
+            // justify-content:center;
+            height:100%; 
+            padding:1rem;
+        }
         &-title{
             display:flex;
             justify-content: center;
@@ -156,7 +162,7 @@ $pink2:#457B9D;
             margin-top:1rem;
             button{
                 font-size:1rem;
-                background-color:$pink1;
+                background-color:$pink2;
                 color: white;
                 border:none;
                 font-weight: 700;
@@ -164,7 +170,7 @@ $pink2:#457B9D;
             }
             button:hover{
                 cursor:pointer;
-                color:$pink;
+                color:#db3d44;
             }
         }
     }
@@ -173,7 +179,7 @@ $pink2:#457B9D;
         flex-direction: column;
         width:40%;
         height: 700px;
-        background-color:$pink1;
+        background-color:$pink2;
         padding: 2rem;
         &-title{
             display:flex; 
@@ -186,7 +192,7 @@ $pink2:#457B9D;
             justify-content: end;
             button{
                 font-size:1rem;
-                background-color:$pink1;
+                background-color:$pink2;
                 color: white;
                 border:none;
                 font-weight: 700;
@@ -194,7 +200,7 @@ $pink2:#457B9D;
             }
             button:hover{
                 cursor:pointer;
-                color:$pink;
+                color:#db3d44;
             }
         }
         &__container{
@@ -220,7 +226,7 @@ $pink2:#457B9D;
                     &-button{
                         button{
                             font-size:1rem;
-                            background-color:$pink1;
+                            background-color:$pink2;
                             color: white;
                             border:none;
                             font-weight: 700;
@@ -228,7 +234,7 @@ $pink2:#457B9D;
                         }
                         button:hover{
                             cursor:pointer;
-                            color:$pink;
+                            color:#db3d44;
                         }
                     }
                     &-title{

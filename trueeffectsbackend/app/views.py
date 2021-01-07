@@ -133,7 +133,7 @@ def createOwnExercise(request):
 @api_view(['GET'])
 #@permission_classes([IsAuthenticated,])
 def displayTraining(request):
-    example = Training.objects.all()
+    example = Training.objects.filter(user=request.user)
     serializer = TrainingSerializer(example,many=True)
     return Response(serializer.data)
 
@@ -188,7 +188,7 @@ def createSingleSeries(request):
 @api_view(['GET'])
 def displayDescriptionGoals(request):
     user= request.user
-    description_data = DescriptionGoals.objects.filter()
+    description_data = DescriptionGoals.objects.filter(user=user)
     serializer = DescriptionGoalsSerializer(description_data,many=True)
     return Response(serializer.data)
 #createTraining

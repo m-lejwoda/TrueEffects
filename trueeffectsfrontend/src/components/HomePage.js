@@ -24,7 +24,7 @@ const Homepage = (props) => {
                 <div className="homepage__goalscontainer-title">Twoje cele do zrealizowania</div>
                 <div className="homepage__goalscontainer-add"><button onClick={click}>+ Dodaj nowe cele</button></div>
                 <div className="homepage__goalscontainer__elements">
-                {props.goals.map((goal)=><HomepageGoalItem goal={goal}/>)}
+                {props.goals.length>0 ?props.goals.map((goal)=><HomepageGoalItem goal={goal}/>): <p>Nie masz aktualnie żadnych celów do zrealizowania</p>}
                 {/* <div className="homepage__goalscontainer__elements__element">
                     <div className="homepage__goalscontainer__elements__element-name">Podciąganie +20 kg * 5</div>
                     <div className="homepage__goalscontainer__elements__element__time">
@@ -44,7 +44,7 @@ const Homepage = (props) => {
                 </div>
             </div>
             <div className="homepage__measurementcontainer">
-            <HomepageMeasurementItem measurement={props.measurements[0]}/>
+            <HomepageMeasurementItem measurement={props.measurements}/>
             </div>
             {/* <div className="homepage__measurementcontainer">
                 <div className="homepage__measurementcontainer-title">Twoje ostatnie pomiary</div>
@@ -94,7 +94,7 @@ const Homepage = (props) => {
                 <div className="homepage__lasttrainingscontainer-title">Ostatnie wykonane treningi</div>
                 <div className="homepage__lasttrainingscontainer-add"><button>+ Dodaj nowy trening</button></div>
                 <div className="homepage__lasttrainingscontainer__container">
-                    {props.trainings.map((training)=> <HomepageTrainingItem allprops={props} training={training}/>)}
+                    {props.trainings.length>0 ? props.trainings.map((training)=> <HomepageTrainingItem allprops={props} training={training}/>): <p>Nie wykonałeś jeszcze żadnych treningów</p>}
                     {/* <div className="homepage__lasttrainingscontainer__container__element">
                     <div className="homepage__lasttrainingscontainer__container__element__top">
                         <div className="homepage__lasttrainingscontainer__container__element__top-title">Wytrzymałość</div>
