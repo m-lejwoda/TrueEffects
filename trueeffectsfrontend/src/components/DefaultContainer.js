@@ -6,7 +6,7 @@ import Training from './Training';
 import Schedule from './Schedule';
 import Homepage from './Homepage';
 import {connect} from 'react-redux';
-import {getMeasurements,postTraining,getTrainings,getGoals} from '../redux/actions/trainingActions';
+import {getMeasurements,postTraining,getTrainings,getGoals,getExercises} from '../redux/actions/trainingActions';
 //import MeasurementsNotification from './MeasurementsNotification';
 import DisplayMeasurements from './DisplayMeasurements'
 import AddMeasurements from './AddMeasurements';
@@ -14,16 +14,23 @@ import CreateTraining from './CreateTraining';
 import '../sass/defaultcontainer.scss';
 import { BoxLoading } from 'react-loadingg';
 import AddMeasurementsSummary from './AddMeasurementsSummary';
+import { useHistory } from "react-router-dom";
 const DefaultContainer = (props) => {
   useEffect(()=>{
-    console.log("Homepage")
+    console.log(window.localStorage.getItem('token'))
+    // if(window.localStorage.getItem('token') === null){
+    //   props.history.push('/login')
+    // }
+    console.log("Default Container")
     props.getMeasurements();
     props.getTrainings();
     props.getGoals();
+    props.getExercises();
   },[])
+  
 return(
     <div className="containerdefault">
-      {props.loadedtrainings && props.loadedgoals && props.loadedmeasurements ?  <>
+      {props.loadedtrainings && props.loadedgoals && props.loadedmeasurements && props.loadedexercises ?  <>
       <Navbar />
       <Navbar2 />
       <Route exact path="/" component={Homepage}/>
@@ -33,7 +40,6 @@ return(
       <Route path="/displaymeasurements" component={DisplayMeasurements}/>
       <Route path="/createtraining" component={CreateTraining}/>
       <Route path="/measurementsummary" component={AddMeasurementsSummary} />
-
       </>
       : <BoxLoading />}
     </div>  
@@ -43,7 +49,8 @@ return(
       
       loadedtrainings: state.training.loadedtrainings,
       loadedmeasurements: state.training.loadedmeasurements,
-      loadedgoals: state.training.loadedgoals
+      loadedgoals: state.training.loadedgoals,
+      loadedexercises: state.training.loadedexercises
   }
 }
-export default connect(mapStateToProps,{getMeasurements,getTrainings,getGoals})(DefaultContainer);   
+export default connect(mapStateToProps,{getMeasurements,getTrainings,getGoals,getExercises})(DefaultContainer);   

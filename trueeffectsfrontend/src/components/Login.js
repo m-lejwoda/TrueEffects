@@ -19,7 +19,6 @@ const useStyles = makeStyles((theme) => ({
             fontWeight: '700'
             
         }
-        
       },
     },
   }));
@@ -31,28 +30,26 @@ const Login = (props) => {
     const handleMovetoBack = () => {
         props.history.goBack()
     }
-    console.log(props)
     const [login,setLogin] = useState("")
     const [password,setPassword] = useState("")
     const classes = useStyles();
-    const handleLogin = (e) =>{
+    const  handleLogin = async (e) =>{
         e.preventDefault()
         let data= {
             "username": login,
             "password": password
         }
-        props.postLogin(data)
+        await props.postLogin(data)        
+    }
+    if (props.token !== ''){
+        props.history.push('/')
     }
     
-    if(props.token !== '' ){
-        props.history.push("/");
-    }
     return (
         
         <div className="login">
             <AuthenticateLogo />
-            <div className="login__secondcontainer">
-                
+            <div className="login__secondcontainer">    
             <div className="login__secondcontainer__top">
                 <div className="login__secondcontainer__top__back" onClick={handleMovetoBack}>
                     <div className="login__secondcontainer__top__back-icon"><FontAwesomeIcon icon={faArrowLeft} /></div>

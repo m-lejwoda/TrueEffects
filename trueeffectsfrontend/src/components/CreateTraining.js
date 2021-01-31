@@ -5,8 +5,9 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faArrowRight} from '@fortawesome/fontawesome-free-solid';
 import DatePicker,{registerLocale} from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import {connect} from 'react-redux';
 import pl from "date-fns/locale/pl";
-const CreateTraining = () => {
+const CreateTraining = (props) => {
     registerLocale('pl',pl)
     const [startDate, setStartDate] = useState(new Date());
     const [activediv , setActivediv] = useState(null)
@@ -74,9 +75,7 @@ const CreateTraining = () => {
                     </div>
                     <div className='createtraining__containers__first-input'>Wyszukaj ćwiczenie</div>
                     <div className="createtraining__containers__first__exercises">
-                        <div className="createtraining__containers__first__exercises__element " onClick={handleClickExercise}>Pompki zwykłe</div>
-                        <div className="createtraining__containers__first__exercises__element" onClick={handleClickExercise}>Pompki Diamentowe</div>
-                        <div className="createtraining__containers__first__exercises__element" onClick={handleClickExercise}>Podciąganie</div>
+                        {props.exercises.map((element)=><div className="createtraining__containers__first__exercises__element " onClick={handleClickExercise}>{element.name}</div>)}
                     </div>
                     <div className="createtraining__containers__first__trainingdata">
                         <div className="createtraining__containers__first__trainingdata__series">Podaj liczbę serii danego ćwiczenia *<span><input placeholder={series}  onChange={(e)=>setSeries(parseInt(e.target.value))}/></span></div>
@@ -111,7 +110,7 @@ const CreateTraining = () => {
                                     <th>Powtórzenia</th>
                                     
                                 </tr>
-                                <tr>
+                                {/* <tr>
                                     <td>Pompki Diamentowe</td>
                                     <td><span><input placeholder="12"/></span></td>
                                     
@@ -128,7 +127,7 @@ const CreateTraining = () => {
                                 <tr>
                                     <td>Podciąganie</td>
                                     <td><span><input placeholder="12"/></span></td>
-                                </tr>
+                                </tr> */}
                                 {items.length > 0 ? items.map((item)=>{
                                     console.log(item)
                                     return(
@@ -151,5 +150,13 @@ const CreateTraining = () => {
         </div>
     );
 };
-
-export default CreateTraining;
+const mapStateToProps = (state) => {
+    return{
+        trainings: state.training.trainings.data,
+        loadedtrainings: state.training.loadedtrainings,
+        measurements: state.training.measurements.data,
+        goals: state.training.goals.data,
+        exercises: state.training.exercises.data
+    }
+}
+export default connect(mapStateToProps)(CreateTraining); 

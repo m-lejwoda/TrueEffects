@@ -7,7 +7,11 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import { makeStyles } from '@material-ui/core/styles';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faDumbbell } from '@fortawesome/fontawesome-free-solid';
+import {connect} from 'react-redux';
+import {postLogout} from '../redux/actions/trainingActions';
+import { useHistory } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
     root: {
       flexGrow: 1,
@@ -24,8 +28,16 @@ const useStyles = makeStyles((theme) => ({
       background: '#db3d44',
     },
   }));
-const Navbar = () => {
-    
+const Navbar = (props) => {
+  const history = useHistory()
+    const handleLogout = () =>{
+      props.postLogout()
+      // window.localStorage.removeItem('token')
+      // window.localStorage.removeItem('username')
+      console.log("po usunięciu tokenów")
+      // await history.push('/login')
+      
+    }
       const classes = useStyles();
       return (
       <div className={classes.root}>
@@ -34,13 +46,22 @@ const Navbar = () => {
                 <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
                 </IconButton>
                 <Typography variant="h6" className={classes.title}>
-                  News
+                  <FontAwesomeIcon icon={faDumbbell} />TrueEffects
                 </Typography>
-                <Button color="inherit">Login</Button>
+              
+                {window.localStorage.getItem('username') !== undefined ?<> <p>Witaj {window.localStorage.getItem('username')}<Button onClick={handleLogout} color="inherit">Wyloguj się</Button></p></>:<><Button color="inherit">Login</Button></>}
+                
               </Toolbar>
             </AppBar>
           </div>
     );
 };
-
-export default Navbar;
+const mapStateToProps = (state) => {
+  return{
+      trainings: state.training.trainings.data,
+      loadedtrainings: state.training.loadedtrainings,
+      measurements: state.training.measurements.data,
+      goals: state.training.goals.data
+  }
+}
+export default connect(mapStateToProps,{postLogout})(Navbar); 

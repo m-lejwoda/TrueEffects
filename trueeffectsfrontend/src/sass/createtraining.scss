@@ -38,6 +38,9 @@ $thirdcolor: #db3d44;
                     height:2px;
 
                 }
+                input:focus{
+                    outline: none;
+                }
                 input{
                     width:40px;
                     background-color: $secondcolor;
@@ -118,6 +121,8 @@ $thirdcolor: #db3d44;
             &__exercises{
                 padding-top:1rem;
                 font-size: 1.6rem;
+                overflow-y: scroll;
+                height:211px;
                 &__element{
                     border-bottom: 2px solid white;
                     padding-top:1rem;
@@ -184,6 +189,10 @@ $thirdcolor: #db3d44;
                     text-align: center;
                     width:300px;
                 }
+                input:focus{
+                    outline: none;
+                }  
+                
             }
             &-date{
                 display:flex;
@@ -206,6 +215,7 @@ $thirdcolor: #db3d44;
                     text-align: center;
                     width:300px;
                 }
+                
             }
             &-description{
                 display:flex;
@@ -228,6 +238,9 @@ $thirdcolor: #db3d44;
                     text-align: center;
                     width:500px;
                 }
+                input:focus{
+                    outline: none;
+                }  
 
             }
             &__elements{
@@ -240,6 +253,8 @@ $thirdcolor: #db3d44;
                     font-weight: 700;
                 }
                 &__element{
+                    height:512px;
+                    overflow-y:scroll;
                     padding-top:1rem;
                     display:flex;
                     font-size: 1.4rem;
@@ -270,8 +285,10 @@ $thirdcolor: #db3d44;
                                 font-size:1rem;
                                 font-weight:600;
                                 width:40px;
-
                             }
+                            input:focus{
+                                outline: none;
+                            }    
                         }
                     }
                 }

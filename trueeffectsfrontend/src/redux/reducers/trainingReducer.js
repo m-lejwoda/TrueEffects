@@ -1,16 +1,20 @@
-import {GET_MEASUREMENTS,GET_MEASUREMENTS_SUCCESS,POST_TRAINING,GET_TRAININGS,GET_TRAININGS_FAILURE,GET_TRAININGS_SUCCESS,
-    GET_GOALS,GET_GOALS_SUCCESS,POST_MEASUREMENT,POST_MEASUREMENT_SUCCESS} from '../actions/types';
+import {POST_LOGOUT,GET_MEASUREMENTS,GET_MEASUREMENTS_SUCCESS,POST_TRAINING,GET_TRAININGS,GET_TRAININGS_FAILURE,GET_TRAININGS_SUCCESS,
+    GET_GOALS,GET_GOALS_SUCCESS,POST_MEASUREMENT,POST_MEASUREMENT_SUCCESS,GET_EXERCISES,GET_EXERCISES_SUCCESS} from '../actions/types';
 
 const initialState = {
     measurements: [],
     trainings: [],
     goals:[],
+    defaultexercises:[],
     loadingtrainings: false,
     loadedtrainings: false,
     loadingmeasurements: false,
     loadedmeasurements: false,
     loadinggoals: false,
     loadedgoals:false,
+    loadingexercises: false,
+    loadedexercises:false
+    
 };
 export default function trainreducer(state=initialState,action){
     switch(action.type){
@@ -26,6 +30,17 @@ export default function trainreducer(state=initialState,action){
                 loadingmeasurements:false,
                 loadedmeasurements:true
             }
+        case GET_EXERCISES:
+            return{
+                ...state,
+                loadingexercises:true,
+            }
+            case GET_EXERCISES_SUCCESS:
+                return{
+                    ...state,
+                    exercises: action.payload,
+                    loadedexercises: true,
+                }
         case GET_TRAININGS:
             return{
                 ...state,
@@ -60,6 +75,17 @@ export default function trainreducer(state=initialState,action){
             return{
                 ...state
             }
+        case POST_LOGOUT:
+            return{
+                ...state,
+                measurements: [],
+                trainings: [],
+                goals:[],
+                loadedtrainings: false,
+                loadedgoals: false,
+                loadedmeasurements: false
+            }
+        
         default: 
             return state;
     }

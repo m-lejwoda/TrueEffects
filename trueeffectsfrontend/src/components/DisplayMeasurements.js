@@ -1,51 +1,25 @@
 import React from 'react';
-
-const DisplayMeasurements = () => {
+import '../sass/displaymeasurements.scss';
+import {connect} from 'react-redux';
+import DisplayMeasurementsItem from './DisplayMeasurementsItem';
+const DisplayMeasurements = (props) => {
+    let reverse = props.measurements.slice(8).reverse()
     return (
         <div className="displaymeasurements">
             <div className="displaymeasurements-title">Twoje ostatnie 9 pomiarów</div>
             <div className="displaymeasurements__containers">
-                <div className="displaymeasurements__containers__container">
-                    <div className="displaymeasurements__containers__container-data"></div>
-                    <div className="displaymeasurements__containers__container__elements">
-                        <div className="displaymeasurements__containers__container__elements__element">
-                            <div className="displaymeasurements__containers__container__elements__element-name">Waga</div>
-                            <div className="displaymeasurements__containers__container__elements__element-result"></div>
-                        </div>
-                        <div className="displaymeasurements__containers__container__elements__element">
-                            <div className="displaymeasurements__containers__container__elements__element-name">Wzrost</div>
-                            <div className="displaymeasurements__containers__container__elements__element-result"></div>
-                        </div>
-                        <div className="displaymeasurements__containers__container__elements__element">
-                            <div className="displaymeasurements__containers__container__elements__element-name">Prawy biceps</div>
-                            <div className="displaymeasurements__containers__container__elements__element-result"></div>
-                        </div>
-                        <div className="displaymeasurements__containers__container__elements__element">
-                            <div className="displaymeasurements__containers__container__elements__element-name">Lewy biceps</div>
-                            <div className="displaymeasurements__containers__container__elements__element-result"></div>
-                        </div>
-                        <div className="displaymeasurements__containers__container__elements__element">
-                            <div className="displaymeasurements__containers__container__elements__element-name">Prawe przedramię</div>
-                            <div className="displaymeasurements__containers__container__elements__element-result"></div>
-                        </div>
-                        <div className="displaymeasurements__containers__container__elements__element">
-                            <div className="displaymeasurements__containers__container__elements__element-name">Lewe przedramię</div>
-                            <div className="displaymeasurements__containers__container__elements__element-result"></div>
-                        </div>
-                        <div className="displaymeasurements__containers__container__elements__element">
-                            <div className="displaymeasurements__containers__container__elements__element-name">Prawe udo</div>
-                            <div className="displaymeasurements__containers__container__elements__element-result"></div>
-                        </div>
-                        <div className="displaymeasurements__containers__container__elements__element">
-                            <div className="displaymeasurements__containers__container__elements__element-name">Lewe udo</div>
-                            <div className="displaymeasurements__containers__container__elements__element-result"></div>
-                        </div>
-                    </div>
-                </div>
-                
+                {reverse.map((measurement)=><DisplayMeasurementsItem measurement={measurement}/>)}
             </div>
         </div>
     );
 };
 
-export default DisplayMeasurements;
+const mapStateToProps = (state) => {
+    return{
+        trainings: state.training.trainings.data,
+        loadedtrainings: state.training.loadedtrainings,
+        measurements: state.training.measurements.data,
+        goals: state.training.goals.data
+    }
+}
+export default connect(mapStateToProps)(DisplayMeasurements); 

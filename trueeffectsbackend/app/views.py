@@ -15,7 +15,19 @@ from rest_framework import status
 from rest_framework import permissions
 from rest_framework.generics import CreateAPIView
 from rest_framework import viewsets
+from rest_framework.authtoken.views import ObtainAuthToken
+class CustomAuthToken(ObtainAuthToken):
 
+    def post(self, request, *args, **kwargs):
+        serializer = self.serializer_class(data=request.data,context={'request': request})
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data['user']
+        token, created = Token.objects.get_or_create(user=user)
+        return Response({
+            'token': token.key,
+            'username': user.username,
+            
+        })
 
 class Logout(APIView):
     def get(self, request, format=None):

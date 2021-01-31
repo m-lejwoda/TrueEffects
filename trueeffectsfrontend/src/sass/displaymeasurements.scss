@@ -1,0 +1,45 @@
+$pink: #1D3557;
+$pink2:#457B9D;
+.displaymeasurements{
+    margin-left:4px;
+    width:100%;
+    height: 100%;
+    background-color:$pink;
+    &-title{
+        padding-top:1rem;
+        display:flex;
+        justify-content: center;
+        color:white;
+        font-size:2rem;
+    }
+    &__containers{
+        color:white;
+        font-size:1.2rem;
+        display:flex;
+        flex-wrap:wrap;
+        width:100%;
+        height: 100%;
+        justify-content: space-around;
+        &__container{
+            margin-top: 2rem;
+            padding-top:1rem;
+            padding-left:1rem;
+            padding-right:1rem;
+            background-color:$pink2;
+            width:30%;
+            height: 25%;
+            &__elements{
+                &-date{
+                    display:flex;
+                    justify-content: center;
+                    color:red;
+                }
+                &__element{
+                    display:flex;
+                    flex-wrap:nowrap;
+                    justify-content: space-between;
+                }
+            }
+        }
+    }
+}

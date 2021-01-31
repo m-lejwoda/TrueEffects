@@ -24,7 +24,7 @@ const Homepage = (props) => {
                 <div className="homepage__goalscontainer-title">Twoje cele do zrealizowania</div>
                 <div className="homepage__goalscontainer-add"><button onClick={click}>+ Dodaj nowe cele</button></div>
                 <div className="homepage__goalscontainer__elements">
-                {props.goals.length>0 ?props.goals.map((goal)=><HomepageGoalItem goal={goal}/>): <p>Nie masz aktualnie żadnych celów do zrealizowania</p>}
+                {props.goals.length>0 ? props.goals.map((goal)=><HomepageGoalItem goal={goal}/>): <p>Nie masz aktualnie żadnych celów do zrealizowania</p>}
                 {/* <div className="homepage__goalscontainer__elements__element">
                     <div className="homepage__goalscontainer__elements__element-name">Podciąganie +20 kg * 5</div>
                     <div className="homepage__goalscontainer__elements__element__time">
