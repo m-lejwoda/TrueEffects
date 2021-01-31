@@ -37,14 +37,15 @@ const CreateTraining = (props) => {
           }]);
     }
     const clearState = () =>{
+        console.log("clear state")
         setSeries(1)
-        setAssumedReps(1)
-        setRest(60)
-        setWeight(0)
-        setConcentricPhase(0)
-        setPauseConcentricPhase(0)
-        setEccentricPhase(0)
-        setPauseEccentricPhase(0)
+        // setAssumedReps(1)
+        // setRest(60)
+        // setWeight(0)
+        // setConcentricPhase(0)
+        // setPauseConcentricPhase(0)
+        // setEccentricPhase(0)
+        // setPauseEccentricPhase(0)
     }
     const handleClickExercise = (e) =>{
         if(activediv !== null){
@@ -54,8 +55,10 @@ const CreateTraining = (props) => {
         setExercise(e.target.textContent)
         e.target.style.background = '#db3d44'
     }
-    const handleClickSelect = () =>{
+    const handleClickSelect = (e) =>{
+        
         console.log("handleClickSelect")
+        console.log(series)
         for(let i=0;i<series;i++){
             addElementtoItems()
         }
@@ -78,7 +81,7 @@ const CreateTraining = (props) => {
                         {props.exercises.map((element)=><div className="createtraining__containers__first__exercises__element " onClick={handleClickExercise}>{element.name}</div>)}
                     </div>
                     <div className="createtraining__containers__first__trainingdata">
-                        <div className="createtraining__containers__first__trainingdata__series">Podaj liczbę serii danego ćwiczenia *<span><input placeholder={series}  onChange={(e)=>setSeries(parseInt(e.target.value))}/></span></div>
+                        <div className="createtraining__containers__first__trainingdata__series">Podaj liczbę serii danego ćwiczenia *<span><input placeholder={series} value={series} onChange={(e)=>setSeries(parseInt(e.target.value))}/></span></div>
                         <div className="createtraining__containers__first__trainingdata__singleseries">Podaj liczbę powtórzeń danego ćwiczenia *<span><input placeholder={assumedreps} onChange={(e)=>setAssumedReps(parseInt(e.target.value))} /></span></div>
                         <div className="createtraining__containers__first__trainingdata__rest">Podaj czas odpoczynku w (s) *<span><input placeholder={rest} onChange={(e)=>setRest(parseInt(e.target.value))}/></span></div>
                         <div className="createtraining__containers__first__trainingdata__weight">Podaj ciężar w kg(domyślnie 0) <span><input placeholder={weight} onChange={(e)=>setWeight(parseInt(e.target.value))}/></span></div>
