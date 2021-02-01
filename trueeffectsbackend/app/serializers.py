@@ -87,13 +87,16 @@ class SingleSeriesSerializer(serializers.ModelSerializer):
         model = SingleSeries
         fields = '__all__'
     def create(self, validated_data):
+        print("validated data")
         print(validated_data)
+        print("koniec validated data")
         reps_data = validated_data.pop('reps')
+        print("reps_data")
         print(reps_data)
         singleseries = SingleSeries.objects.create(**validated_data)
         for rep_data in reps_data:
-            reps,created = Reps.objects.get_or_create(**rep_data)
-            print(reps)
+            # reps,created = Reps.objects.get_or_create(**rep_data)
+            reps = Reps.objects.create(**rep_data)
             singleseries.reps.add(reps)
         return singleseries
 
@@ -103,13 +106,28 @@ class TrainingSerializer(serializers.ModelSerializer):
         model = Training
         fields = '__all__'
     def create(self,validated_data):
+        print(validated_data)
         singleseries_data = validated_data.pop('training')
+        training = Training.objects.create(**validated_data)
         for singleseries_dat in singleseries_data:
+            print("pierwsza singleseria")
             print(singleseries_dat)
             reps_data = singleseries_dat.pop('reps')
-            for repeats in reps_data:
-                reps = Reps.objects.create(**repeats)
-                print(reps)
+            print("reps_data")
+            print(reps_data)
+            singleseries = SingleSeries.objects.create(**singleseries_dat)
+            for rep_data in reps_data:
+                # reps,created = Reps.objects.get_or_create(**rep_data)
+                reps = Reps.objects.create(**rep_data)
+                singleseries.reps.add(reps)
+            training.training.add(singleseries)
+        return training
+
+            # reps_data = singleseries_dat.pop('reps')
+            # for repeats in reps_data:
+            #     reps = Reps.objects.create(**repeats)
+            #     print(reps)
+                
         #return training
         
         

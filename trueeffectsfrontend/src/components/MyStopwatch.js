@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState,useRef,useEffect} from 'react';
 import { useStopwatch } from 'react-timer-hook';
 
 const MyStopwatch=(props) => {
@@ -11,7 +11,7 @@ const MyStopwatch=(props) => {
     start,
     pause,
     reset,
-  } = useStopwatch({ autoStart: true });
+  } = useStopwatch({ autoStart: false });
   
   const handleStart = () =>{
       console.log("handle start")
@@ -24,8 +24,6 @@ if (props.stopstoper === true){
 console.log(props.endbuttonRef)
   return (
     <div style={{textAlign: 'center'}}>
-      {/* <h1>react-timer-hook</h1>
-      <p>Stopwatch Demo</p> */}
       <div style={{fontSize: '100px'}}>
         <span>{hours<10 && 0}{hours}</span>:<span>{minutes<10 && 0}{minutes}</span>:<span>{seconds<10 && 0}{seconds}</span>
       </div>

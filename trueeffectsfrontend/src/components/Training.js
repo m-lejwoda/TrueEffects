@@ -1,4 +1,4 @@
-import React,{useState,useRef} from 'react';
+import React,{useState,useRef,useEffect} from 'react';
 import ReactStopwatch from 'react-stopwatch';
 import MyStopwatch from './MyStopwatch';
 import '../sass/training.scss';
@@ -81,6 +81,7 @@ const Training = (props) => {
 
     const goNext = () =>{
       let value = parseInt(inputRef.current.value)
+      let placeholder = parseInt(inputRef.current.placeholder)
       if(Number.isInteger(value)){
       inputRef.current.value = ''
       if(singleSeries+1 < training.training[series].reps.length){
@@ -94,8 +95,21 @@ const Training = (props) => {
       setSingleSeries(0)
       }
     }}
+    else if(Number.isInteger(placeholder)){
+      inputRef.current.value = ''
+      if(singleSeries+1 < training.training[series].reps.length){
+      setSingleSeries(singleSeries+1)
+    }else{
+      if(series+1>=training.training.length){
+        setEndTraining(true)
+      }
+      else{
+      setSeries(series+1)
+      setSingleSeries(0)
+      }
+    }}
     else{
-      console.log("błąd")
+      alert("Niepoprawne dane");
     }
   }
   const handleStoper = () => {
@@ -166,7 +180,7 @@ const Training = (props) => {
                     </div>
                     <div className="training__bottom__phase-title2">Ile powtórzeń wykonałeś w serii</div>
                     <div className="training__bottom__phase__reps">
-                        <div className="training__bottom__phase__reps-actualreps"><input ref={inputRef} onChange={handleInput} id="actualreps" min="0" max="10000" /></div>
+                        <div className="training__bottom__phase__reps-actualreps"><input ref={inputRef} placeholder={training.training[`${series}`].reps[`${singleSeries}`]['reps']} onChange={handleInput} id="actualreps" min="0" max="10000" /></div>
                         <div className="training__bottom__phase__reps-/">/</div>
                         <div className="training__bottom__phase__reps-assumedreps">{training.training[`${series}`].reps[`${singleSeries}`]['reps']}</div>
                     </div>
