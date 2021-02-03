@@ -3,7 +3,7 @@ import '../sass/navbar.scss';
 import { useHistory } from "react-router-dom";
 import SideNav, {NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome,faClipboardList,faWeight,faGavel } from '@fortawesome/fontawesome-free-solid';
+import { faHome,faClipboardList,faWeight,faGavel,faClock } from '@fortawesome/fontawesome-free-solid';
 // import { makeStyles } from '@material-ui/core/styles';
 const Navbar2 = (props) => {
     const history = useHistory()
@@ -21,6 +21,9 @@ const Navbar2 = (props) => {
     }
     const handleMovetoAllMeasurements = () =>{
         history.push("/displaymeasurements");
+    }
+    const handleMovetoAddGoals = () =>{
+        history.push("/addgoals");
     }
     return (
         <SideNav>
@@ -64,6 +67,14 @@ const Navbar2 = (props) => {
                         </NavIcon>
                         <NavText>
                             Wyświetl wszystkie pomiary
+                        </NavText>
+                    </NavItem>
+                    <NavItem onClick={handleMovetoAddGoals} eventKey="goal">
+                        <NavIcon>
+                          <FontAwesomeIcon icon={faClock} />
+                        </NavIcon>
+                        <NavText>
+                            Dodaj Cel do zrealizowania
                         </NavText>
                     </NavItem>
                 </SideNav.Nav>

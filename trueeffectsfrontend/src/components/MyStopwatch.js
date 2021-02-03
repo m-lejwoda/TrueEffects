@@ -21,7 +21,13 @@ const MyStopwatch=(props) => {
 if (props.stopstoper === true){
     pause()
 }
-console.log(props.endbuttonRef)
+if(props.endtraining === true){
+  console.log("koniec")
+  props.setseconds(seconds)
+  props.setminutes(minutes)
+  props.sethours(hours)
+}
+// console.log(props.endbuttonRef)
   return (
     <div style={{textAlign: 'center'}}>
       <div style={{fontSize: '100px'}}>

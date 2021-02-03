@@ -24,10 +24,6 @@ export class Schedule extends React.Component {
       console.log("select")
     }
     handleSelectEvent = (e) =>{
-      console.log("cały e")
-      console.log(e)
-      console.log("kliknąłeś na event")
-      console.log(e.data)
       this.setState({
         modalopen:true,
         training:e.data,

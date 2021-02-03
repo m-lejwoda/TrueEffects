@@ -77,32 +77,10 @@ const CreateTraining = (props) => {
             description: training_description.current.value,
             date: fullday,
             user: 1,
-            // trainingv2: [],
             training: []
-                // {
-                // user: 1,
-                // weight: 0,
-                // pause_after_concentric_phase:34,
-                // pause_after_eccentric_phase:23,
-                // rest:23,
-                // reps: [{
-                //     reps: 234
-                // },
-                // {
-                //     reps: 233
-                // },
-                // {
-                //     reps: 232
-                // }
-                // ]
-                // }]
         }
         
         let allobjects = []
-        
-        console.log(training_date.current.input.value)
-        console.log(array)
-        console.log(items)
         for(let i=0;i<items.length;i++){
             let objects = {reps: []}
             objects["user"] = 1
@@ -118,8 +96,6 @@ const CreateTraining = (props) => {
             allobjects.push(objects)
 
         }
-        console.log("wynikowy array")
-        console.log(array)
         props.postTraining(array)
         
     }

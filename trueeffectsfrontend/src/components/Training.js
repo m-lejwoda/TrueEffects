@@ -8,7 +8,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import Checkbox from '@material-ui/core/Checkbox';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft,faArrowRight } from '@fortawesome/fontawesome-free-solid';
+
 import ReactTimerStopwatch from 'react-stopwatch-timer';
+import SelectInput from '@material-ui/core/Select/SelectInput';
 const useStyles = makeStyles({
   root: {
     '&:hover': {
@@ -74,11 +76,14 @@ const Training = (props) => {
     const [input,setInput] = useState('')
     const [startStoper,setStartStoper] = useState(false)
     const [stopStoper,setStopStoper] = useState(false)
+    const [seconds,setSeconds] = useState(0)
+    const [minutes,setMinutes] = useState(0)
+    const [hours,setHours] = useState(0)
+    const [endtrainin,setEndTrainin] = useState(false)
     const inputRef = useRef()
     const buttonRef = useRef()
     const endbuttonRef = useRef()
     const fromTime = new Date(0, 0, 0, 0, 0, 0, 0);
-
     const goNext = () =>{
       let value = parseInt(inputRef.current.value)
       let placeholder = parseInt(inputRef.current.placeholder)
@@ -112,6 +117,7 @@ const Training = (props) => {
       alert("Niepoprawne dane");
     }
   }
+  
   const handleStoper = () => {
     console.log("handle stoper")
     setStartStoper(!startStoper)
@@ -124,10 +130,35 @@ const Training = (props) => {
     console.log("handle pause")
     pause()
 }
+  const displayAlert = () => {
+    let sec 
+    let min
+    let hour
+    if (seconds<10){
+      sec = "0"+ seconds 
+    }else{
+      sec = seconds
+    }
+    if (minutes<10){
+      min = "0"+ minutes 
+    }else{
+      min = minutes
+    }
+    if (hours<10){
+      hour = "0"+ hours 
+    }else{
+      hour = hours
+    }
+    alert("Trening zakończony"+ hour +":" + min + ":" + sec)
+    
+  }
   const handleEndTraining = ()=>{
+    setEndTrainin(true)
     setStopStoper(true)
   }
-  console.log(startStoper)
+  if (seconds !== 0 || minutes !== 0 ||  hours !== 0){
+    displayAlert()
+ }
     return (
         <div className="training">
             <div className="training__top">
@@ -148,7 +179,7 @@ const Training = (props) => {
                       <img src={logo} alt="logo"  />
                     </div>
                     <div className="training__middle__logotime-time">
-                    <MyStopwatch endbuttonref={endbuttonRef} stopstoper={stopStoper} setStopStoper={setStopStoper}/>
+                    <MyStopwatch setseconds={setSeconds} setminutes={setMinutes} sethours={setHours} endtraining={endtrainin} endbuttonref={endbuttonRef} stopstoper={stopStoper} setStopStoper={setStopStoper}/>
                   </div>
                 </div>
                 <div className="training__middle__series">
@@ -165,7 +196,7 @@ const Training = (props) => {
             </div>
             <div className="training__bottom">
                 <div className="training__bottom__leftbutton">
-                    <button id="endtraining" ref={endbuttonRef} onClick={()=>setStopStoper(true)}>Zakończ trening X</button>
+                    <button id="endtraining" ref={endbuttonRef} onClick={handleEndTraining}>Zakończ trening X</button>
                 </div>
                 <div className="training__bottom__phase">
                     <div className="training__bottom__phase-title">Fazy(w sekundach)</div>

@@ -21,10 +21,6 @@ const AddGoals = (props) => {
             "date": actualDate,
             "description": inputdescription.current.value
         }
-        // let data = {
-        //     "date": "1996-01-01",
-        //     "description": "opis"
-        // }
         await props.postGoals(data)
         await props.getGoals()
         
