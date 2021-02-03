@@ -189,7 +189,6 @@ def displaySingleSeries(request):
 
 @api_view(['POST'])
 def createSingleSeries(request):
-    print(request.data)
     serializer = SingleSeriesSerializer(data = request.data)
     if serializer.is_valid():
         serializer.save()
@@ -203,6 +202,21 @@ def displayDescriptionGoals(request):
     description_data = DescriptionGoals.objects.filter(user=user)
     serializer = DescriptionGoalsSerializer(description_data,many=True)
     return Response(serializer.data)
+
+@api_view(['POST'])
+def createDescriptionGoals(request):
+    data = request.data
+    data['user'] = request.user.id
+    # request.data._mutable = True
+    request.data['user']= request.user.id
+    # request.data._mutable = False
+    serializer = DescriptionGoalsSerializer(data = data)
+    if serializer.is_valid():
+        serializer.save()
+    else:
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    return Response(serializer.data)
+
 #createTraining
 #displayTraining
 #createOwnExercise

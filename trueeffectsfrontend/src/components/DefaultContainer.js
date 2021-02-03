@@ -5,6 +5,7 @@ import Navbar2 from './Navbar2';
 import Training from './Training';
 import Schedule from './Schedule';
 import Homepage from './Homepage';
+import AddGoals from './AddGoals';
 import {connect} from 'react-redux';
 import {getMeasurements,postTraining,getTrainings,getGoals,getExercises} from '../redux/actions/trainingActions';
 //import MeasurementsNotification from './MeasurementsNotification';
@@ -40,6 +41,7 @@ return(
       <Route path="/displaymeasurements" component={DisplayMeasurements}/>
       <Route path="/createtraining" component={CreateTraining}/>
       <Route path="/measurementsummary" component={AddMeasurementsSummary} />
+      <Route path="/addgoals" component={AddGoals} />
       </>
       : <BoxLoading />}
     </div>  

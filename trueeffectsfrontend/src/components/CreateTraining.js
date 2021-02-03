@@ -99,7 +99,7 @@ const CreateTraining = (props) => {
         }
         
         let allobjects = []
-        props.postTraining(array)
+        
         console.log(training_date.current.input.value)
         console.log(array)
         console.log(items)
@@ -120,7 +120,7 @@ const CreateTraining = (props) => {
         }
         console.log("wynikowy array")
         console.log(array)
-        
+        props.postTraining(array)
         
     }
     return (

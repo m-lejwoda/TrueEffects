@@ -58,6 +58,18 @@ export const getGoals = () => dispatch =>{
         payload: res,
     }));
 }
+export const postGoals = (data) => dispatch => {
+    let token = window.localStorage.getItem('token')
+    axios.defaults.headers.common['Authorization'] = `Token ${token}`
+    axios.post('http://127.0.0.1:8000/api/create_description_goals/',data)
+    .then(res=>{
+        console.log(res.data)
+    })
+    .catch(err=>{
+        console.log(err.response)
+    })
+    
+}
 export const postMeasurement = (data) => dispatch =>{
     let token = window.localStorage.getItem('token')
     dispatch({type: POST_MEASUREMENT})

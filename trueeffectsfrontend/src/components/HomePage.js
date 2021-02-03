@@ -46,79 +46,12 @@ const Homepage = (props) => {
             <div className="homepage__measurementcontainer">
             <HomepageMeasurementItem measurement={props.measurements}/>
             </div>
-            {/* <div className="homepage__measurementcontainer">
-                <div className="homepage__measurementcontainer-title">Twoje ostatnie pomiary</div>
-                <div className="homepage__measurementcontainer-data">Pomiary na dzień 24.12.2020</div>
-                <div className="homepage__measurementcontainer-add"><button>+ Dodaj nowe pomiary</button></div>
-                <div className="homepage__measurementcontainer__container">
-                    <div className="homepage__measurementcontainer__container__element">
-                        <div className="homepage__measurementcontainer__container__element-name">Prawy biceps</div>
-                        <div className="homepage__measurementcontainer__container__element-result">10 cm</div>
-                    </div>
-                    <div className="homepage__measurementcontainer__container__element">
-                        <div className="homepage__measurementcontainer__container__element-name">Lewy biceps</div>
-                        <div className="homepage__measurementcontainer__container__element-result">10 cm</div>
-                    </div>
-                    <div className="homepage__measurementcontainer__container__element">
-                        <div className="homepage__measurementcontainer__container__element-name">Prawe przedramię</div>
-                        <div className="homepage__measurementcontainer__container__element-result">10 cm</div>
-                    </div>
-                    <div className="homepage__measurementcontainer__container__element">
-                        <div className="homepage__measurementcontainer__container__element-name">Lewe przedramię</div>
-                        <div className="homepage__measurementcontainer__container__element-result">10 cm</div>
-                    </div>
-                    <div className="homepage__measurementcontainer__container__element">
-                        <div className="homepage__measurementcontainer__container__element-name">Udo prawej nogi</div>
-                        <div className="homepage__measurementcontainer__container__element-result">50 cm</div>
-                    </div>
-                    <div className="homepage__measurementcontainer__container__element">
-                        <div className="homepage__measurementcontainer__container__element-name">Udo lewej nogi</div>
-                        <div className="homepage__measurementcontainer__container__element-result">50 cm</div>
-                    </div>
-                    <div className="homepage__measurementcontainer__container__element">
-                        <div className="homepage__measurementcontainer__container__element-name">Waga</div>
-                        <div className="homepage__measurementcontainer__container__element-result">75kg</div>
-                    </div>
-                    <div className="homepage__measurementcontainer__container__element">
-                        <div className="homepage__measurementcontainer__container__element-name">Wzrost</div>
-                        <div className="homepage__measurementcontainer__container__element-result">180 cm</div>
-                    </div>
-                    <div className="homepage__measurementcontainer__container__element">
-                        <div className="homepage__measurementcontainer__container__element-name">Talia</div>
-                        <div className="homepage__measurementcontainer__container__element-result">85 cm</div>
-                    </div>
-                </div> 
-            </div> */}
             </div>
             <div className="homepage__lasttrainingscontainer">
                 <div className="homepage__lasttrainingscontainer-title">Ostatnie wykonane treningi</div>
                 <div className="homepage__lasttrainingscontainer-add"><button>+ Dodaj nowy trening</button></div>
                 <div className="homepage__lasttrainingscontainer__container">
                     {props.trainings.length>0 ? props.trainings.map((training)=> <HomepageTrainingItem allprops={props} training={training}/>): <p>Nie wykonałeś jeszcze żadnych treningów</p>}
-                    {/* <div className="homepage__lasttrainingscontainer__container__element">
-                    <div className="homepage__lasttrainingscontainer__container__element__top">
-                        <div className="homepage__lasttrainingscontainer__container__element__top-title">Wytrzymałość</div>
-                        <div className="homepage__lasttrainingscontainer__container__element__top-databutton">
-                        <div className="homepage__lasttrainingscontainer__container__element__top-data">24.12.2020</div>
-                        <div className="homepage__lasttrainingscontainer__container__element__top-button"><button>Powtórz trening</button></div>
-                        </div>
-                    </div>
-                    <div className="homepage__lasttrainingscontainer__container__element__bottom">
-                        Trening nastawiony na siłe +20 kg z elementami wytrzymałości
-                    </div>
-                    </div> */}
-                    {/* <div className="homepage__lasttrainingscontainer__container__element">
-                    <div className="homepage__lasttrainingscontainer__container__element__top">
-                        <div className="homepage__lasttrainingscontainer__container__element__top-title">Wytrzymałość</div>
-                        <div className="homepage__lasttrainingscontainer__container__element__top-databutton">
-                        <div className="homepage__lasttrainingscontainer__container__element__top-data">24.12.2020</div>
-                        <div className="homepage__lasttrainingscontainer__container__element__top-button"><button>Powtórz trening</button></div>
-                    </div>
-                    </div>
-                    <div className="homepage__lasttrainingscontainer__container__element__bottom">
-                        Trening nastawiony na siłe +20 kg z elementami wytrzymałości
-                    </div>
-                    </div> */}
                 </div>
             </div>
             </div>

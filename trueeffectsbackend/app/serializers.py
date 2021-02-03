@@ -87,12 +87,7 @@ class SingleSeriesSerializer(serializers.ModelSerializer):
         model = SingleSeries
         fields = '__all__'
     def create(self, validated_data):
-        print("validated data")
-        print(validated_data)
-        print("koniec validated data")
         reps_data = validated_data.pop('reps')
-        print("reps_data")
-        print(reps_data)
         singleseries = SingleSeries.objects.create(**validated_data)
         for rep_data in reps_data:
             # reps,created = Reps.objects.get_or_create(**rep_data)
@@ -116,44 +111,6 @@ class TrainingSerializer(serializers.ModelSerializer):
                 singleseries.reps.add(reps)
             training.training.add(singleseries)
         return training
-
-            # reps_data = singleseries_dat.pop('reps')
-            # for repeats in reps_data:
-            #     reps = Reps.objects.create(**repeats)
-            #     print(reps)
-                
-        #return training
-        
-        
-        
-        
-        
-        # print("validated_data")
-        # print(validated_data)
-        # training = Training.objects.create(**validated_data)
-        # trainings_data = validated_data.pop('training')
-        # singleseries = SingleSeries.objects.create()
-        # print("trening")
-        # print(trainings_data)
-        # print("koniec treningu")
-        # for training_data in trainings_data:
-        #     reps = training_data.pop('reps')
-        #     print("reps")
-        #     print(reps)
-            #training.training.add(train)
-            # for rep in reps:
-            #     repeats = Reps.objects.get_or_create(**rep)
-            #     print("repeats")
-            #     print(repeats)
-            #     print("reps")
-            #     print(rep)
-            # singleseries = SingleSeries.objects.create(reps = repeats)
-            # print(singleseries)
-            # print("wartosci")
-            # print(singleseries.values())
-            # training = Training.objects.create(training=singleseries **training_data)
-        # return training
-        
        
         
         
