@@ -75,6 +75,8 @@ $pink2:#457B9D;
         }
         &__elements{
             padding:1rem;
+            height:220px;
+            overflow-y:scroll;
             &__element{
                 margin-bottom:2rem;
                 &-name{
@@ -206,6 +208,8 @@ $pink2:#457B9D;
         &__container{
             display:flex;
             flex-direction: column;
+            overflow-y: scroll;
+            height: 520px;
             &__element{
                 padding-top:1rem;
                 width: 100%;

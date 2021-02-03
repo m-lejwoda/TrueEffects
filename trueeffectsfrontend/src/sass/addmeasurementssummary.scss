@@ -28,4 +28,18 @@ $thirdcolor: #db3d44;
             justify-content: space-between;
         }
     }
+    &__button{
+        margin-top:2rem;
+        button{
+            padding:0.5rem 3rem 0.5rem 3rem;
+            background-color:white;
+            color:$maincolor;
+            border-color:$maincolor;
+            border-width: medium;
+            font-weight: 600;
+        }
+        button:hover{
+            cursor:pointer;
+        }
+    }
 }

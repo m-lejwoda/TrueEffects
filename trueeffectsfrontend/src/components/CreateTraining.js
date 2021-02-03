@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState,useRef} from 'react';
 import CreateTrainingItem from './CreateTrainingItem';
 import '../sass/createtraining.scss';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
@@ -7,6 +7,7 @@ import DatePicker,{registerLocale} from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import {connect} from 'react-redux';
 import pl from "date-fns/locale/pl";
+import { postTraining } from '../redux/actions/trainingActions';
 const CreateTraining = (props) => {
     registerLocale('pl',pl)
     const [startDate, setStartDate] = useState(new Date());
@@ -22,6 +23,9 @@ const CreateTraining = (props) => {
     const [eccentricphase,setEccentricPhase] = useState(0)
     const [pauseeccentricphase,setPauseEccentricPhase] = useState(0)
     const [items,setItems] = useState([])
+    const name_of_training = useRef(null);
+    const training_description = useRef(null);
+    const training_date = useRef(null);
     const addElementtoItems = () =>{
         setItems(prevItems => [...prevItems, {
             exercise : {exercise},
@@ -37,7 +41,7 @@ const CreateTraining = (props) => {
           }]);
     }
     const clearState = () =>{
-        console.log("clear state")
+        // console.log("clear state")
         setSeries(1)
         // setAssumedReps(1)
         // setRest(60)
@@ -56,16 +60,68 @@ const CreateTraining = (props) => {
         e.target.style.background = '#db3d44'
     }
     const handleClickSelect = (e) =>{
-        
-        console.log("handleClickSelect")
-        console.log(series)
         for(let i=0;i<series;i++){
             addElementtoItems()
         }
         clearState()
     }
     const handleAcceptTraining = () => {
-        console.log("handleAcceptTraining")
+        let date = new Date(training_date.current.input.value)
+        let year = date.getFullYear() 
+        let month = date.getMonth() 
+        let day = date.getDay() 
+        let fullday = year + "-" + month + "-" + day
+
+        let array = {
+            name: name_of_training.current.value,
+            description: training_description.current.value,
+            date: fullday,
+            user: 1,
+            // trainingv2: [],
+            training: []
+                // {
+                // user: 1,
+                // weight: 0,
+                // pause_after_concentric_phase:34,
+                // pause_after_eccentric_phase:23,
+                // rest:23,
+                // reps: [{
+                //     reps: 234
+                // },
+                // {
+                //     reps: 233
+                // },
+                // {
+                //     reps: 232
+                // }
+                // ]
+                // }]
+        }
+        
+        let allobjects = []
+        props.postTraining(array)
+        console.log(training_date.current.input.value)
+        console.log(array)
+        console.log(items)
+        for(let i=0;i<items.length;i++){
+            let objects = {reps: []}
+            objects["user"] = 1
+            objects["pause_after_concentric_phase"]=items[i].pauseconcentricphase.pauseconcentricphase
+            objects["pause_after_eccentric_phase"]=items[i].pauseeccentricphase.pauseeccentricphase
+            objects["weight"] = items[i].weight.weight
+            objects["series"] = items[i].series.series
+            objects["rest"] = items[i].rest.rest
+            for(let j=0;j<items[i].series.series;j++){
+                objects["reps"].push({reps: items[i].assumedreps.assumedreps})
+            }
+            array["training"].push(objects)
+            allobjects.push(objects)
+
+        }
+        console.log("wynikowy array")
+        console.log(array)
+        
+        
     }
     return (
         <div className="createtraining">
@@ -97,11 +153,11 @@ const CreateTraining = (props) => {
 
                 </div>
                 <div className="createtraining__containers__third">
-                    <div className="createtraining__containers__third-title"><span><input placeholder="Nazwa treningu"/></span></div>
+                    <div className="createtraining__containers__third-title"><span><input ref={name_of_training} placeholder="Nazwa treningu"/></span></div>
                     <div className="createtraining__containers__third-date"><span>
-                    <DatePicker locale='pl' dateFormat='dd/MM/yyyy' selected={startDate} onChange={date => setStartDate(date)} />
+                    <DatePicker ref={training_date} locale='pl' dateFormat='dd/MM/yyyy' selected={startDate} onChange={date => setStartDate(date)} />
                         </span></div>
-                    <div className="createtraining__containers__third-description"><span><input placeholder="Opis"/></span></div>
+                    <div className="createtraining__containers__third-description"><span><input ref={training_description} placeholder="Opis"/></span></div>
                     <div className="createtraining__containers__third__elements">
                         <div className="createtraining__containers__third__elements-title">
                             Ćwiczenia
@@ -113,24 +169,6 @@ const CreateTraining = (props) => {
                                     <th>Powtórzenia</th>
                                     
                                 </tr>
-                                {/* <tr>
-                                    <td>Pompki Diamentowe</td>
-                                    <td><span><input placeholder="12"/></span></td>
-                                    
-                                </tr>
-                                <tr>
-                                    <td>Pompki Zwykłe</td>
-                                    <td><span><input placeholder="12"/></span></td>
-                                    
-                                </tr>
-                                <tr>
-                                    <td>Pompki Szerokie</td>
-                                    <td><span><input placeholder="12"/></span></td>
-                                </tr>
-                                <tr>
-                                    <td>Podciąganie</td>
-                                    <td><span><input placeholder="12"/></span></td>
-                                </tr> */}
                                 {items.length > 0 ? items.map((item)=>{
                                     console.log(item)
                                     return(
@@ -162,4 +200,4 @@ const mapStateToProps = (state) => {
         exercises: state.training.exercises.data
     }
 }
-export default connect(mapStateToProps)(CreateTraining); 
+export default connect(mapStateToProps,{postTraining})(CreateTraining); 

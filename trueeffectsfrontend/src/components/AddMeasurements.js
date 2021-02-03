@@ -20,10 +20,22 @@ const AddMeasurements = (props) => {
     const [bodyfat,setBodyFat] = useState(0)
     const [summary,setSummary] = useState(false)
     const [data,setData] = useState()
+    const [olddata,setOldData] = useState("brak")
+    const [startDate, setStartDate] = useState("");
+    const [actualDate, setActualDate] = useState("")
+    const handleDate = (date) =>{
+        let day = date.getDay()
+        let month = date.getMonth()
+        let year = date.getFullYear()
+        let fulldate = year + "-" + month + "-" + day
+        setActualDate(fulldate)
+        setStartDate(date)
+        
+    }
     const handlePostMeasurement = () => {
         let data = 
         {
-            "date":"2020-01-06",
+            "date":actualDate,
             "weight":weight,
             "growth":growth,
             "left_biceps":leftbiceps,
@@ -35,6 +47,7 @@ const AddMeasurements = (props) => {
             "bodyfat":bodyfat,
 
         }
+        setOldData(props.measurements[props.measurements.length-1])
         props.postMeasurement(data)
         props.getMeasurements()
         setData(data)
@@ -42,11 +55,11 @@ const AddMeasurements = (props) => {
         
     }
     registerLocale('pl',pl)
-    const [startDate, setStartDate] = useState(new Date());
+    
     return (
         
         <div className="addmeasurements">
-            {summary ? <AddMeasurementsSummary newdata={data}/> :
+            {summary ? <AddMeasurementsSummary newdata={data} olddata={olddata}/> :
             <>
             <div className="addmeasurements-title">Dodaj pomiary</div>
             <div className="addmeasurements__container">
@@ -98,7 +111,7 @@ const AddMeasurements = (props) => {
             <div className="addmeasurements__container__newmeasurementscontainer-title">Aktualny pomiar</div>
                 <div className="addmeasurements__container__newmeasurementscontainer__data">
                     <div className="addmeasurements__container__newmeasurementscontainer__data-input">
-                    <DatePicker locale='pl' dateFormat='dd/MM/yyyy' selected={startDate} onChange={date => setStartDate(date)} /></div>
+                    <DatePicker locale='pl' dateFormat='dd/MM/yyyy' selected={startDate} onChange={date => handleDate(date)} /></div>
                     </div>
                 <div className="addmeasurements__container__newmeasurementscontainer__elements">
                 <div className="addmeasurements__container__newmeasurementscontainer__elements__element">

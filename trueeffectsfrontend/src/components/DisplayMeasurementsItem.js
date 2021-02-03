@@ -13,7 +13,7 @@ const DisplayMeasurementsItem = (props) => {
                         </div>
                         <div className="displaymeasurements__containers__container__elements__element">
                             <div className="displaymeasurements__containers__container__elements__element-name">Wzrost</div>
-                            <div className="displaymeasurements__containers__container__elements__element-result"></div>
+                            <div className="displaymeasurements__containers__container__elements__element-result">{props.measurement.growth}</div>
                         </div>
                         <div className="displaymeasurements__containers__container__elements__element">
                             <div className="displaymeasurements__containers__container__elements__element-name">Prawy biceps</div>
