@@ -22,6 +22,7 @@ const CreateTraining = (props) => {
     const [pauseconcentricphase,setPauseConcentricPhase] = useState(0)
     const [eccentricphase,setEccentricPhase] = useState(0)
     const [pauseeccentricphase,setPauseEccentricPhase] = useState(0)
+    const [itemsplaceholders,setItemsPlaceHolders] = useState([])
     const [items,setItems] = useState([])
     const name_of_training = useRef(null);
     const training_description = useRef(null);
@@ -60,18 +61,31 @@ const CreateTraining = (props) => {
         e.target.style.background = '#db3d44'
     }
     const handleClickSelect = (e) =>{
+        
         for(let i=0;i<series;i++){
+            setItemsPlaceHolders(oldArray => [...oldArray, assumedreps])
             addElementtoItems()
         }
         clearState()
     }
+    const handleChangeinTrainingItems = (e,element) =>{
+        let assumed = {"assumedreps" : e.target.value}
+        items[element.id].assumedreps = assumed
+        
+    }
     const handleAcceptTraining = () => {
         let date = new Date(training_date.current.input.value)
-        let year = date.getFullYear() 
-        let month = date.getMonth() 
-        let day = date.getDay() 
-        let fullday = year + "-" + month + "-" + day
-
+        console.log(training_date.current.input.value)
+        let splitdate = training_date.current.input.value.split("/")
+        console.log(splitdate)
+        
+        // let year = date.getFullYear() 
+        // let month = date.getMonth() 
+        // let day = date.getDay() 
+        // let fullday = year + "-" + month + "-" + day
+        let fullday = splitdate[2] + "-" + splitdate[1] + "-" +  splitdate[0]
+        console.log("fullday")
+        console.log(fullday)
         let array = {
             name: name_of_training.current.value,
             description: training_description.current.value,
@@ -79,7 +93,6 @@ const CreateTraining = (props) => {
             user: 1,
             training: []
         }
-        
         let allobjects = []
         for(let i=0;i<items.length;i++){
             let objects = {reps: []}
@@ -97,7 +110,6 @@ const CreateTraining = (props) => {
 
         }
         props.postTraining(array)
-        
     }
     return (
         <div className="createtraining">
@@ -110,7 +122,7 @@ const CreateTraining = (props) => {
                     </div>
                     <div className='createtraining__containers__first-input'>Wyszukaj ćwiczenie</div>
                     <div className="createtraining__containers__first__exercises">
-                        {props.exercises.map((element)=><div className="createtraining__containers__first__exercises__element " onClick={handleClickExercise}>{element.name}</div>)}
+                        {props.exercises.map((element)=><div className="createtraining__containers__first__exercises__element "   onClick={handleClickExercise}>{element.name}</div>)}
                     </div>
                     <div className="createtraining__containers__first__trainingdata">
                         <div className="createtraining__containers__first__trainingdata__series">Podaj liczbę serii danego ćwiczenia *<span><input placeholder={series} value={series} onChange={(e)=>setSeries(parseInt(e.target.value))}/></span></div>
@@ -145,19 +157,17 @@ const CreateTraining = (props) => {
                                     <th>Powtórzenia</th>
                                     
                                 </tr>
-                                {items.length > 0 ? items.map((item)=>{
+                                {items.length > 0 ? items.map((item,id)=>{
+                                    console.log(id)
                                     console.log(item)
                                     return(
                                     <tr>
                                         <td>{item.exercise.exercise}</td>
-                                        <td><span><input placeholder="12"/></span></td> 
+                                        <td ><span><input  placeholder={itemsplaceholders[id]} onChange={(e)=>handleChangeinTrainingItems(e,{id})}/></span></td> 
                                     </tr>)
                                 })
                                 :<tr>
-                                        
                                     </tr>}
-                                
-
                             </table>
                         </div>
                     </div>

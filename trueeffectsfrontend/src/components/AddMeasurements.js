@@ -20,7 +20,7 @@ const AddMeasurements = (props) => {
     const [bodyfat,setBodyFat] = useState(0)
     const [summary,setSummary] = useState(false)
     const [data,setData] = useState()
-    const [olddata,setOldData] = useState("brak")
+    const [olddata,setOldData] = useState(props.measurements[props.measurements.length-1])
     const [startDate, setStartDate] = useState("");
     const [actualDate, setActualDate] = useState("")
     const handleDate = (date) =>{
@@ -32,7 +32,7 @@ const AddMeasurements = (props) => {
         setStartDate(date)
         
     }
-    const handlePostMeasurement = () => {
+    const handlePostMeasurement = async() => {
         let data = 
         {
             "date":actualDate,
@@ -48,14 +48,14 @@ const AddMeasurements = (props) => {
 
         }
         setOldData(props.measurements[props.measurements.length-1])
-        props.postMeasurement(data)
-        props.getMeasurements()
+        await props.postMeasurement(data)
+        await props.getMeasurements()
         setData(data)
         setSummary(true)
         
     }
     registerLocale('pl',pl)
-    
+    console.log(olddata)
     return (
         
         <div className="addmeasurements">
@@ -68,42 +68,42 @@ const AddMeasurements = (props) => {
 
                 <div className="addmeasurements__container__oldmeasurementscontainer__data">
                     <div className="addmeasurements__container__oldmeasurementscontainer__data-input">
-                        24.10.2020
+                        {olddata.date}
                     </div>
                     </div>
         
                 <div className="addmeasurements__container__oldmeasurementscontainer__elements">
                 <div className="addmeasurements__container__oldmeasurementscontainer__elements__element">
                     <div className="addmeasurements__container__oldmeasurementscontainer__elements__element-name">Waga</div>
-                    <div className="addmeasurements__container__oldmeasurementscontainer__elements__element-result">82 kg</div>
+                    <div className="addmeasurements__container__oldmeasurementscontainer__elements__element-result">{olddata.weight} kg</div>
                     </div>
                     <div className="addmeasurements__container__oldmeasurementscontainer__elements__element">
                     <div className="addmeasurements__container__oldmeasurementscontainer__elements__element-name">Wzrost</div>
-                    <div className="addmeasurements__container__oldmeasurementscontainer__elements__element-result">180 cm</div>
+                    <div className="addmeasurements__container__oldmeasurementscontainer__elements__element-result">{olddata.growth} cm</div>
                     </div>
                     <div className="addmeasurements__container__oldmeasurementscontainer__elements__element">
                     <div className="addmeasurements__container__oldmeasurementscontainer__elements__element-name">Prawy biceps</div>
-                    <div className="addmeasurements__container__oldmeasurementscontainer__elements__element-result">30 cm</div>
+                    <div className="addmeasurements__container__oldmeasurementscontainer__elements__element-result">{olddata.right_biceps}cm</div>
                     </div>
                     <div className="addmeasurements__container__oldmeasurementscontainer__elements__element">
                     <div className="addmeasurements__container__oldmeasurementscontainer__elements__element-name">Lewy biceps</div>
-                    <div className="addmeasurements__container__oldmeasurementscontainer__elements__element-result">30 cm</div>
+                    <div className="addmeasurements__container__oldmeasurementscontainer__elements__element-result">{olddata.left_biceps} cm</div>
                     </div>
                     <div className="addmeasurements__container__oldmeasurementscontainer__elements__element">
                     <div className="addmeasurements__container__oldmeasurementscontainer__elements__element-name">Prawe przedramię</div>
-                    <div className="addmeasurements__container__oldmeasurementscontainer__elements__element-result">20 cm</div>
+                    <div className="addmeasurements__container__oldmeasurementscontainer__elements__element-result">{olddata.right_forearm} cm</div>
                     </div>
                     <div className="addmeasurements__container__oldmeasurementscontainer__elements__element">
                     <div className="addmeasurements__container__oldmeasurementscontainer__elements__element-name">Lewe przedramię</div>
-                    <div className="addmeasurements__container__oldmeasurementscontainer__elements__element-result">20 cm</div>
+                    <div className="addmeasurements__container__oldmeasurementscontainer__elements__element-result">{olddata.left_forearm} cm</div>
                     </div>
                     <div className="addmeasurements__container__oldmeasurementscontainer__elements__element">
                     <div className="addmeasurements__container__oldmeasurementscontainer__elements__element-name">Prawe udo</div>
-                    <div className="addmeasurements__container__oldmeasurementscontainer__elements__element-result">40 cm</div>
+                    <div className="addmeasurements__container__oldmeasurementscontainer__elements__element-result">{olddata.right_leg} cm</div>
                     </div>
                     <div className="addmeasurements__container__oldmeasurementscontainer__elements__element">
                     <div className="addmeasurements__container__oldmeasurementscontainer__elements__element-name">Lewe udo</div>
-                    <div className="addmeasurements__container__oldmeasurementscontainer__elements__element-result">40 cm</div>
+                    <div className="addmeasurements__container__oldmeasurementscontainer__elements__element-result">{olddata.left_leg} cm</div>
                     </div>
                 </div>
             </div>

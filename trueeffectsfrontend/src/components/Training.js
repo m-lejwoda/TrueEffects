@@ -159,6 +159,7 @@ const Training = (props) => {
   if (seconds !== 0 || minutes !== 0 ||  hours !== 0){
     displayAlert()
  }
+ console.log(training)
     return (
         <div className="training">
             <div className="training__top">
