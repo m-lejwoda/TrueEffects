@@ -63,7 +63,7 @@ class PersonalResultsSerializer(serializers.ModelSerializer):
 class ExerciseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Exercise
-        fields = ['name']
+        fields = '__all__'
 
 class OwnExerciseSerializer(serializers.ModelSerializer):
     class Meta:

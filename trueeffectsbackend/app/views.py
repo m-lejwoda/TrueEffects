@@ -152,7 +152,11 @@ def displayTraining(request):
 @api_view(['POST'])
 #@permission_classes([IsAuthenticated,])
 def createTraining(request):
-    serializer = TrainingSerializer(data=request.data)
+    data = request.data
+    data["user"] = request.user.id
+    for element in data['training']:
+        element["user"] = request.user.id
+    serializer = TrainingSerializer(data=data)
     if serializer.is_valid():
         serializer.save()
     else:

@@ -75,10 +75,7 @@ const CreateTraining = (props) => {
     }
     const handleAcceptTraining = () => {
         let date = new Date(training_date.current.input.value)
-        console.log(training_date.current.input.value)
         let splitdate = training_date.current.input.value.split("/")
-        console.log(splitdate)
-        
         // let year = date.getFullYear() 
         // let month = date.getMonth() 
         // let day = date.getDay() 
@@ -86,6 +83,7 @@ const CreateTraining = (props) => {
         let fullday = splitdate[2] + "-" + splitdate[1] + "-" +  splitdate[0]
         console.log("fullday")
         console.log(fullday)
+
         let array = {
             name: name_of_training.current.value,
             description: training_description.current.value,
@@ -96,7 +94,11 @@ const CreateTraining = (props) => {
         let allobjects = []
         for(let i=0;i<items.length;i++){
             let objects = {reps: []}
-            objects["user"] = 1
+            for(let j=0;j<props.exercises.length;j++){
+                if (items[i].exercise.exercise === props.exercises[j].name){
+                    objects["exercise"] = props.exercises[j].id
+                } 
+            }
             objects["pause_after_concentric_phase"]=items[i].pauseconcentricphase.pauseconcentricphase
             objects["pause_after_eccentric_phase"]=items[i].pauseeccentricphase.pauseeccentricphase
             objects["weight"] = items[i].weight.weight
@@ -122,7 +124,7 @@ const CreateTraining = (props) => {
                     </div>
                     <div className='createtraining__containers__first-input'>Wyszukaj ćwiczenie</div>
                     <div className="createtraining__containers__first__exercises">
-                        {props.exercises.map((element)=><div className="createtraining__containers__first__exercises__element "   onClick={handleClickExercise}>{element.name}</div>)}
+                        {props.exercises.map((element)=><div className="createtraining__containers__first__exercises__element "onClick={handleClickExercise}>{element.name}</div>)}
                     </div>
                     <div className="createtraining__containers__first__trainingdata">
                         <div className="createtraining__containers__first__trainingdata__series">Podaj liczbę serii danego ćwiczenia *<span><input placeholder={series} value={series} onChange={(e)=>setSeries(parseInt(e.target.value))}/></span></div>

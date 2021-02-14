@@ -50,8 +50,8 @@ const ModalDisplayTraining = props => {
                 <table id="training">
                 <tr>
                     <th>Nazwa Ćwiczenia</th>
-                    <th>Liczba Powtórzeń</th>
-                    <th>Zakładana liczba Powtórzeń</th>
+                    <th>Liczba Serii</th>
+                    {/* <th>Zakładana liczba Powtórzeń</th> */}
                     <th>Przerwa między seriami</th>
                     <th>Ciężar</th>
                     <th>Fazy</th>
