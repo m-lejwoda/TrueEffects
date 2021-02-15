@@ -26,6 +26,7 @@ export const getExercises = () =>(dispatch)=>{
 
 export const postTraining = (data) => dispatch => {
     let token = window.localStorage.getItem('token')
+    console.log(data)
     axios.defaults.headers.common['Authorization'] = `Token ${token}`
     axios.post('http://127.0.0.1:8000/api/create_training/',data)
     .then(res=>{

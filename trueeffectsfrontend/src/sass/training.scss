@@ -1,5 +1,5 @@
 //$pink: #E90B33;
-$pink1: #E90B33;
+$pink1: #db3d44;
 //$pink: #FF5A5A;
 $pink: #1D3557;
 .training{
@@ -25,6 +25,7 @@ $pink: #1D3557;
             display: flex;
             flex-direction: row;
             justify-content: center;
+            align-items: stretch;
             &-logo{
                 padding-right:2rem;
             }
@@ -134,5 +135,41 @@ $pink: #1D3557;
             }
         }
         
+    }
+}
+
+.stopwatchbuttons{
+    display:flex;
+    justify-content: space-between;
+    margin-top:2rem;
+    #start{
+        background-color:$pink1;
+        color:white;
+        font-size:1.2rem;
+        font-weight: 600;
+        padding:0px 20px 0px 20px
+    }
+    #start:hover{
+        cursor:pointer;
+    }
+    #pause{
+        background-color:$pink1;
+        color:white;
+        font-size:1.2rem;
+        font-weight: 600;
+        padding:0px 20px 0px 20px
+    }
+    #pause:hover{
+        cursor:pointer;
+    }
+    #reset{
+        background-color:$pink1;
+        color:white;
+        font-size:1.2rem;
+        font-weight: 600;
+        padding:0px 20px 0px 20px
+    }
+    #reset:hover{
+        cursor:pointer;
     }
 }

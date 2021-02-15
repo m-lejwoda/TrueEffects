@@ -145,10 +145,21 @@ def createOwnExercise(request):
 @api_view(['GET'])
 #@permission_classes([IsAuthenticated,])
 def displayTraining(request):
-    example = Training.objects.filter(user=request.user)
-    serializer = TrainingSerializer(example,many=True)
+    training = Training.objects.filter(user=request.user)
+    print(training)
+    serializer = TrainingSerializer(training,many=True)
     return Response(serializer.data)
 
+@api_view(['PUT'])
+def updateTraining(request):
+    training = Training.objects.get(id=request.data['id'])
+    print(training)
+    serializer = TrainingSerializer(instance=training,data=request.data)
+    if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+    else:
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 @api_view(['POST'])
 #@permission_classes([IsAuthenticated,])
 def createTraining(request):

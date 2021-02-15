@@ -33,9 +33,11 @@ if(props.endtraining === true){
       <div style={{fontSize: '100px'}}>
         <span>{hours<10 && 0}{hours}</span>:<span>{minutes<10 && 0}{minutes}</span>:<span>{seconds<10 && 0}{seconds}</span>
       </div>
-      <button id="start" onClick={handleStart}>Start</button>
-      <button id="pause" onClick={pause}>Pause</button>
-      <button id="reset"onClick={reset}>Reset</button>
+      <div className="stopwatchbuttons">
+        <button id="start" onClick={handleStart}>Start</button>
+        <button id="pause" onClick={pause}>Pause</button>
+        <button id="reset"onClick={reset}>Reset</button>
+      </div>
     </div>
   );
 }

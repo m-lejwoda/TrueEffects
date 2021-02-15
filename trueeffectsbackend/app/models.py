@@ -92,7 +92,6 @@ class Training(models.Model):
     date = models.DateField(null=True)
     description = models.CharField(max_length=255,default='',null=True)
     time = models.TimeField(auto_now=False, auto_now_add=False,null=True,default='00:00:00')
-    
 @receiver(post_save,sender=User)
 def create_auth_token(sender,instance=None,created=False,**kwargs):
     if created:

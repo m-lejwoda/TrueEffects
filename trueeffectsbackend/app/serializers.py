@@ -44,10 +44,6 @@ class UserSerializer(serializers.ModelSerializer):
             user.save()
 
         return user
-# class PersonSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Person
-#         fields=['__all__']
 class PersonalDimensionsSerializer(serializers.ModelSerializer):
     class Meta:
         model = PersonalDimensions
@@ -76,16 +72,21 @@ class DescriptionGoalsSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class RepsSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Reps
         fields = '__all__'
-
+class AssumedRepsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AssumedReps
+        fields = '__all__'
 class SingleSeriesSerializer(serializers.ModelSerializer):
     reps = RepsSerializer(many=True)
+    exercise = ExerciseSerializer()
+    ownexercise = OwnExerciseSerializer(required=False, allow_null=True)
     class Meta:
         model = SingleSeries
         fields = '__all__'
+        
     def create(self, validated_data):
         reps_data = validated_data.pop('reps')
         singleseries = SingleSeries.objects.create(**validated_data)
@@ -100,6 +101,10 @@ class TrainingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Training
         fields = '__all__'
+    def update(self, instance, validated_data):
+        print("update")
+        print("Poprawka przed update")
+        return instance
     def create(self,validated_data):
         singleseries_data = validated_data.pop('training')
         training = Training.objects.create(**validated_data)
@@ -111,6 +116,6 @@ class TrainingSerializer(serializers.ModelSerializer):
                 singleseries.reps.add(reps)
             training.training.add(singleseries)
         return training
-       
+    
         
         

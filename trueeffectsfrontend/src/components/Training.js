@@ -85,6 +85,8 @@ const Training = (props) => {
     const endbuttonRef = useRef()
     const fromTime = new Date(0, 0, 0, 0, 0, 0, 0);
     const goNext = () =>{
+      training.training[`${series}`].reps[`${singleSeries}`]['reps']= parseInt(inputRef.current.value)
+      // { "reps" : inputRef.current.value}
       let value = parseInt(inputRef.current.value)
       let placeholder = parseInt(inputRef.current.placeholder)
       if(Number.isInteger(value)){
@@ -123,8 +125,8 @@ const Training = (props) => {
     setStartStoper(!startStoper)
   }
   const handleInput = () => {
-    console.log("handle input")
     setInput(inputRef.current.value)
+    
   }
   const handlePause = (pause) =>{
     console.log("handle pause")
@@ -164,17 +166,17 @@ const Training = (props) => {
         <div className="training">
             <div className="training__top">
                 <div className="training__top__previousexercise">
-                    <div className="training__top__previousexercise-title"><FontAwesomeIcon icon={faArrowLeft} /> Poprzednie ćwiczenie</div>
-                    <div className="training__top__previousexercise-name">Pompki diamentowe</div>
+                    <div style={{visibility: typeof training.training[series-1] !== "undefined" ? 'visible' : 'hidden' }} className="training__top__previousexercise-title"><FontAwesomeIcon icon={faArrowLeft} /> Poprzednie ćwiczenie</div>
+                    <div style={{visibility: typeof training.training[series-1] !== "undefined" ? 'visible' : 'hidden' }} className="training__top__previousexercise-name">{typeof training.training[series-1] !== "undefined" && training.training[series-1].exercise.name}</div>
                 </div>
-                <div className="training__top__nextexercise">
-                    <div className="training__top__nextexercise-title">Następne ćwiczenie <FontAwesomeIcon icon={faArrowRight} /></div>
-                    <div className="training__top__nextexercise-name">Podciąganie szerokie</div>
-                </div>
+                {typeof training.training[series+1] !== "undefined" && <div className="training__top__nextexercise">
+                    <div style={{visibility: typeof training.training[series+1] !== "undefined" ? 'visible' : 'hidden' }} className="training__top__nextexercise-title">Następne ćwiczenie <FontAwesomeIcon icon={faArrowRight} /></div>
+                    <div style={{visibility: typeof training.training[series+1] !== "undefined" ? 'visible' : 'hidden' }} className="training__top__nextexercise-name">{typeof training.training[series+1] !== "undefined" &&  training.training[series+1].exercise.name}</div>
+                </div>}
             </div>
             <div className="training__middle">
                 <div className="training__middle-title">Aktualne Ćwiczenie</div>
-                <div className="training__middle-exercise">Podciąganie wąskie</div>
+                <div className="training__middle-exercise">{training.training[series].exercise.name}</div>
                 <div className="training__middle__logotime">
                     <div className="training__middle__logotime-logo">
                       <img src={logo} alt="logo"  />
@@ -192,6 +194,7 @@ const Training = (props) => {
                       <StyledCheckbox defaultChecked />
                       <StyledCheckbox defaultChecked /> */}
                       </div>
+                      {/* {training.training[`${series}`].reps[singleSeries]} */}
                     <div className="training__middle__series-title">Seria {singleSeries+1}/{training.training[`${series}`].reps.length}</div>
                 </div>
             </div>
