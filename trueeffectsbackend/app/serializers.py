@@ -81,7 +81,7 @@ class AssumedRepsSerializer(serializers.ModelSerializer):
         fields = '__all__'
 class SingleSeriesSerializer(serializers.ModelSerializer):
     reps = RepsSerializer(many=True)
-    exercise = ExerciseSerializer()
+    exercise = ExerciseSerializer(required=False, allow_null=True)
     ownexercise = OwnExerciseSerializer(required=False, allow_null=True)
     class Meta:
         model = SingleSeries
@@ -109,7 +109,11 @@ class TrainingSerializer(serializers.ModelSerializer):
         singleseries_data = validated_data.pop('training')
         training = Training.objects.create(**validated_data)
         for singleseries_dat in singleseries_data:
+            exercise = Exercise.objects.get(name = singleseries_dat['exercise']['name'])
+            singleseries_dat['exercise'] = exercise
             reps_data = singleseries_dat.pop('reps')
+            exercise_data = singleseries_dat.pop('exercise')
+            singleseries_dat['exercise'] = (exercise_data)
             singleseries = SingleSeries.objects.create(**singleseries_dat)
             for rep_data in reps_data:
                 reps = Reps.objects.create(**rep_data)

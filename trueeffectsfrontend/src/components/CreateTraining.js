@@ -13,7 +13,7 @@ const CreateTraining = (props) => {
     const [startDate, setStartDate] = useState(new Date());
     const [activediv , setActivediv] = useState(null)
     const [ownexercise,setOwnExercise] = useState('')
-    const [exercise,setExercise] = useState('')
+    const [exercise,setExercise] = useState({id: '', name:''})
     const [series,setSeries] = useState(1)
     const [assumedreps,setAssumedReps] = useState(1)
     const [rest,setRest] = useState(60)
@@ -52,12 +52,16 @@ const CreateTraining = (props) => {
         // setEccentricPhase(0)
         // setPauseEccentricPhase(0)
     }
-    const handleClickExercise = (e) =>{
+    const handleClickExercise = (e,element) =>{
+        console.log(element)
+        console.log(element.id)
+        console.log(element.name)
         if(activediv !== null){
             activediv.style.background = "#457B9D"
         }
         setActivediv(e.target)
-        setExercise(e.target.textContent)
+        setExercise({id:element.id})
+        setExercise({name:element.name})
         e.target.style.background = '#db3d44'
     }
     const handleClickSelect = (e) =>{
@@ -94,11 +98,12 @@ const CreateTraining = (props) => {
         let allobjects = []
         for(let i=0;i<items.length;i++){
             let objects = {reps: []}
-            for(let j=0;j<props.exercises.length;j++){
-                if (items[i].exercise.exercise === props.exercises[j].name){
-                    objects["exercise"] = props.exercises[j].id
-                } 
-            }
+            // for(let j=0;j<props.exercises.length;j++){
+            //     if (items[i].exercise.exercise === props.exercises[j].name){
+            //         objects["exercise"] = props.exercises[j].id
+            //     } 
+            // }
+            objects["exercise"] = exercise
             objects["pause_after_concentric_phase"]=items[i].pauseconcentricphase.pauseconcentricphase
             objects["pause_after_eccentric_phase"]=items[i].pauseeccentricphase.pauseeccentricphase
             objects["weight"] = items[i].weight.weight
@@ -124,7 +129,7 @@ const CreateTraining = (props) => {
                     </div>
                     <div className='createtraining__containers__first-input'>Wyszukaj ćwiczenie</div>
                     <div className="createtraining__containers__first__exercises">
-                        {props.exercises.map((element)=><div className="createtraining__containers__first__exercises__element "onClick={handleClickExercise}>{element.name}</div>)}
+                        {props.exercises.map((element)=><div className="createtraining__containers__first__exercises__element "onClick={(e)=>handleClickExercise(e,element)}>{element.name}</div>)}
                     </div>
                     <div className="createtraining__containers__first__trainingdata">
                         <div className="createtraining__containers__first__trainingdata__series">Podaj liczbę serii danego ćwiczenia *<span><input placeholder={series} value={series} onChange={(e)=>setSeries(parseInt(e.target.value))}/></span></div>
@@ -160,11 +165,11 @@ const CreateTraining = (props) => {
                                     
                                 </tr>
                                 {items.length > 0 ? items.map((item,id)=>{
-                                    console.log(id)
-                                    console.log(item)
+                                    // console.log(id)
+                                    // console.log(item)
                                     return(
                                     <tr>
-                                        <td>{item.exercise.exercise}</td>
+                                        <td>{item.exercise.exercise.name}</td>
                                         <td ><span><input  placeholder={itemsplaceholders[id]} onChange={(e)=>handleChangeinTrainingItems(e,{id})}/></span></td> 
                                     </tr>)
                                 })

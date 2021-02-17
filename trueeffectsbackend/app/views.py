@@ -166,7 +166,7 @@ def createTraining(request):
     data = request.data
     data["user"] = request.user.id
     for element in data['training']:
-        element["user"] = request.user.id
+        element["user"] = request.user.id  
     serializer = TrainingSerializer(data=data)
     if serializer.is_valid():
         serializer.save()

@@ -6,8 +6,8 @@ from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
 class Exercise(models.Model):
     name = models.CharField(max_length=100)
-    def __str__(self):
-        return self.name
+    # def __str__(self):
+    #     return self.name
     
 
 class AssumedReps(models.Model):
@@ -16,8 +16,8 @@ class AssumedReps(models.Model):
         return str(self.assumedreps)
 class Reps(models.Model):
     reps = models.IntegerField()
-    def __str__(self):
-        return str(self.reps)
+    # def __str__(self):
+    #     return str(self.reps)
 
 class AllSeries(models.Model):
     #series = models.ManyToManyField(SingleSeries)
