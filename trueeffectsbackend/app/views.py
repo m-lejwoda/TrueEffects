@@ -153,7 +153,8 @@ def displayTraining(request):
 @api_view(['PUT'])
 def updateTraining(request):
     training = Training.objects.get(id=request.data['id'])
-    print(training)
+    print("training")
+    # training.values()
     serializer = TrainingSerializer(instance=training,data=request.data)
     if serializer.is_valid():
             serializer.save()

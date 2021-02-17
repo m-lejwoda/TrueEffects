@@ -104,6 +104,46 @@ class TrainingSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         print("update")
         print("Poprawka przed update")
+        # print(instance.name)
+        # print(instance.training.all())
+        training = validated_data.pop('training')
+        print(training)
+        for el in range(len(instance.training.all())):
+            print(training[el]['reps'])
+            singleseries = SingleSeries.objects.get(id = instance.training.all()[el].id)
+            print("singleseries.reps.all()")
+            print(singleseries.reps)
+            # for rep in singleseries.reps.all():
+            #     print("to jest rep")
+            #     print(rep.delete())
+            for element in training[el]['reps']:
+                print(element['reps'])
+                repeats,repbool=Reps.objects.get_or_create(reps = element['reps'])
+                print("to jest repeat")
+                print(repeats)
+                singleseries.reps.add(repeats)
+            #     print(repeats)
+            #     singleseries.reps.add(repeats[0])
+            # print(singleseries)
+            # for ss in singleseries.reps.all():
+            #     print(ss)
+            # for elements in range(len(singleseries.reps)):
+            #     print(elements)
+            # print(singleseries.exercise)
+            # print(training[el]['exercise']['name'])
+            # exercise = Exercise.object.get(name =  )
+        # for el in instance.training.all():
+        #     singleseries = SingleSeries.objects.get(id = el.id)
+        #     print(singleseries.exercise)
+        # SingleSeries.object
+        # for el in instance:
+        #     print(el)
+        print("koniec treningu")
+       
+        # instance['training'] = validated_data
+        # print(validated_data)
+        # instance = validated_data
+        
         return instance
     def create(self,validated_data):
         singleseries_data = validated_data.pop('training')
@@ -116,7 +156,7 @@ class TrainingSerializer(serializers.ModelSerializer):
             singleseries_dat['exercise'] = (exercise_data)
             singleseries = SingleSeries.objects.create(**singleseries_dat)
             for rep_data in reps_data:
-                reps = Reps.objects.create(**rep_data)
+                reps = Reps.objects.get_or_create(**rep_data)
                 singleseries.reps.add(reps)
             training.training.add(singleseries)
         return training
