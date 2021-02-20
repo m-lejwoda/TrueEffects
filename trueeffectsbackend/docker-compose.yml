@@ -1,10 +1,9 @@
 version: "3.9"
-   
 services:
   db:
     image: postgres
     environment:
-      - POSTGRES_DB=postgres2
+      - POSTGRES_DB=postgres4
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     ports:

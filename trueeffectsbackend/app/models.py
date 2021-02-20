@@ -4,6 +4,7 @@ from django.conf import settings
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
+from django.core.validators import int_list_validator,validate_comma_separated_integer_list
 class Exercise(models.Model):
     name = models.CharField(max_length=100)
     # def __str__(self):
@@ -83,7 +84,9 @@ class SingleSeries(models.Model):
     eccentric_phase = models.IntegerField(default=0)
     pause_after_concentric_phase = models.IntegerField()
     pause_after_eccentric_phase = models.IntegerField()
-    reps = models.ManyToManyField(Reps)
+    # reps = models.ManyToManyField(Reps)
+    reps = models.CharField(validators=[validate_comma_separated_integer_list],max_length=255,default=None)  
+    
 
 class Training(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE,default=None)
