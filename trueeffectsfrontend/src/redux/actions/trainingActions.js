@@ -1,8 +1,7 @@
-import {POST_LOGOUT,GET_MEASUREMENTS_SUCCESS,GET_MEASUREMENTS,POST_TRAINING,GET_TRAININGS, GET_TRAININGS_SUCCESS,GET_GOALS,GET_GOALS_SUCCESS,POST_MEASUREMENT,POST_MEASUREMENT_SUCCESS, GET_EXERCISES,GET_EXERCISES_SUCCESS} from './types';
+import {POST_LOGOUT,AUTH_ERROR,GET_MEASUREMENTS_SUCCESS,GET_MEASUREMENTS,POST_TRAINING,GET_TRAININGS, GET_TRAININGS_SUCCESS,GET_GOALS,GET_GOALS_SUCCESS,POST_MEASUREMENT,POST_MEASUREMENT_SUCCESS, GET_EXERCISES,GET_EXERCISES_SUCCESS} from './types';
 import axios from 'axios';
 
-export const getMeasurements =()=>(dispatch) => {
-    let token = window.localStorage.getItem('token')
+export const getMeasurements =(token)=>(dispatch,getState) => {
     
     dispatch({type: GET_MEASUREMENTS})
     axios.defaults.headers.common['Authorization'] = `Token ${token}`
@@ -12,8 +11,11 @@ export const getMeasurements =()=>(dispatch) => {
         payload: res,
     }));
 }
-export const getExercises = () =>(dispatch)=>{
+export const getExercises = () =>(dispatch,getState)=>{
     let token = window.localStorage.getItem('token')
+    if (token === null){
+        token = getState().authentication.token
+    }
     dispatch({type: GET_EXERCISES})
     axios.defaults.headers.common['Authorization'] = `Token ${token}`
     axios.get('http://127.0.0.1:8000/api/display_exercises/')
@@ -24,8 +26,11 @@ export const getExercises = () =>(dispatch)=>{
 }
 
 
-export const postTraining = (data) => dispatch => {
+export const postTraining = (data) => (dispatch,getState) => {
     let token = window.localStorage.getItem('token')
+    if (token === null){
+        token = getState().authentication.token
+    }
     console.log(data)
     axios.defaults.headers.common['Authorization'] = `Token ${token}`
     axios.post('http://127.0.0.1:8000/api/create_training/',data)
@@ -37,9 +42,7 @@ export const postTraining = (data) => dispatch => {
     })
     
 }
-export const getTrainings = () => dispatch =>{
-    let token = window.localStorage.getItem('token')
-    console.log(token)
+export const getTrainings = (token) => (dispatch,getState) =>{
     dispatch({type: GET_TRAININGS})
     axios.defaults.headers.common['Authorization'] = `Token ${token}`
     axios.get('http://127.0.0.1:8000/api/display_training/')
@@ -48,9 +51,7 @@ export const getTrainings = () => dispatch =>{
         payload: res,
     }));
 }
-export const getGoals = () => dispatch =>{
-    let token = window.localStorage.getItem('token')
-    console.log(token)
+export const getGoals = (token) => (dispatch,getState) =>{
     dispatch({type: GET_GOALS})
     axios.defaults.headers.common['Authorization'] = `Token ${token}`
     axios.get('http://127.0.0.1:8000/api/display_description_goals/')
@@ -59,8 +60,11 @@ export const getGoals = () => dispatch =>{
         payload: res,
     }));
 }
-export const postGoals = (data) => dispatch => {
+export const postGoals = (data) => (dispatch,getState) => {
     let token = window.localStorage.getItem('token')
+    if (token === null){
+        token = getState().authentication.token
+    }
     axios.defaults.headers.common['Authorization'] = `Token ${token}`
     axios.post('http://127.0.0.1:8000/api/create_description_goals/',data)
     .then(res=>{
@@ -71,24 +75,15 @@ export const postGoals = (data) => dispatch => {
     })
     
 }
-export const postMeasurement = (data) => dispatch =>{
+export const postMeasurement = (data) => (dispatch,getState) =>{
     let token = window.localStorage.getItem('token')
+    if (token === null){
+        token = getState().authentication.token
+    }
     dispatch({type: POST_MEASUREMENT})
     axios.defaults.headers.common['Authorization'] = `Token ${token}`
     axios.post('http://127.0.0.1:8000/api/create_personal_dimensions/',data)
     .then(res=>dispatch({
         type: POST_MEASUREMENT_SUCCESS,
     }))
-}
-export const postLogout = ()=> dispatch =>{
-    let token = window.localStorage.getItem('token')
-    axios.defaults.headers.common['Authorization'] = `Token ${token}`
-    axios.get('http://127.0.0.1:8000/api/logout/')
-    .then(res=>dispatch({
-        type: POST_LOGOUT,
-    }))
-    .then(res=>{
-        window.localStorage.removeItem('token')
-        window.localStorage.removeItem('username')
-    })
 }

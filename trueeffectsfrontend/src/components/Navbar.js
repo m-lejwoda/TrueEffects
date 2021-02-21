@@ -10,7 +10,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDumbbell } from '@fortawesome/fontawesome-free-solid';
 import {connect} from 'react-redux';
-import {postLogout} from '../redux/actions/trainingActions';
+import {postLogout} from '../redux/actions/authenticationActions';
 import { useHistory } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -30,12 +30,10 @@ const useStyles = makeStyles((theme) => ({
   }));
 const Navbar = (props) => {
   const history = useHistory()
-    const handleLogout = () =>{
-      props.postLogout()
-      // window.localStorage.removeItem('token')
-      // window.localStorage.removeItem('username')
-      console.log("po usunięciu tokenów")
-      // await history.push('/login')
+    const handleLogout = async() =>{
+      await props.postLogout()
+      
+      // history.push('/login')
       
     }
       const classes = useStyles();
@@ -48,9 +46,7 @@ const Navbar = (props) => {
                 <Typography variant="h6" className={classes.title}>
                   <FontAwesomeIcon icon={faDumbbell} />TrueEffects
                 </Typography>
-              
                 {window.localStorage.getItem('username') !== undefined ?<> <p>Witaj {window.localStorage.getItem('username')}<Button onClick={handleLogout} color="inherit">Wyloguj się</Button></p></>:<><Button color="inherit">Login</Button></>}
-                
               </Toolbar>
             </AppBar>
           </div>

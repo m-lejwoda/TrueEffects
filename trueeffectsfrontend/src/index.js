@@ -12,8 +12,9 @@ import store from './store';
 // Be sure to include styles at some point, probably during your bootstraping
 import '@trendmicro/react-sidenav/dist/react-sidenav.css';
 import './sass/index.scss';
-
+console.log("index.js")
 ReactDOM.render(
+  
   <Provider store={store}>
   <BrowserRouter>
   <Switch>

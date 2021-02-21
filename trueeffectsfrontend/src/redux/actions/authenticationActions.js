@@ -1,36 +1,18 @@
-import {POST_LOGIN,POST_LOGOUT_AUTH,LOGIN_ERROR, POST_REGISTER,REGISTER_ERROR} from './types';
+import {POST_LOGIN,POST_LOGOUT,POST_LOGOUT_AUTH,LOGIN_ERROR, POST_REGISTER,REGISTER_ERROR,USER_LOADING,USER_LOADED,AUTH_ERROR} from './types';
 import axios from 'axios';
 
 export const postLogin =(data)=>dispatch => {
         delete axios.defaults.headers.common["Authorization"];
         axios.post('http://127.0.0.1:8000/api/login/',data)
         .then(res=>{
-            console.log(res)
             window.localStorage.setItem('token',res.data.token)
-            window.localStorage.setItem('username',res.data.username)
-            console.log(window.localStorage.getItem('token'))
-            console.log(window.localStorage.getItem('username'))
-            dispatch({
-                    type: POST_LOGIN,
-                    payload: res.data.token,
-                    username: res.data.username
-                })
+            console.log(localStorage.getItem('token'))
+            
         })
-        // .then(res=> dispatch({
-        //     type: POST_LOGIN,
-        //     payload: res.data.token,
-        //     username: res.data.username
-        // }))
-        // .then(res=>{
-        //     console.log(res)
-        //     window.localStorage.setItem('token',res.payload)
-        //     window.localStorage.setItem('username',res.username)
-        //     console.log(window.localStorage.getItem('token'))
-        //     console.log(window.localStorage.getItem('username'))
-        // })
-        .then(res=> dispatch({
-            type: LOGIN_ERROR,
-            payload: "",
+        .then(res=>dispatch({
+            type: POST_LOGIN,
+            payload:res,
+            
         }))
         .catch(res=> dispatch({
             type: LOGIN_ERROR,
@@ -55,5 +37,36 @@ export const postRegister = (data) => dispatch =>{
 export const postLogoutAuth = () => dispatch =>{
     dispatch({
         type: POST_LOGOUT_AUTH
+    })
+}
+export const loadUser = (data) => (dispatch,getState) => {
+    dispatch({type: USER_LOADING});
+    delete axios.defaults.headers.common["Authorization"];
+    axios.post('http://127.0.0.1:8000/api/login/',data)
+    .then(res=>{
+        console.log(data)
+        dispatch({
+            type: USER_LOADED,
+            payload: res.data
+        })
+    }).catch(err=>{
+        dispatch({
+            type: AUTH_ERROR
+        })
+    })
+}
+export const postLogout = ()=> (dispatch,getState) =>{
+    let token = getState().authentication.token
+    axios.defaults.headers.common['Authorization'] = `Token ${token}`
+    axios.get('http://127.0.0.1:8000/api/logout/')
+    .then(res=>dispatch({
+        type: AUTH_ERROR
+    }))
+    .then(res=>dispatch({
+        type: POST_LOGOUT,
+    }))
+    .then(res=>{
+        window.localStorage.removeItem('token')
+        window.localStorage.removeItem('username')
     })
 }

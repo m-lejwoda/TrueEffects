@@ -1,14 +1,14 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import '../sass/login.scss';
 import {connect} from 'react-redux';
-import {postLogin} from '../redux/actions/authenticationActions';
+import {postLogin,loadUser} from '../redux/actions/authenticationActions';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft,faArrowRight } from '@fortawesome/fontawesome-free-solid';
 import AuthenticateLogo from './AuthenticateLogo';
 import { useHistory } from "react-router-dom";
-
+import {getMeasurements,postTraining,getTrainings,getGoals,getExercises} from '../redux/actions/trainingActions';
 const useStyles = makeStyles((theme) => ({
     root: {
       '& .MuiTextField-root': {
@@ -24,6 +24,9 @@ const useStyles = makeStyles((theme) => ({
   }));
 
 const Login = (props) => {
+    if(props.token !== null){
+        props.history.push('/')
+    }
     const handleMoveToRegister = () => {
         props.history.push('/register')
     }
@@ -33,18 +36,14 @@ const Login = (props) => {
     const [login,setLogin] = useState("")
     const [password,setPassword] = useState("")
     const classes = useStyles();
-    const  handleLogin = async (e) =>{
-        e.preventDefault()
+    const  handleLogin = async(e)=>{
+        e.preventDefault();
         let data= {
             "username": login,
             "password": password
         }
-        await props.postLogin(data)        
+        await props.loadUser(data)
     }
-    if (props.token !== ''){
-        props.history.push('/')
-    }
-    
     return (
         
         <div className="login">
@@ -86,7 +85,8 @@ const mapStateToProps = (state) => {
     return{
         // trainings: state.training.trainings.data,
         error: state.authentication.error,
-        token: state.authentication.token
+        token: state.authentication.token,
+        tokenloaded: state.authentication.tokenloaded
     }
 }
-export default connect(mapStateToProps,{postLogin})(Login); 
+export default connect(mapStateToProps,{postLogin,getMeasurements,postTraining,getTrainings,getGoals,getExercises,loadUser})(Login); 

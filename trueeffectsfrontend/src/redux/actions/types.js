@@ -19,5 +19,8 @@ export const LOGIN_ERROR = 'LOGIN_ERROR';
 export const REGISTER_ERROR = 'REGISTER_ERROR';
 export const GET_EXERCISES = 'GET_EXERCISES';
 export const GET_EXERCISES_SUCCESS = 'GET_EXERCISES_SUCCESS';
+export const AUTH_ERROR = "AUTH_ERROR";
+export const USER_LOADED = "USER_LOADED";
+export const USER_LOADING = "USER_LOADING";
 
 

@@ -20,7 +20,13 @@ const AddMeasurements = (props) => {
     const [bodyfat,setBodyFat] = useState(0)
     const [summary,setSummary] = useState(false)
     const [data,setData] = useState()
-    const [olddata,setOldData] = useState(props.measurements[props.measurements.length-1])
+    const [olddata,setOldData] = useState(()=>{
+        if(props.measurements[props.measurements.length-1] !== undefined){
+            return props.measurements[props.measurements.length-1]
+        }else{
+            return undefined
+        }
+    })
     const [startDate, setStartDate] = useState("");
     const [actualDate, setActualDate] = useState("")
     const handleDate = (date) =>{
@@ -30,8 +36,8 @@ const AddMeasurements = (props) => {
         let fulldate = year + "-" + month + "-" + day
         setActualDate(fulldate)
         setStartDate(date)
-        
     }
+    //props.measurements[props.measurements.length-1]
     const handlePostMeasurement = async() => {
         let data = 
         {
@@ -52,10 +58,8 @@ const AddMeasurements = (props) => {
         await props.getMeasurements()
         setData(data)
         setSummary(true)
-        
     }
     registerLocale('pl',pl)
-    console.log(olddata)
     return (
         
         <div className="addmeasurements">
@@ -63,7 +67,7 @@ const AddMeasurements = (props) => {
             <>
             <div className="addmeasurements-title">Dodaj pomiary</div>
             <div className="addmeasurements__container">
-            <div className="addmeasurements__container__oldmeasurementscontainer">
+            {olddata !== undefined && <div className="addmeasurements__container__oldmeasurementscontainer">
                 <div className="addmeasurements__container__oldmeasurementscontainer-title">Ostatni pomiar</div>
 
                 <div className="addmeasurements__container__oldmeasurementscontainer__data">
@@ -71,7 +75,6 @@ const AddMeasurements = (props) => {
                         {olddata.date}
                     </div>
                     </div>
-        
                 <div className="addmeasurements__container__oldmeasurementscontainer__elements">
                 <div className="addmeasurements__container__oldmeasurementscontainer__elements__element">
                     <div className="addmeasurements__container__oldmeasurementscontainer__elements__element-name">Waga</div>
@@ -106,7 +109,7 @@ const AddMeasurements = (props) => {
                     <div className="addmeasurements__container__oldmeasurementscontainer__elements__element-result">{olddata.left_leg} cm</div>
                     </div>
                 </div>
-            </div>
+            </div>}
             <div className="addmeasurements__container__newmeasurementscontainer">
             <div className="addmeasurements__container__newmeasurementscontainer-title">Aktualny pomiar</div>
                 <div className="addmeasurements__container__newmeasurementscontainer__data">

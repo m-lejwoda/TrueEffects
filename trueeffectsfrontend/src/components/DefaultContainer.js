@@ -6,6 +6,7 @@ import Training from './Training';
 import Schedule from './Schedule';
 import Homepage from './Homepage';
 import AddGoals from './AddGoals';
+import LoginContainer from './LoginContainer';
 import {connect} from 'react-redux';
 import {getMeasurements,postTraining,getTrainings,getGoals,getExercises} from '../redux/actions/trainingActions';
 //import MeasurementsNotification from './MeasurementsNotification';
@@ -17,18 +18,23 @@ import { BoxLoading } from 'react-loadingg';
 import AddMeasurementsSummary from './AddMeasurementsSummary';
 import { useHistory } from "react-router-dom";
 const DefaultContainer = (props) => {
-  useEffect(()=>{
-    console.log(window.localStorage.getItem('token'))
-    // if(window.localStorage.getItem('token') === null){
-    //   props.history.push('/login')
-    // }
-    console.log("Default Container")
-    props.getMeasurements();
-    props.getTrainings();
-    props.getGoals();
-    props.getExercises();
-  },[])
   
+  useEffect(()=>{
+    if(props.token){
+      console.log("musze załadować część")
+      props.getMeasurements(props.token);
+      props.getTrainings(props.token);
+      props.getGoals(props.token);
+      props.getExercises(props.token);
+    }else{
+      props.history.push('/login')
+    }
+  },[])
+  useEffect(()=>{
+    if (props.token === null){
+      props.history.push('/login')
+    }
+  },[props.token])
 return(
     <div className="containerdefault">
       {props.loadedtrainings && props.loadedgoals && props.loadedmeasurements && props.loadedexercises ?  <>
@@ -42,13 +48,15 @@ return(
       <Route path="/createtraining" component={CreateTraining}/>
       <Route path="/measurementsummary" component={AddMeasurementsSummary} />
       <Route path="/addgoals" component={AddGoals} />
+      <Route exact path="/login" component={LoginContainer} />
+      <Route exact path="/register" component={LoginContainer} />
       </>
       : <BoxLoading />}
     </div>  
  )}
  const mapStateToProps = (state) => {
   return{
-      
+      token : state.authentication.token,
       loadedtrainings: state.training.loadedtrainings,
       loadedmeasurements: state.training.loadedmeasurements,
       loadedgoals: state.training.loadedgoals,

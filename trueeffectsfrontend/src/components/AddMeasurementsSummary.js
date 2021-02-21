@@ -14,6 +14,7 @@ const AddMeasurementsSummary = (props) => {
             <Logo />
             <div className="addmeasurementssummary-title">Właśnie zaaktualizowałeś swoje pomiary</div>
             <div className="addmeasurementssummary-secondtitle">Zmiany:</div>
+            {props.olddata !== undefined ?
             <div className="addmeasurementssummary__elements">
                 <div className="addmeasurementssummary__elements__element" style={{color: props.olddata.weight >= props.newdata.weight ? 'red' : 'green' }}>Waga <span>{props.olddata.weight}{'=>'}{props.newdata.weight}</span></div>
                 <div className="addmeasurementssummary__elements__element" style={{color: props.olddata.growth >= props.newdata.growth ? 'red' : 'green' }}>Wzrost <span>{props.olddata.growth}{'=>'}{props.newdata.growth}</span></div>
@@ -25,6 +26,17 @@ const AddMeasurementsSummary = (props) => {
                 <div className="addmeasurementssummary__elements__element" style={{color: props.olddata.right_leg >= props.newdata.right_leg ? 'red' : 'green' }}>Prawa noga <span>{props.olddata.right_leg}{'=>'}{props.newdata.right_leg}</span></div>
                 <div className="addmeasurementssummary__elements__element"></div>
             </div>
+            :<div className="addmeasurementssummary__elements">
+                <div className="addmeasurementssummary__elements__element" >Waga <span>{props.newdata.weight}</span></div>
+                <div className="addmeasurementssummary__elements__element" >Wzrost <span>{props.newdata.growth}</span></div>
+                <div className="addmeasurementssummary__elements__element" >Lewy biceps <span>{props.newdata.left_biceps}</span></div>
+                <div className="addmeasurementssummary__elements__element" >Prawy biceps <span>{props.newdata.right_biceps}</span></div>
+                <div className="addmeasurementssummary__elements__element" >Lewe przedramię <span>{props.newdata.left_forearm}</span></div>
+                <div className="addmeasurementssummary__elements__element" >Prawe przedramię <span>{props.newdata.right_forearm}</span></div>
+                <div className="addmeasurementssummary__elements__element" >Lewa noga <span>{props.newdata.left_leg}</span></div>
+                <div className="addmeasurementssummary__elements__element" >Prawa noga <span>{props.newdata.right_leg}</span></div>
+            <div className="addmeasurementssummary__elements__element"></div>
+        </div>}
             <div className="addmeasurementssummary__button">
                 <button onClick={handlemovetohomepage}>Dalej</button>
             </div>
