@@ -7,8 +7,6 @@ import {connect} from 'react-redux';
 import {postMeasurement,getMeasurements} from '../redux/actions/trainingActions';
 import AddMeasurementsSummary from './AddMeasurementsSummary';
 const AddMeasurements = (props) => {
-    console.log("addMeasurements")
-    console.log(props.measurements)
     const [weight,setWeight] = useState(0)
     const [growth,setGrowth] = useState(0)
     const [leftbiceps,setLeftBiceps] = useState(0)
@@ -37,7 +35,6 @@ const AddMeasurements = (props) => {
         setActualDate(fulldate)
         setStartDate(date)
     }
-    //props.measurements[props.measurements.length-1]
     const handlePostMeasurement = async() => {
         let data = 
         {
@@ -61,7 +58,6 @@ const AddMeasurements = (props) => {
     }
     registerLocale('pl',pl)
     return (
-        
         <div className="addmeasurements">
             {summary ? <AddMeasurementsSummary newdata={data} olddata={olddata}/> :
             <>

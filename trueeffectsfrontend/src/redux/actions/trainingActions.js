@@ -2,8 +2,8 @@ import {POST_LOGOUT,AUTH_ERROR,GET_MEASUREMENTS_SUCCESS,GET_MEASUREMENTS,POST_TR
 import axios from 'axios';
 
 export const getMeasurements =(token)=>(dispatch,getState) => {
-    
     dispatch({type: GET_MEASUREMENTS})
+    let token = getState().authentication.token
     axios.defaults.headers.common['Authorization'] = `Token ${token}`
     axios.get('http://127.0.0.1:8000/api/display_personal_dimensions/')
     .then(res=> dispatch({
@@ -76,14 +76,16 @@ export const postGoals = (data) => (dispatch,getState) => {
     
 }
 export const postMeasurement = (data) => (dispatch,getState) =>{
-    let token = window.localStorage.getItem('token')
-    if (token === null){
-        token = getState().authentication.token
-    }
+    let token = getState().authentication.token
+    console.log(data)
     dispatch({type: POST_MEASUREMENT})
     axios.defaults.headers.common['Authorization'] = `Token ${token}`
     axios.post('http://127.0.0.1:8000/api/create_personal_dimensions/',data)
     .then(res=>dispatch({
         type: POST_MEASUREMENT_SUCCESS,
     }))
+    .catch(err=>{
+        console.log(err.response)
+    })
+
 }
