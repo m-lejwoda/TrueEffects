@@ -1,14 +1,26 @@
-import React from 'react';
+import React,{useState,useEffect} from 'react';
 import '../sass/displaymeasurements.scss';
 import {connect} from 'react-redux';
 import DisplayMeasurementsItem from './DisplayMeasurementsItem';
-const DisplayMeasurements = (props) => {
-    let reverse = props.measurements.slice(8).reverse()
+const DisplayMeasurements = (props) => { 
+    const [measurements,setMeasurements] = useState(props.measurements)
+    useEffect(()=>{
+        setMeasurements(()=>{
+            let meas
+            if(props.measurements.length>8){
+                meas = props.measurements.slice(8)
+                meas.slice(0).reverse()
+                return meas  
+            }else{
+                meas = props.measurements.slice(0).reverse()}
+                return meas
+            })
+    },[])
     return (
         <div className="displaymeasurements">
             <div className="displaymeasurements-title">Twoje ostatnie 9 pomiarów</div>
             <div className="displaymeasurements__containers">
-                {reverse.map((measurement)=><DisplayMeasurementsItem measurement={measurement}/>)}
+                {measurements.map((measurement)=><DisplayMeasurementsItem measurement={measurement}/>)}
             </div>
         </div>
     );
