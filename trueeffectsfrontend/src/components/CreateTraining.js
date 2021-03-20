@@ -58,7 +58,8 @@ const CreateTraining = (props) => {
           }]);
     }
     const clearState = () =>{
-        // console.log("clear state")
+        
+        // Domyślne dane
         setSeries(1)
         // setAssumedReps(1)
         // setRest(60)
@@ -68,6 +69,8 @@ const CreateTraining = (props) => {
         // setEccentricPhase(0)
         // setPauseEccentricPhase(0)
     }
+    
+    
     const handleClickExercise = (e,element) =>{
         if(activediv !== null){
             activediv.style.background = "#457B9D"
@@ -86,16 +89,14 @@ const CreateTraining = (props) => {
         clearState()
     }
     const handleChangeinTrainingItems = (e,element) =>{
-        let assumed = {"assumedreps" : e.target.value}
-        items[element.id].assumedreps = assumed
-        
+        let temp = [...itemsplaceholders];
+        temp[element.id] = e.target.value
+        setItemsPlaceHolders(temp)
     }
     const handleAcceptTraining = () => {
         let date = new Date(training_date.current.input.value)
         let splitdate = training_date.current.input.value.split("/")
         let fullday = splitdate[2] + "-" + splitdate[1] + "-" +  splitdate[0]
-        
-
         let array = {
             name: name_of_training.current.value,
             description: training_description.current.value,
@@ -104,26 +105,27 @@ const CreateTraining = (props) => {
             training: []
         }
         let allobjects = []
-        console.log(items)
-        for(let i=0;i<items.length;i++){
+        let temparray = [...itemsplaceholders]
+        for(let i=0;i<seriesitems.length;i++){
             let objects = {reps: []}
             objects["exercise"] = exercise
-            objects["pause_after_concentric_phase"]=items[i].pauseconcentricphase.pauseconcentricphase
-            objects["pause_after_eccentric_phase"]=items[i].pauseeccentricphase.pauseeccentricphase
-            objects["weight"] = items[i].weight.weight
-            objects["series"] = items[i].series.series
-            objects["rest"] = items[i].rest.rest
-            for(let j=0;j<items[i].series.series;j++){
-                objects["reps"].push({reps: items[i].assumedreps.assumedreps})
-                // console.log(items[i].assumedreps.assumedreps)
+            objects["pause_after_concentric_phase"]=seriesitems[i].pauseconcentricphase.pauseconcentricphase
+            objects["pause_after_eccentric_phase"]=seriesitems[i].pauseeccentricphase.pauseeccentricphase
+            objects["weight"] = seriesitems[i].weight.weight
+            objects["series"] = seriesitems[i].series.series
+            objects["rest"] = seriesitems[i].rest.rest
+            console.log(seriesitems[i].series.series)
+            let secondtemparray = []
+            for(let k=0; k<seriesitems[i].series.series;k++){
+                let temp = temparray.shift();
+                secondtemparray.push(temp)
+                objects['reps'] = secondtemparray  
             }
+            console.log(objects)
             array["training"].push(objects)
             allobjects.push(objects)
-            
-
         }
-        // console.log(items)
-        // console.log(allobjects)
+        console.log(seriesitems)
         // props.postTraining(array)
     }
     return (

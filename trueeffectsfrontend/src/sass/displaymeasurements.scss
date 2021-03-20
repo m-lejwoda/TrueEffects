@@ -36,9 +36,9 @@ $pink2:#457B9D;
         font-size:1.2rem;
         display:flex;
         flex-wrap:wrap;
-        width:100%;
-        height: 100%;
-        justify-content: space-around;
+        width: calc(100% - 64px);
+        padding-left: 1rem;
+        justify-content: space-between;
         &__container{
             margin-top: 2rem;
             padding-top:1rem;
@@ -46,7 +46,8 @@ $pink2:#457B9D;
             padding-right:1rem;
             background-color:$pink2;
             width:30%;
-            height: 25%;
+            // height: 25%;
+            height: 220px;
             min-width: 300px;
             &__elements{
                 &-date{
