@@ -22,5 +22,7 @@ export const GET_EXERCISES_SUCCESS = 'GET_EXERCISES_SUCCESS';
 export const AUTH_ERROR = "AUTH_ERROR";
 export const USER_LOADED = "USER_LOADED";
 export const USER_LOADING = "USER_LOADING";
-
+export const GET_TIME = "GET_TIME";
+export const GET_TIME_SUCCESS = "GET_TIME_SUCCESS";
+export const GET_TIME_RESET = "GET_TIME_RESET";
 

@@ -1,3 +1,22 @@
+@mixin breakpoint($point){
+    @if $point == mobile{
+      @media screen  and (max-width:500px){@content;}
+    }
+    @else if $point == mobilebig{
+        @media screen  and (max-width:700px){@content;}
+    }
+    @else if $point == laptop{
+      @media screen  and (max-width:900px){@content;}
+    }
+    @else if $point == desktop{
+      @media screen  and (max-width:1200px){@content;}
+    }
+    @else if $point == desktopsmall{
+        @media screen and(max-width:1400px){@content;}
+    }
+    @else if $point == LGdesktop{
+      @media screen and (min-width:1401px){@content;}
+    }}
 $pink: #1D3557;
 $pink2:#457B9D;
 .displaymeasurements{
@@ -28,6 +47,7 @@ $pink2:#457B9D;
             background-color:$pink2;
             width:30%;
             height: 25%;
+            min-width: 300px;
             &__elements{
                 &-date{
                     display:flex;

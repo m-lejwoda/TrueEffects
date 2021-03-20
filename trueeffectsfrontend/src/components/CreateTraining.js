@@ -10,7 +10,8 @@ import pl from "date-fns/locale/pl";
 import { postTraining } from '../redux/actions/trainingActions';
 const CreateTraining = (props) => {
     registerLocale('pl',pl)
-    const [startDate, setStartDate] = useState(new Date());
+    const [startDate, setStartDate] = useState(new Date())
+    const [ownexerciseActive,setOwnExerciseActive] = useState(false)
     const [activediv , setActivediv] = useState(null)
     const [ownexercise,setOwnExercise] = useState('')
     const [exercise,setExercise] = useState({id: '', name:''})
@@ -24,11 +25,26 @@ const CreateTraining = (props) => {
     const [pauseeccentricphase,setPauseEccentricPhase] = useState(0)
     const [itemsplaceholders,setItemsPlaceHolders] = useState([])
     const [items,setItems] = useState([])
+    const [seriesitems,setSeriesItems] = useState([])
     const name_of_training = useRef(null);
     const training_description = useRef(null);
     const training_date = useRef(null);
     const addElementtoItems = () =>{
         setItems(prevItems => [...prevItems, {
+            exercise : {exercise},
+            ownexercise: {ownexercise},
+            series: {series},
+            assumedreps: {assumedreps},
+            rest: {rest},
+            weight: {weight},
+            concentricphase:{concentricphase},
+            pauseconcentricphase:{pauseconcentricphase},
+            eccentricphase:{eccentricphase},
+            pauseeccentricphase:{pauseeccentricphase}
+          }]);
+    }
+    const addElementstoMainItems = () => {
+        setSeriesItems(prevItems => [...prevItems, {
             exercise : {exercise},
             ownexercise: {ownexercise},
             series: {series},
@@ -53,9 +69,6 @@ const CreateTraining = (props) => {
         // setPauseEccentricPhase(0)
     }
     const handleClickExercise = (e,element) =>{
-        console.log(element)
-        console.log(element.id)
-        console.log(element.name)
         if(activediv !== null){
             activediv.style.background = "#457B9D"
         }
@@ -65,7 +78,7 @@ const CreateTraining = (props) => {
         e.target.style.background = '#db3d44'
     }
     const handleClickSelect = (e) =>{
-        
+        addElementstoMainItems()
         for(let i=0;i<series;i++){
             setItemsPlaceHolders(oldArray => [...oldArray, assumedreps])
             addElementtoItems()
@@ -80,13 +93,8 @@ const CreateTraining = (props) => {
     const handleAcceptTraining = () => {
         let date = new Date(training_date.current.input.value)
         let splitdate = training_date.current.input.value.split("/")
-        // let year = date.getFullYear() 
-        // let month = date.getMonth() 
-        // let day = date.getDay() 
-        // let fullday = year + "-" + month + "-" + day
         let fullday = splitdate[2] + "-" + splitdate[1] + "-" +  splitdate[0]
-        console.log("fullday")
-        console.log(fullday)
+        
 
         let array = {
             name: name_of_training.current.value,
@@ -96,13 +104,9 @@ const CreateTraining = (props) => {
             training: []
         }
         let allobjects = []
+        console.log(items)
         for(let i=0;i<items.length;i++){
             let objects = {reps: []}
-            // for(let j=0;j<props.exercises.length;j++){
-            //     if (items[i].exercise.exercise === props.exercises[j].name){
-            //         objects["exercise"] = props.exercises[j].id
-            //     } 
-            // }
             objects["exercise"] = exercise
             objects["pause_after_concentric_phase"]=items[i].pauseconcentricphase.pauseconcentricphase
             objects["pause_after_eccentric_phase"]=items[i].pauseeccentricphase.pauseeccentricphase
@@ -111,12 +115,16 @@ const CreateTraining = (props) => {
             objects["rest"] = items[i].rest.rest
             for(let j=0;j<items[i].series.series;j++){
                 objects["reps"].push({reps: items[i].assumedreps.assumedreps})
+                // console.log(items[i].assumedreps.assumedreps)
             }
             array["training"].push(objects)
             allobjects.push(objects)
+            
 
         }
-        props.postTraining(array)
+        // console.log(items)
+        // console.log(allobjects)
+        // props.postTraining(array)
     }
     return (
         <div className="createtraining">
@@ -127,6 +135,16 @@ const CreateTraining = (props) => {
                         <div className="createtraining__containers__first__selectors-globalexercise">Ćwiczenia</div>
                         <div className="createtraining__containers__first__selectors-myexercise">Moje Ćwiczenia</div>
                     </div>
+                    <div className="createtraining__containers__first__newexercise">
+                        <div className="createtraining__containers__first__newexercise-title">Wprowadź nazwę ćwiczenia lub wyszukaj</div>
+                        <span>
+                            <input placeholder="Wprowadź swoje ćwiczenie" />
+                        </span>
+                        <div className="createtraining__containers__first__newexercise-button">
+                            <button>Dodaj </button>
+                        </div>
+                    </div>
+
                     <div className='createtraining__containers__first-input'>Wyszukaj ćwiczenie</div>
                     <div className="createtraining__containers__first__exercises">
                         {props.exercises.map((element)=><div className="createtraining__containers__first__exercises__element "onClick={(e)=>handleClickExercise(e,element)}>{element.name}</div>)}
@@ -165,8 +183,6 @@ const CreateTraining = (props) => {
                                     
                                 </tr>
                                 {items.length > 0 ? items.map((item,id)=>{
-                                    // console.log(id)
-                                    // console.log(item)
                                     return(
                                     <tr>
                                         <td>{item.exercise.exercise.name}</td>

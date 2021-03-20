@@ -14,7 +14,6 @@ const MyStopwatch=(props) => {
   } = useStopwatch({ autoStart: false });
   
   const handleStart = () =>{
-      console.log("handle start")
       props.setStopStoper(false)
       start()
   }
@@ -27,7 +26,6 @@ if(props.endtraining === true){
   props.setminutes(minutes)
   props.sethours(hours)
 }
-// console.log(props.endbuttonRef)
   return (
     <div style={{textAlign: 'center'}}>
       <div style={{fontSize: '100px'}}>

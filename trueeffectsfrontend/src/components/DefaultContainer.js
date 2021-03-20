@@ -9,7 +9,6 @@ import AddGoals from './AddGoals';
 import LoginContainer from './LoginContainer';
 import {connect} from 'react-redux';
 import {getMeasurements,postTraining,getTrainings,getGoals,getExercises} from '../redux/actions/trainingActions';
-//import MeasurementsNotification from './MeasurementsNotification';
 import DisplayMeasurements from './DisplayMeasurements'
 import AddMeasurements from './AddMeasurements';
 import CreateTraining from './CreateTraining';
@@ -21,7 +20,6 @@ const DefaultContainer = (props) => {
   
   useEffect(()=>{
     if(props.token){
-      console.log("musze załadować część")
       props.getMeasurements(props.token);
       props.getTrainings(props.token);
       props.getGoals(props.token);

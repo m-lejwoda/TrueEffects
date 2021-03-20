@@ -1,5 +1,4 @@
 import React,{useState,useRef,useEffect} from 'react';
-import ReactStopwatch from 'react-stopwatch';
 import MyStopwatch from './MyStopwatch';
 import '../sass/training.scss';
 import logo from '../images/logo.png';
@@ -8,9 +7,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Checkbox from '@material-ui/core/Checkbox';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft,faArrowRight } from '@fortawesome/fontawesome-free-solid';
-
-import ReactTimerStopwatch from 'react-stopwatch-timer';
-import SelectInput from '@material-ui/core/Select/SelectInput';
 const useStyles = makeStyles({
   root: {
     '&:hover': {
@@ -84,9 +80,10 @@ const Training = (props) => {
     const buttonRef = useRef()
     const endbuttonRef = useRef()
     const fromTime = new Date(0, 0, 0, 0, 0, 0, 0);
+    console.log(training.training[`${series}`].reps)
     const goNext = () =>{
-      training.training[`${series}`].reps[`${singleSeries}`]['reps']= parseInt(inputRef.current.value)
-      // { "reps" : inputRef.current.value}
+      console.log(training.training[`${series}`].reps[`${singleSeries}`])
+      training.training[`${series}`].reps[`${singleSeries}`]= parseInt(inputRef.current.value)
       let value = parseInt(inputRef.current.value)
       let placeholder = parseInt(inputRef.current.placeholder)
       if(Number.isInteger(value)){
@@ -154,14 +151,20 @@ const Training = (props) => {
     alert("Trening zakończony"+ hour +":" + min + ":" + sec)
     
   }
+  const takeStopwatchData = (h,m,s,) =>{
+    setHours(h)
+    setMinutes(m)
+    setSeconds(s)
+  }
   const handleEndTraining = ()=>{
-    setEndTrainin(true)
+    // setEndTrainin(true)
     setStopStoper(true)
   }
   if (seconds !== 0 || minutes !== 0 ||  hours !== 0){
     displayAlert()
  }
  console.log(training)
+ console.log(training.training[series])
     return (
         <div className="training">
             <div className="training__top">
@@ -171,38 +174,44 @@ const Training = (props) => {
                 </div>
                 {typeof training.training[series+1] !== "undefined" && <div className="training__top__nextexercise">
                     <div style={{visibility: typeof training.training[series+1] !== "undefined" ? 'visible' : 'hidden' }} className="training__top__nextexercise-title">Następne ćwiczenie <FontAwesomeIcon icon={faArrowRight} /></div>
-                    <div style={{visibility: typeof training.training[series+1] !== "undefined" ? 'visible' : 'hidden' }} className="training__top__nextexercise-name">{typeof training.training[series+1] !== "undefined" &&  training.training[series+1].exercise.name}</div>
+                    <div style={{visibility: typeof training.training[series+1] !== "undefined" ? 'visible' : 'hidden' }} className="training__top__nextexercise-name">{typeof training.training[series+1] !== "undefined" &&  training.training[series+1].exercise !== null ? training.training[series+1].exercise.name !== null: training.training[series+1].ownexercise.name}</div>
                 </div>}
             </div>
             <div className="training__middle">
                 <div className="training__middle-title">Aktualne Ćwiczenie</div>
-                <div className="training__middle-exercise">{training.training[series].exercise.name}</div>
+                <div className="training__middle-exercise">{training.training[series].exercise !== null ? training.training[series].exercise.name : training.training[series].ownexercise.name}</div>
                 <div className="training__middle__logotime">
                     <div className="training__middle__logotime-logo">
                       <img src={logo} alt="logo"  />
                     </div>
                     <div className="training__middle__logotime-time">
-                    <MyStopwatch setseconds={setSeconds} setminutes={setMinutes} sethours={setHours} endtraining={endtrainin} endbuttonref={endbuttonRef} stopstoper={stopStoper} setStopStoper={setStopStoper}/>
+                    <MyStopwatch setseconds={setSeconds} setminutes={setMinutes} sethours={setHours}  endtraining={endtrainin} endbuttonref={endbuttonRef} stopstoper={stopStoper} setStopStoper={setStopStoper}/>
                   </div>
                 </div>
                 <div className="training__middle__series">
-                    <div className="training__middle__series__checkboxes">
-                      
-                      {/* <StyledCheckbox defaultChecked/>
-                      <StyledCheckbox defaultChecked />
-                      <StyledCheckbox disabled />
-                      <StyledCheckbox defaultChecked />
-                      <StyledCheckbox defaultChecked /> */}
+                    <div className="training__middle__series__checkboxes" style={{visibility: endtraining ? 'hidden' : 'visible' }}>
+                    {training.training[`${series}`].reps.map(function (item,index) {
+                      if(index < singleSeries+1){
+                        
+                        return (
+                          <Checkbox checked={true} />
+                        )
+                        }else{
+                        return(
+                          <Checkbox disabled checked={false}/>
+                        )
+                      }
+                      }
+                )}
                       </div>
-                      {/* {training.training[`${series}`].reps[singleSeries]} */}
-                    <div className="training__middle__series-title">Seria {singleSeries+1}/{training.training[`${series}`].reps.length}</div>
+                    <div className="training__middle__series-title" style={{visibility: endtraining ? 'hidden' : 'visible' }}>Seria {singleSeries+1}/{training.training[`${series}`].reps.length}</div>
                 </div>
             </div>
             <div className="training__bottom">
                 <div className="training__bottom__leftbutton">
                     <button id="endtraining" ref={endbuttonRef} onClick={handleEndTraining}>Zakończ trening X</button>
                 </div>
-                <div className="training__bottom__phase">
+                <div className="training__bottom__phase" style={{visibility: endtraining ? 'hidden' : 'visible' }}>
                     <div className="training__bottom__phase-title">Fazy(w sekundach)</div>
                     <div className="training__bottom__phase__allphases">
                         <div className="training__bottom__phase__allphases-phase">{training.training[`${series}`].concentric_phase}</div>
@@ -215,9 +224,9 @@ const Training = (props) => {
                     </div>
                     <div className="training__bottom__phase-title2">Ile powtórzeń wykonałeś w serii</div>
                     <div className="training__bottom__phase__reps">
-                        <div className="training__bottom__phase__reps-actualreps"><input ref={inputRef} placeholder={training.training[`${series}`].reps[`${singleSeries}`]['reps']} onChange={handleInput} id="actualreps" min="0" max="10000" /></div>
+                        <div className="training__bottom__phase__reps-actualreps"><input ref={inputRef} placeholder={training.training[`${series}`].reps[`${singleSeries}`]} onChange={handleInput} id="actualreps" min="0" max="10000" /></div>
                         <div className="training__bottom__phase__reps-/">/</div>
-                        <div className="training__bottom__phase__reps-assumedreps">{training.training[`${series}`].reps[`${singleSeries}`]['reps']}</div>
+                        <div className="training__bottom__phase__reps-assumedreps">{training.training[`${series}`].reps[`${singleSeries}`]}</div>
                     </div>
                 </div>
                 <div className="training__bottom__rightbutton">

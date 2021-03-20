@@ -44,12 +44,13 @@ export default function authreducer(state=initialState,action){
                 isLoading: true
             }
         case USER_LOADED:
+            console.log(action.payload.name)
             return{
                 ...state,
                 isLoaded: true,
                 isAuthenticated: true,  
                 token: action.payload.token,
-                name: action.payload.name
+                name: action.payload.username
             }
         case AUTH_ERROR:
             localStorage.removeItem('token')

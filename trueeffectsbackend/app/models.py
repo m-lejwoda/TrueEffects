@@ -5,6 +5,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
 from django.core.validators import int_list_validator,validate_comma_separated_integer_list
+from django.contrib.postgres.fields import ArrayField
 class Exercise(models.Model):
     name = models.CharField(max_length=100)
     # def __str__(self):
@@ -17,9 +18,6 @@ class AssumedReps(models.Model):
         return str(self.assumedreps)
 class Reps(models.Model):
     reps = models.IntegerField()
-    # def __str__(self):
-    #     return str(self.reps)
-
 class AllSeries(models.Model):
     #series = models.ManyToManyField(SingleSeries)
     number_of_series = models.IntegerField()
@@ -76,8 +74,8 @@ class OwnExercise(models.Model):
 
 class SingleSeries(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
-    exercise = models.ForeignKey(Exercise,on_delete=models.CASCADE,default=None,null = True)
-    ownexercise = models.ForeignKey(OwnExercise,on_delete=models.CASCADE,default=None,null = True)
+    exercise = models.ForeignKey(Exercise,on_delete=models.CASCADE,default=None,blank=True, null=True)
+    ownexercise = models.ForeignKey(OwnExercise,on_delete=models.CASCADE,default=None,blank=True, null=True)
     weight = models.FloatField()
     rest = models.IntegerField()
     concentric_phase = models.IntegerField(default=0)
@@ -85,7 +83,8 @@ class SingleSeries(models.Model):
     pause_after_concentric_phase = models.IntegerField()
     pause_after_eccentric_phase = models.IntegerField()
     # reps = models.ManyToManyField(Reps)
-    reps = models.CharField(validators=[validate_comma_separated_integer_list],max_length=255,default=None)  
+    # reps = models.CharField(validators=[validate_comma_separated_integer_list],max_length=255,default=None)
+    reps = ArrayField(models.IntegerField(), blank=True)
     
 
 class Training(models.Model):

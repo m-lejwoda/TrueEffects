@@ -1,6 +1,5 @@
 import React from 'react';
 import '../sass/navbar.scss';
-//import App from '../App';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -32,9 +31,6 @@ const Navbar = (props) => {
   const history = useHistory()
     const handleLogout = async() =>{
       await props.postLogout()
-      
-      // history.push('/login')
-      
     }
       const classes = useStyles();
       return (
@@ -46,7 +42,7 @@ const Navbar = (props) => {
                 <Typography variant="h6" className={classes.title}>
                   <FontAwesomeIcon icon={faDumbbell} />TrueEffects
                 </Typography>
-                {window.localStorage.getItem('username') !== undefined ?<> <p>Witaj {window.localStorage.getItem('username')}<Button onClick={handleLogout} color="inherit">Wyloguj się</Button></p></>:<><Button color="inherit">Login</Button></>}
+                {props.name !== null ?<> <p>Witaj {props.name}<Button onClick={handleLogout} color="inherit">Wyloguj się</Button></p></>:<><Button color="inherit">Zaloguj się</Button></>}
               </Toolbar>
             </AppBar>
           </div>
@@ -57,7 +53,8 @@ const mapStateToProps = (state) => {
       trainings: state.training.trainings.data,
       loadedtrainings: state.training.loadedtrainings,
       measurements: state.training.measurements.data,
-      goals: state.training.goals.data
+      goals: state.training.goals.data,
+      name: state.authentication.name
   }
 }
 export default connect(mapStateToProps,{postLogout})(Navbar); 

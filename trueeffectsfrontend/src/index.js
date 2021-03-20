@@ -6,10 +6,6 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Route,Switch } from 'react-router-dom';
 import {Provider} from 'react-redux'
 import store from './store';
-
-//import MenuIcon from '@material-ui/icons/Menu';
-
-// Be sure to include styles at some point, probably during your bootstraping
 import '@trendmicro/react-sidenav/dist/react-sidenav.css';
 import './sass/index.scss';
 console.log("index.js")

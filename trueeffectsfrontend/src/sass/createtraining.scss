@@ -1,3 +1,41 @@
+@mixin breakpoint($point){
+    @if $point == mobile{
+      @media screen  and (max-width:500px){@content;}
+    }
+    @else if $point == mobilebig{
+        @media screen  and (max-width:700px){@content;}
+    }
+    @else if $point == laptop{
+      @media screen  and (max-width:900px){@content;}
+    }
+    @else if $point == desktop{
+      @media screen  and (max-width:1200px){@content;}
+    }
+    @else if $point == desktopsmall{
+        @media screen and(max-width:1400px){@content;}
+    }
+    @else if $point == LGdesktop{
+      @media screen and (min-width:1401px){@content;}
+    }}
+    
+    $colors: (
+        fill: #a972cb,
+        pulse: #ef6eae, 
+        close: #ff7f82, 
+        raise: #ffa260, 
+        up: #e4cb58, 
+        slide: #8fc866, 
+        offset: #19bc8b
+      );
+      
+      // Sass variables compile to a static string; CSS variables are dynamic and inherited
+        // Loop through the map and set CSS custom properties using Sass variables
+      @each $button, $color in $colors {
+        .#{$button} {
+          --color: #{$color};
+          --hover: #{adjust-hue($color, 45deg)};
+        }
+      }
 $maincolor: #1D3557;
 $secondcolor: #457B9D;
 $thirdcolor: #db3d44;
@@ -16,6 +54,10 @@ $thirdcolor: #db3d44;
     &__containers{
         display:flex;
         justify-content: space-around;
+        @include breakpoint(laptop){
+            flex-direction: column;
+            align-items: center;
+        }
 
         
         &__first{
@@ -25,6 +67,58 @@ $thirdcolor: #db3d44;
             width:500px;
             background-color: $secondcolor;
             color:white;
+            &__newexercise{
+                display:flex;
+                justify-content: center;
+                flex-direction: column;
+                align-items: center;
+                margin-bottom:1rem;
+                &-button{
+                    width:100%;
+                    display:flex;
+                    justify-content: flex-end;
+                    margin-top:0.5rem;
+                    button{
+                        
+                        background-color: #db3d44;
+                        color:white;
+                        padding: 0.5rem 1rem 0.5rem 1rem;
+                        -webkit-transition: ease-out 0.4s;
+                        -moz-transition: ease-out 0.4s;
+                        transition: ease-out 0.4s;
+                        font-weight: 600;
+                        
+                    }
+                    button:hover{
+                        cursor:pointer;
+                    }
+                    button:hover{
+                        box-shadow: inset 400px 0 0 0 $maincolor;
+                    }
+                    
+
+                }
+                span:after{
+                    content: '';
+                    display: block;
+                    width: 320px;
+                    height: 2px;
+                    background-color: white;
+                }
+                input{
+                    margin-top:0.5rem;
+                    background-color: #457B9D;
+                    border: none;
+                    color: white;
+                    font-size: 1.4rem;
+                    font-weight: 600;
+                    text-align: center;
+                    width: 310px;
+                }
+                input:focus{
+                    outline:none;
+                }
+            }
             &__trainingdata{
                 display:flex;
                 flex-direction: column;

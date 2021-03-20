@@ -1,3 +1,23 @@
+@mixin breakpoint($point){
+    @if $point == mobile{
+      @media screen  and (max-width:500px){@content;}
+    }
+    @else if $point == mobilebig{
+        @media screen  and (max-width:700px){@content;}
+    }
+    @else if $point == laptop{
+      @media screen  and (max-width:900px){@content;}
+    }
+    @else if $point == desktop{
+      @media screen  and (max-width:1200px){@content;}
+    }
+    @else if $point == desktopsmall{
+        @media screen and(max-width:1400px){@content;}
+    }
+    @else if $point == LGdesktop{
+      @media screen and (min-width:1401px){@content;}
+    }}
+    
 $pink: #E90B33;
 $pink1: #FF5A5A;
 .addmeasurements{
@@ -7,6 +27,7 @@ $pink1: #FF5A5A;
     display:flex;
     flex-direction: column;
     color:white;
+    
     &-title{
         display:flex;
         width:100%;
@@ -23,6 +44,9 @@ $pink1: #FF5A5A;
         justify-content: space-evenly;
         padding:2rem;
         align-items: center;
+        @include breakpoint(laptop){
+            flex-direction: column;
+        }
         
         &__oldmeasurementscontainer{
             background-color:$pink1;
@@ -33,6 +57,10 @@ $pink1: #FF5A5A;
             width:500px;
             margin-right: 2rem;
             height:450px;
+            @include breakpoint(laptop){
+                width:auto;
+                margin-top: 6rem;
+            }
 
             &-title{
                 display:flex;
@@ -81,6 +109,11 @@ $pink1: #FF5A5A;
             padding:1rem 2rem 1rem 2rem;
             width:500px;
             height:450px;
+            @include breakpoint(laptop){
+                width:auto;
+                min-width: 200px;
+                margin-top: 2rem;
+            }
             &-title{
                 display:flex;
                 width:100%;
