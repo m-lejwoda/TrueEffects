@@ -134,10 +134,10 @@ const CreateTraining = (props) => {
             <div className="createtraining__containers">
                 <div className="createtraining__containers__first">
                     <div className="createtraining__containers__first__selectors">
-                        <div className="createtraining__containers__first__selectors-globalexercise">Ćwiczenia</div>
-                        <div className="createtraining__containers__first__selectors-myexercise">Moje Ćwiczenia</div>
+                        <div className="createtraining__containers__first__selectors-globalexercise" onClick={()=>setOwnExerciseActive(false)}>Ćwiczenia</div>
+                        <div className="createtraining__containers__first__selectors-myexercise" onClick={()=>setOwnExerciseActive(true)}>Moje Ćwiczenia</div>
                     </div>
-                    <div className="createtraining__containers__first__newexercise">
+                    <div className="createtraining__containers__first__newexercise" style={{display: ownexerciseActive ? 'flex' : 'none' }}>
                         <div className="createtraining__containers__first__newexercise-title">Wprowadź nazwę ćwiczenia lub wyszukaj</div>
                         <span>
                             <input placeholder="Wprowadź swoje ćwiczenie" />
