@@ -13,7 +13,9 @@ const initialState = {
     loadinggoals: false,
     loadedgoals:false,
     loadingexercises: false,
-    loadedexercises:false
+    loadedexercises:false,
+    loadedtime :false,
+    time: []
     
 };
 export default function trainreducer(state=initialState,action){
