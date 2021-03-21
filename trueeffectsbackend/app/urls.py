@@ -24,6 +24,9 @@ urlpatterns=[
     path('display_description_goals/',views.displayDescriptionGoals,name="display_description_goals"),
     path('create_description_goals/',views.createDescriptionGoals,name="display_description_goals"),
     path('update_training/',views.updateTraining,name="update_training"),
+    path('delete_goals/<str:pk>',views.deleteGoals,name="delete_goals"),
+    path('delete_measurement/<str:pk>',views.deleteMeasurement,name="delete_measurement"),
+    path('delete_training/<str:pk>',views.deleteTraining,name="delete_training"),
     path('overview/',views.apiOverview),
 ]
 #createTraining

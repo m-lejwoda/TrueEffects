@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState,useRef} from 'react';
 import '../sass/addmeasurements.scss';
 import DatePicker,{registerLocale} from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -18,6 +18,7 @@ const AddMeasurements = (props) => {
     const [bodyfat,setBodyFat] = useState(0)
     const [summary,setSummary] = useState(false)
     const [data,setData] = useState()
+    const inputdate = useRef(null)
     const [olddata,setOldData] = useState(()=>{
         if(props.measurements[props.measurements.length-1] !== undefined){
             return props.measurements[props.measurements.length-1]
@@ -25,20 +26,29 @@ const AddMeasurements = (props) => {
             return undefined
         }
     })
-    const [startDate, setStartDate] = useState("");
-    const [actualDate, setActualDate] = useState("")
-    const handleDate = (date) =>{
-        let day = date.getDay()
-        let month = date.getMonth()
-        let year = date.getFullYear()
-        let fulldate = year + "-" + month + "-" + day
-        setActualDate(fulldate)
-        setStartDate(date)
+    const [startDate, setStartDate] = useState(new Date());
+    const [actualDate, setActualDate] = useState(new Date())
+    const handleDate = () =>{
+        let date = new Date(inputdate.current.input.value)
+        let splitdate = inputdate.current.input.value.split("/")
+        let fullday = splitdate[2] + "-" + splitdate[1] + "-" +  splitdate[0]
+        // let day = date.getDay()
+        // let month = date.getMonth()
+        // let year = date.getFullYear()
+        // let fulldate = year + "-" + month + "-" + day
+        setActualDate(fullday)
+        // setStartDate(date)
     }
-    const handlePostMeasurement = async() => {
+    const handlePostMeasurement = () => {
+        async function fetchData(){
+            await props.postMeasurement(data)
+            await props.getMeasurements()
+        }
+        let splitdate = inputdate.current.input.value.split("/")
+        let fullday = splitdate[2] + "-" + splitdate[1] + "-" +  splitdate[0]
         let data = 
         {
-            "date":actualDate,
+            "date":fullday,
             "weight":weight,
             "growth":growth,
             "left_biceps":leftbiceps,
@@ -51,8 +61,7 @@ const AddMeasurements = (props) => {
 
         }
         setOldData(props.measurements[props.measurements.length-1])
-        await props.postMeasurement(data)
-        await props.getMeasurements()
+        fetchData()
         setData(data)
         setSummary(true)
     }
@@ -110,7 +119,8 @@ const AddMeasurements = (props) => {
             <div className="addmeasurements__container__newmeasurementscontainer-title">Aktualny pomiar</div>
                 <div className="addmeasurements__container__newmeasurementscontainer__data">
                     <div className="addmeasurements__container__newmeasurementscontainer__data-input">
-                    <DatePicker locale='pl' dateFormat='dd/MM/yyyy' selected={startDate} onChange={date => handleDate(date)} /></div>
+                    {/* <DatePicker ref={inputdate} locale='pl' dateFormat='dd/MM/yyyy' selected={actualDate} onChange={date => handleDate(date)} /> */}
+                    <DatePicker ref={inputdate} locale='pl' dateFormat='dd/MM/yyyy' selected={actualDate} onChange={date => setActualDate(date)} /></div>
                     </div>
                 <div className="addmeasurements__container__newmeasurementscontainer__elements">
                 <div className="addmeasurements__container__newmeasurementscontainer__elements__element">

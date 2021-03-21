@@ -40,8 +40,8 @@ class PersonalExercise(models.Model):
 class PersonalDimensions(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE,default=None)
     date = models.DateField(null=True)
-    weight = models.FloatField(default =0)
-    growth = models.FloatField(default =0)
+    weight = models.FloatField(default=0)
+    growth = models.FloatField(default=0)
     left_biceps = models.FloatField()
     right_biceps = models.FloatField()
     left_forearm = models.FloatField()

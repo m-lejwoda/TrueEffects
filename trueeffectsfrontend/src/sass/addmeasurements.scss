@@ -17,11 +17,12 @@
     @else if $point == LGdesktop{
       @media screen and (min-width:1401px){@content;}
     }}
-    
+$maincolor: #1D3557;
+$secondcolor: #457B9D;   
 $pink: #E90B33;
 $pink1: #FF5A5A;
 .addmeasurements{
-    background-color: $pink;
+    background-color: $maincolor;
     height:100%;
     width:100%;
     display:flex;
@@ -49,7 +50,7 @@ $pink1: #FF5A5A;
         }
         
         &__oldmeasurementscontainer{
-            background-color:$pink1;
+            background-color:$secondcolor;
             display:flex;
             flex-direction: column;
             padding:1rem 2rem 1rem 2rem;
@@ -103,7 +104,7 @@ $pink1: #FF5A5A;
             }
         }
         &__newmeasurementscontainer{
-            background-color:$pink1;
+            background-color:$secondcolor;
             display:flex;
             flex-direction: column;
             padding:1rem 2rem 1rem 2rem;
@@ -138,7 +139,7 @@ $pink1: #FF5A5A;
                     height:2px;
                 }
                 input{
-                    background-color: $pink1;
+                    background-color: $secondcolor;
                     border:none
                 }
                 input::after{
@@ -175,8 +176,8 @@ $pink1: #FF5A5A;
                         button{
                             padding:0.5rem 1rem 0.5rem 1rem;
                             background-color:white;
-                            color:$pink;
-                            border-color:$pink;
+                            color:$secondcolor;
+                            border-color:$secondcolor;
                             border-width: medium;
                             font-weight: 600;
                         }
@@ -191,7 +192,7 @@ $pink1: #FF5A5A;
                         input{
                             width: 100%;
                             border: none;
-                            background-color:$pink1;
+                            background-color:$secondcolor;
                             color:white;
                             font-weight: 600;
                             font-size:0.9rem;

@@ -83,14 +83,17 @@ const Training = (props) => {
     console.log(training.training[`${series}`].reps)
     const goNext = () =>{
       console.log(training.training[`${series}`].reps[`${singleSeries}`])
-      training.training[`${series}`].reps[`${singleSeries}`]= parseInt(inputRef.current.value)
+      console.log(inputRef.current.value)
+      if (inputRef.current.value !== ""){
+        training.training[`${series}`].reps[`${singleSeries}`]= parseInt(inputRef.current.value)
+      }
       let value = parseInt(inputRef.current.value)
       let placeholder = parseInt(inputRef.current.placeholder)
       if(Number.isInteger(value)){
-      inputRef.current.value = ''
+        inputRef.current.value = ''
       if(singleSeries+1 < training.training[series].reps.length){
       setSingleSeries(singleSeries+1)
-    }else{
+      }else{
       if(series+1>=training.training.length){
         setEndTraining(true)
       }
@@ -106,8 +109,7 @@ const Training = (props) => {
     }else{
       if(series+1>=training.training.length){
         setEndTraining(true)
-      }
-      else{
+      }else{
       setSeries(series+1)
       setSingleSeries(0)
       }
@@ -148,7 +150,7 @@ const Training = (props) => {
     }else{
       hour = hours
     }
-    alert("Trening zakończony"+ hour +":" + min + ":" + sec)
+    return alert("Trening zakończony"+ hour +":" + min + ":" + sec)
     
   }
   const takeStopwatchData = (h,m,s,) =>{
@@ -156,9 +158,10 @@ const Training = (props) => {
     setMinutes(m)
     setSeconds(s)
   }
-  const handleEndTraining = ()=>{
+  const handleEndTraining = async()=>{
     // setEndTrainin(true)
-    setStopStoper(true)
+    await setStopStoper(true)
+    await displayAlert()
   }
   if (seconds !== 0 || minutes !== 0 ||  hours !== 0){
     displayAlert()
@@ -192,16 +195,13 @@ const Training = (props) => {
                     <div className="training__middle__series__checkboxes" style={{visibility: endtraining ? 'hidden' : 'visible' }}>
                     {training.training[`${series}`].reps.map(function (item,index) {
                       if(index < singleSeries+1){
-                        
                         return (
                           <Checkbox checked={true} />
                         )
                         }else{
                         return(
                           <Checkbox disabled checked={false}/>
-                        )
-                      }
-                      }
+                        )}}
                 )}
                       </div>
                     <div className="training__middle__series-title" style={{visibility: endtraining ? 'hidden' : 'visible' }}>Seria {singleSeries+1}/{training.training[`${series}`].reps.length}</div>

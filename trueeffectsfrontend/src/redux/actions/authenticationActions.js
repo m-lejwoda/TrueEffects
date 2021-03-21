@@ -47,7 +47,6 @@ export const loadUser = (data) => (dispatch,getState) => {
     delete axios.defaults.headers.common["Authorization"];
     axios.post('http://127.0.0.1:8000/api/login/',data)
     .then(res=>{
-        console.log(data)
         dispatch({
             type: USER_LOADED,
             payload: res.data

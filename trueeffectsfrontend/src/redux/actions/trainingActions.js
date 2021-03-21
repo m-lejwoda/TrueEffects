@@ -13,7 +13,7 @@ export const getMeasurements =(token)=>(dispatch,getState) => {
     dispatch({type: GET_MEASUREMENTS})
     let token = getState().authentication.token
     axios.defaults.headers.common['Authorization'] = `Token ${token}`
-    axios.get('http://127.0.0.1:8000/api/display_personal_dimensions/')
+    return axios.get('http://127.0.0.1:8000/api/display_personal_dimensions/')
     .then(res=> dispatch({
         type: GET_MEASUREMENTS_SUCCESS,
         payload: res,
@@ -38,28 +38,23 @@ export const getExercises = () =>(dispatch,getState)=>{
         payload: res,
     })));
 }
-
-
-export const postTraining = (data) => (dispatch,getState) => {
+export const postTraining = (data) => async(dispatch,getState) => {
     let token = window.localStorage.getItem('token')
     if (token === null){
         token = getState().authentication.token
     }
-    console.log(data)
     axios.defaults.headers.common['Authorization'] = `Token ${token}`
-    axios.post('http://127.0.0.1:8000/api/create_training/',data)
-    .then(res=>{
-        console.log(res.data)
-    })
+    return await axios.post('http://127.0.0.1:8000/api/create_training/',data)
     .catch(err=>{
-        console.log(err.response)
+        alert("Nieudało się dodać treningu popraw błędy")
     })
     
 }
-export const getTrainings = (token) => (dispatch,getState) =>{
+export const getTrainings = () => (dispatch,getState) =>{
     dispatch({type: GET_TRAININGS})
+    let token = getState().authentication.token
     axios.defaults.headers.common['Authorization'] = `Token ${token}`
-    axios.get('http://127.0.0.1:8000/api/display_training/')
+    return axios.get('http://127.0.0.1:8000/api/display_training/')
     .then(res => dispatch({
         type: GET_TRAININGS_SUCCESS,
         payload: res,
@@ -90,10 +85,10 @@ export const postGoals = (data) => (dispatch,getState) => {
     
 }
 export const postMeasurement = (data) => (dispatch,getState) =>{
-    let token = getState().authentication.token
     dispatch({type: POST_MEASUREMENT})
+    let token = getState().authentication.token
     axios.defaults.headers.common['Authorization'] = `Token ${token}`
-    axios.post('http://127.0.0.1:8000/api/create_personal_dimensions/',data)
+    return axios.post('http://127.0.0.1:8000/api/create_personal_dimensions/',data)
     .then(res=>dispatch({
         type: POST_MEASUREMENT_SUCCESS,
     }))
@@ -111,6 +106,24 @@ export const postOwnExercise = (data) => (dispatch,getState) =>{
     .catch(err=>{
         alert("Wystąpił błąd")
     })
+}
+export const deleteTraining = pk =>(dispatch,getState)=>{
+    let token = getState().authentication.token
+    axios.defaults.headers.common['Authorization'] = `Token ${token}`
+    return axios.delete(`http://127.0.0.1:8000/api/deleteTraining/${pk}`)
+    .then(res => {
+        alert("Trening został usunięty")
+    })
+    .catch("Wystąpił problem z usunięciem treningu")
 
+}
+export const deleteMeasurement = pk =>(dispatch,getState)=>{
+    let token = getState().authentication.token
+    axios.defaults.headers.common['Authorization'] = `Token ${token}`
+    return axios.delete(`http://127.0.0.1:8000/api/deleteMeasurement/${pk}`)
+    .then(res => {
+        alert("Trening został usunięty")
+    })
+    .catch("Wystąpił problem z usunięciem treningu")
 
 }

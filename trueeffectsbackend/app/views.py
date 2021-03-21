@@ -75,11 +75,18 @@ def exerciseCreate(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     return Response(serializer.data)
 
-@api_view(['POST'])
+
 #@permission_classes([IsAuthenticated,])
+@api_view(['POST'])
 def createpersonalDimensions(request):
-    # request.data['user']= request.user.id
-    serializer = PersonalDimensionsSerializer(data=request.data)
+    data = request.data
+    data["user"] = request.user.id
+    print(request.user)
+    print(data)
+    
+    # print(request.user.id)
+    # data['user'] = request.user.id
+    serializer = PersonalDimensionsSerializer(data=data)
     if serializer.is_valid():
         serializer.save()
     else:
@@ -162,7 +169,7 @@ def updateTraining(request):
     else:
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 @api_view(['POST'])
-#@permission_classes([IsAuthenticated,])
+@permission_classes([IsAuthenticated,])
 def createTraining(request):
     data = request.data
     data["user"] = request.user.id
@@ -229,6 +236,20 @@ def createDescriptionGoals(request):
     else:
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     return Response(serializer.data)
+@api_view(['DELETE'])
+def deleteTraining(request,pk):
+    training = Training.objects.get(id=pk)
+    training.delete()
+
+@api_view(['DELETE'])
+def deleteMeasurement(request,pk):
+    measurement = PersonalDimensions.objects.get(id=pk)
+    measurement.delete()
+
+@api_view(['DELETE'])
+def deleteGoals(request,pk):
+    goal = DescriptionGoals.objects.get(id=pk)
+    goal.delete()
 
 #createTraining
 #displayTraining

@@ -7,7 +7,7 @@ import DatePicker,{registerLocale} from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import {connect} from 'react-redux';
 import pl from "date-fns/locale/pl";
-import { postTraining,postOwnExercise } from '../redux/actions/trainingActions';
+import { postTraining,postOwnExercise,getTrainings } from '../redux/actions/trainingActions';
 const CreateTraining = (props) => {
     registerLocale('pl',pl)
     const [startDate, setStartDate] = useState(new Date())
@@ -97,6 +97,10 @@ const CreateTraining = (props) => {
         setItemsPlaceHolders(temp)
     }
     const handleAcceptTraining = () => {
+        async function fetchData(data){
+            await props.postTraining(data)
+            await props.getTrainings()
+        }
         let date = new Date(training_date.current.input.value)
         let splitdate = training_date.current.input.value.split("/")
         let fullday = splitdate[2] + "-" + splitdate[1] + "-" +  splitdate[0]
@@ -104,14 +108,13 @@ const CreateTraining = (props) => {
             name: name_of_training.current.value,
             description: training_description.current.value,
             date: fullday,
-            user: 1,
             training: []
         }
         let allobjects = []
         let temparray = [...itemsplaceholders]
         for(let i=0;i<seriesitems.length;i++){
             let objects = {reps: []}
-            objects["exercise"] = seriesitems[i].exercise.exercise.name
+            objects["exercise"] = {"name" : seriesitems[i].exercise.exercise.name}
             objects["pause_after_concentric_phase"]=seriesitems[i].pauseconcentricphase.pauseconcentricphase
             objects["pause_after_eccentric_phase"]=seriesitems[i].pauseeccentricphase.pauseeccentricphase
             objects["weight"] = seriesitems[i].weight.weight
@@ -126,7 +129,8 @@ const CreateTraining = (props) => {
             array["training"].push(objects)
             allobjects.push(objects)
         }
-        props.postTraining(array)
+        fetchData(array)
+        // props.postTraining(array)
     }
     return (
         <div className="createtraining">
@@ -212,4 +216,4 @@ const mapStateToProps = (state) => {
         ownexercises: state.training.ownexercises
     }
 }
-export default connect(mapStateToProps,{postTraining,postOwnExercise})(CreateTraining); 
+export default connect(mapStateToProps,{postTraining,postOwnExercise,getTrainings})(CreateTraining); 
