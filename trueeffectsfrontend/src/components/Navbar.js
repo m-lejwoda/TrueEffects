@@ -42,7 +42,7 @@ const Navbar = (props) => {
                 <Typography variant="h6" className={classes.title}>
                   <FontAwesomeIcon icon={faDumbbell} />TrueEffects
                 </Typography>
-                {props.name !== null ?<> <p>Witaj {props.name}<Button onClick={handleLogout} color="inherit">Wyloguj się</Button></p></>:<><Button color="inherit">Zaloguj się</Button></>}
+                {props.token !== null ?<> <p>Witaj {props.name}<Button onClick={handleLogout} color="inherit">Wyloguj się</Button></p></>:<><Button color="inherit">Zaloguj się</Button></>}
               </Toolbar>
             </AppBar>
           </div>
@@ -54,7 +54,8 @@ const mapStateToProps = (state) => {
       loadedtrainings: state.training.loadedtrainings,
       measurements: state.training.measurements.data,
       goals: state.training.goals.data,
-      name: state.authentication.name
+      name: state.authentication.name,
+      token: state.authentication.token
   }
 }
 export default connect(mapStateToProps,{postLogout})(Navbar); 

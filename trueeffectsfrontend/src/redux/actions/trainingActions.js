@@ -1,4 +1,5 @@
-import {POST_LOGOUT,GET_TIME,GET_TIME_SUCCESS,AUTH_ERROR,GET_MEASUREMENTS_SUCCESS,GET_MEASUREMENTS,POST_TRAINING,GET_TRAININGS, GET_TRAININGS_SUCCESS,GET_GOALS,GET_GOALS_SUCCESS,POST_MEASUREMENT,POST_MEASUREMENT_SUCCESS, GET_EXERCISES,GET_EXERCISES_SUCCESS} from './types';
+import {POST_LOGOUT,GET_TIME,GET_TIME_SUCCESS,AUTH_ERROR,GET_MEASUREMENTS_SUCCESS,GET_MEASUREMENTS,POST_TRAINING,GET_TRAININGS,
+     GET_TRAININGS_SUCCESS,GET_GOALS,GET_GOALS_SUCCESS,POST_MEASUREMENT,POST_MEASUREMENT_SUCCESS, GET_EXERCISES,GET_EXERCISES_SUCCESS,GET_OWN_EXERCISES_SUCCESS} from './types';
 import axios from 'axios';
 
 export const getTime = (time)=>(dispatch) =>{
@@ -25,11 +26,17 @@ export const getExercises = () =>(dispatch,getState)=>{
     }
     dispatch({type: GET_EXERCISES})
     axios.defaults.headers.common['Authorization'] = `Token ${token}`
+    axios.get('http://127.0.0.1:8000/api/display_own_exercise/')
+    .then(res=>dispatch({
+        type: GET_OWN_EXERCISES_SUCCESS,
+        payload: res.data
+    }))
+    .then(
     axios.get('http://127.0.0.1:8000/api/display_exercises/')
     .then(res=> dispatch({
         type: GET_EXERCISES_SUCCESS,
         payload: res,
-    }));
+    })));
 }
 
 
@@ -84,7 +91,6 @@ export const postGoals = (data) => (dispatch,getState) => {
 }
 export const postMeasurement = (data) => (dispatch,getState) =>{
     let token = getState().authentication.token
-    console.log(data)
     dispatch({type: POST_MEASUREMENT})
     axios.defaults.headers.common['Authorization'] = `Token ${token}`
     axios.post('http://127.0.0.1:8000/api/create_personal_dimensions/',data)
@@ -94,5 +100,17 @@ export const postMeasurement = (data) => (dispatch,getState) =>{
     .catch(err=>{
         console.log(err.response)
     })
+
+}
+
+export const postOwnExercise = (data) => (dispatch,getState) =>{
+    let token = getState().authentication.token
+    let dictdata = {"name": data}
+    axios.defaults.headers.common['Authorization'] = `Token ${token}`
+    axios.post('http://127.0.0.1:8000/api/create_own_exercise/',dictdata)
+    .catch(err=>{
+        alert("Wystąpił błąd")
+    })
+
 
 }

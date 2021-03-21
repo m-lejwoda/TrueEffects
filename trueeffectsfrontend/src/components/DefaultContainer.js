@@ -12,6 +12,7 @@ import {getMeasurements,postTraining,getTrainings,getGoals,getExercises} from '.
 import DisplayMeasurements from './DisplayMeasurements'
 import AddMeasurements from './AddMeasurements';
 import CreateTraining from './CreateTraining';
+import Register from './Register';
 import '../sass/defaultcontainer.scss';
 import { BoxLoading } from 'react-loadingg';
 import AddMeasurementsSummary from './AddMeasurementsSummary';
@@ -47,7 +48,7 @@ return(
       <Route path="/measurementsummary" component={AddMeasurementsSummary} />
       <Route path="/addgoals" component={AddGoals} />
       <Route exact path="/login" component={LoginContainer} />
-      <Route exact path="/register" component={LoginContainer} />
+      <Route exact path="/register" component={Register} />
       </>
       : <BoxLoading />}
     </div>  

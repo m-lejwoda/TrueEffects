@@ -67,7 +67,7 @@ class PersonalGoals(models.Model):
     Pushups = models.IntegerField()
     Other = models.CharField(max_length=255)
 class OwnExercise(models.Model):
-    user = models.ForeignKey(User,on_delete=models.CASCADE,default=None)
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     def __str__(self):
         return self.name
@@ -82,8 +82,6 @@ class SingleSeries(models.Model):
     eccentric_phase = models.IntegerField(default=0)
     pause_after_concentric_phase = models.IntegerField()
     pause_after_eccentric_phase = models.IntegerField()
-    # reps = models.ManyToManyField(Reps)
-    # reps = models.CharField(validators=[validate_comma_separated_integer_list],max_length=255,default=None)
     reps = ArrayField(models.IntegerField(), blank=True)
     
 

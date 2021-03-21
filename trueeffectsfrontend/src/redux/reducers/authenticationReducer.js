@@ -24,8 +24,10 @@ export default function authreducer(state=initialState,action){
         case POST_REGISTER:
             return{
                 ...state,
-                token:action.payload,
+                token:action.payload.token,
+                name:action.payload.username,
                 tokenloaded: true,
+                error_register: ''
             }
         case REGISTER_ERROR:
             return{
@@ -54,10 +56,11 @@ export default function authreducer(state=initialState,action){
             }
         case AUTH_ERROR:
             localStorage.removeItem('token')
+            localStorage.removeItem('name')
             return{
                 ...state,
                 token:null,
-                user: null,
+                name: null,
                 isAuthenticated:false,
                 isLoading: false
             }

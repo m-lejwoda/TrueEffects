@@ -147,9 +147,7 @@ const AddMeasurements = (props) => {
                 </div>
                 <div className="addmeasurements__container__newmeasurementscontainer__elements__element">
                     <div className="addmeasurements__container__newmeasurementscontainer__elements__element-button"><button onClick={handlePostMeasurement}>Zaakceptuj zmiany</button></div>
-                    
                 </div>
-                
                 </div>
                 </div>
             </div></>}

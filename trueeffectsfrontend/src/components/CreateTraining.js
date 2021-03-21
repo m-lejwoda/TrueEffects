@@ -7,7 +7,7 @@ import DatePicker,{registerLocale} from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import {connect} from 'react-redux';
 import pl from "date-fns/locale/pl";
-import { postTraining } from '../redux/actions/trainingActions';
+import { postTraining,postOwnExercise } from '../redux/actions/trainingActions';
 const CreateTraining = (props) => {
     registerLocale('pl',pl)
     const [startDate, setStartDate] = useState(new Date())
@@ -29,6 +29,7 @@ const CreateTraining = (props) => {
     const name_of_training = useRef(null);
     const training_description = useRef(null);
     const training_date = useRef(null);
+    const inputOwnExercise = useRef(null);
     const addElementtoItems = () =>{
         setItems(prevItems => [...prevItems, {
             exercise : {exercise},
@@ -70,7 +71,9 @@ const CreateTraining = (props) => {
         // setPauseEccentricPhase(0)
     }
     
-    
+    const handleNewOwnExercise = () => {
+        props.postOwnExercise(inputOwnExercise.current.value)
+    }
     const handleClickExercise = (e,element) =>{
         if(activediv !== null){
             activediv.style.background = "#457B9D"
@@ -108,25 +111,22 @@ const CreateTraining = (props) => {
         let temparray = [...itemsplaceholders]
         for(let i=0;i<seriesitems.length;i++){
             let objects = {reps: []}
-            objects["exercise"] = exercise
+            objects["exercise"] = seriesitems[i].exercise.exercise.name
             objects["pause_after_concentric_phase"]=seriesitems[i].pauseconcentricphase.pauseconcentricphase
             objects["pause_after_eccentric_phase"]=seriesitems[i].pauseeccentricphase.pauseeccentricphase
             objects["weight"] = seriesitems[i].weight.weight
             objects["series"] = seriesitems[i].series.series
             objects["rest"] = seriesitems[i].rest.rest
-            console.log(seriesitems[i].series.series)
             let secondtemparray = []
             for(let k=0; k<seriesitems[i].series.series;k++){
                 let temp = temparray.shift();
                 secondtemparray.push(temp)
                 objects['reps'] = secondtemparray  
             }
-            console.log(objects)
             array["training"].push(objects)
             allobjects.push(objects)
         }
-        console.log(seriesitems)
-        // props.postTraining(array)
+        props.postTraining(array)
     }
     return (
         <div className="createtraining">
@@ -134,22 +134,22 @@ const CreateTraining = (props) => {
             <div className="createtraining__containers">
                 <div className="createtraining__containers__first">
                     <div className="createtraining__containers__first__selectors">
-                        <div className="createtraining__containers__first__selectors-globalexercise" onClick={()=>setOwnExerciseActive(false)}>Ćwiczenia</div>
-                        <div className="createtraining__containers__first__selectors-myexercise" onClick={()=>setOwnExerciseActive(true)}>Moje Ćwiczenia</div>
+                        <div className="createtraining__containers__first__selectors-globalexercise" style={{color: ownexerciseActive ? 'white' : '#db3d44' }} onClick={()=>setOwnExerciseActive(false)}>Ćwiczenia</div>
+                        <div className="createtraining__containers__first__selectors-myexercise" style={{color: ownexerciseActive ? '#db3d44' : 'white' }} onClick={()=>setOwnExerciseActive(true)}>Moje Ćwiczenia</div>
                     </div>
                     <div className="createtraining__containers__first__newexercise" style={{display: ownexerciseActive ? 'flex' : 'none' }}>
                         <div className="createtraining__containers__first__newexercise-title">Wprowadź nazwę ćwiczenia lub wyszukaj</div>
                         <span>
-                            <input placeholder="Wprowadź swoje ćwiczenie" />
+                            <input ref={inputOwnExercise} placeholder="Wprowadź swoje ćwiczenie" />
                         </span>
                         <div className="createtraining__containers__first__newexercise-button">
-                            <button>Dodaj </button>
+                            <button onClick={handleNewOwnExercise}>Dodaj</button>
                         </div>
                     </div>
 
                     <div className='createtraining__containers__first-input'>Wyszukaj ćwiczenie</div>
                     <div className="createtraining__containers__first__exercises">
-                        {props.exercises.map((element)=><div className="createtraining__containers__first__exercises__element "onClick={(e)=>handleClickExercise(e,element)}>{element.name}</div>)}
+                        {ownexerciseActive ? props.ownexercises.map((element)=><div className="createtraining__containers__first__exercises__element "onClick={(e)=>handleClickExercise(e,element)}>{element.name}</div>) : props.exercises.map((element)=><div className="createtraining__containers__first__exercises__element "onClick={(e)=>handleClickExercise(e,element)}>{element.name}</div>)}
                     </div>
                     <div className="createtraining__containers__first__trainingdata">
                         <div className="createtraining__containers__first__trainingdata__series">Podaj liczbę serii danego ćwiczenia *<span><input placeholder={series} value={series} onChange={(e)=>setSeries(parseInt(e.target.value))}/></span></div>
@@ -208,7 +208,8 @@ const mapStateToProps = (state) => {
         loadedtrainings: state.training.loadedtrainings,
         measurements: state.training.measurements.data,
         goals: state.training.goals.data,
-        exercises: state.training.exercises.data
+        exercises: state.training.exercises.data,
+        ownexercises: state.training.ownexercises
     }
 }
-export default connect(mapStateToProps,{postTraining})(CreateTraining); 
+export default connect(mapStateToProps,{postTraining,postOwnExercise})(CreateTraining); 

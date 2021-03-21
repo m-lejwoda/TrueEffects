@@ -17,7 +17,6 @@ from rest_framework.generics import CreateAPIView
 from rest_framework import viewsets
 from rest_framework.authtoken.views import ObtainAuthToken
 class CustomAuthToken(ObtainAuthToken):
-
     def post(self, request, *args, **kwargs):
         serializer = self.serializer_class(data=request.data,context={'request': request})
         serializer.is_valid(raise_exception=True)
@@ -26,7 +25,6 @@ class CustomAuthToken(ObtainAuthToken):
         return Response({
             'token': token.key,
             'username': user.username,
-            
         })
 
 class Logout(APIView):
@@ -80,7 +78,7 @@ def exerciseCreate(request):
 @api_view(['POST'])
 #@permission_classes([IsAuthenticated,])
 def createpersonalDimensions(request):
-    request.data['user']= request.user.id
+    # request.data['user']= request.user.id
     serializer = PersonalDimensionsSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
@@ -92,7 +90,7 @@ def createpersonalDimensions(request):
 @permission_classes([IsAuthenticated,])
 def displaypersonalDimensions(request):
     user= request.user
-    personalDimensions = PersonalDimensions.objects.filter(user=user)
+    personalDimensions = PersonalDimensions.objects.filter(user=user).order_by('date')
     serializer = PersonalDimensionsSerializer(personalDimensions,many=True)
     return Response(serializer.data)
 
@@ -132,10 +130,12 @@ def createPersonalGoals(request):
 
 
 @api_view(['POST'])
-#@permission_classes([IsAuthenticated,])
+@permission_classes([IsAuthenticated,])
 def createOwnExercise(request):
-    user = request.user
-    serializer = OwnExerciseSerializer(data=request.data)
+    data = request.data
+    user = request.user.id
+    data['user'] = user
+    serializer = OwnExerciseSerializer(data=data)
     if serializer.is_valid():
         serializer.save()
     else:
@@ -143,7 +143,7 @@ def createOwnExercise(request):
     return Response(serializer.data)
 
 @api_view(['GET'])
-#@permission_classes([IsAuthenticated,])
+@permission_classes([IsAuthenticated,])
 def displayTraining(request):
     training = Training.objects.filter(user=request.user)
     print(training)
@@ -189,8 +189,8 @@ def createTraining2(request):
 @permission_classes([IsAuthenticated,])
 def displayOwnExercise(request):
     user= request.user
-    OwnExercise = OwnExercise.objects.filter(user=user)
-    serializer = OwnExerciseSerializer(OwnExercise,many=True)
+    exercises = OwnExercise.objects.filter(user=user)
+    serializer = OwnExerciseSerializer(exercises,many=True)
     return Response(serializer.data)
 
 
@@ -223,9 +223,6 @@ def displayDescriptionGoals(request):
 def createDescriptionGoals(request):
     data = request.data
     data['user'] = request.user.id
-    # request.data._mutable = True
-    request.data['user']= request.user.id
-    # request.data._mutable = False
     serializer = DescriptionGoalsSerializer(data = data)
     if serializer.is_valid():
         serializer.save()

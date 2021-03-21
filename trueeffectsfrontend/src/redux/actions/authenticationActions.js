@@ -6,6 +6,7 @@ export const postLogin =(data)=>dispatch => {
         axios.post('http://127.0.0.1:8000/api/login/',data)
         .then(res=>{
             window.localStorage.setItem('token',res.data.token)
+            window.localStorage.getItem('name',res.data.name)
             console.log(localStorage.getItem('token'))
             
         })
@@ -21,13 +22,15 @@ export const postLogin =(data)=>dispatch => {
     
 }
 export const postRegister = (data) => dispatch =>{
+    delete axios.defaults.headers.common["Authorization"];
     axios.post('http://127.0.0.1:8000/api/register/',data)
     .then(res=>dispatch({
         type: POST_REGISTER,
-        payload: res.data.token
+        payload: res.data
     }))
     .then(res=>{
-        window.localStorage.setItem('token',res.payload)
+        window.localStorage.setItem('token',res.payload.token)
+        window.localStorage.setItem('name',res.payload.name)
     })
     .catch(res=> dispatch(
         {
@@ -67,6 +70,6 @@ export const postLogout = ()=> (dispatch,getState) =>{
     }))
     .then(res=>{
         window.localStorage.removeItem('token')
-        window.localStorage.removeItem('username')
+        window.localStorage.removeItem('name')
     })
 }
