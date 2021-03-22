@@ -2,9 +2,11 @@ import React,{useState,useRef} from 'react';
 import DatePicker,{registerLocale} from "react-datepicker";
 import {postGoals,getGoals} from '../redux/actions/trainingActions';
 import {connect} from "react-redux";
+import { useHistory } from "react-router-dom";
 import '../sass/addgoals.scss';
 import "react-datepicker/dist/react-datepicker.css";
 const AddGoals = (props) => {
+    const history = useHistory()
     const [startDate, setStartDate] = useState("");
     const [actualDate, setActualDate] = useState("");
     const inputdescription = useRef("");
@@ -23,6 +25,7 @@ const AddGoals = (props) => {
         }
         await props.postGoals(data)
         await props.getGoals()
+        history.push("/")
         
     }
     return (

@@ -1,12 +1,12 @@
 import React,{useState,useRef} from 'react';
 import ReactDOM from 'react-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {faTimes,faCheckCircle,faTimesCircle} from '@fortawesome/fontawesome-free-solid';
+import {faTimes} from '@fortawesome/fontawesome-free-solid';
 import ModalDisplayTrainingItem from './modaldisplaytraining/ModalDisplayTrainingItem';
 import {connect} from 'react-redux';
 import '../sass/modaldisplaytraining.scss';
-import DatePicker,{registerLocale} from "react-datepicker";
-import {deleteTraining,getTrainings} from '../redux/actions/trainingActions';
+import DatePicker from "react-datepicker";
+import {deleteTraining,getTrainings,updateDateTraining} from '../redux/actions/trainingActions';
 const MODAL_STYLES = {
     position: 'fixed',
     top: '50%',
@@ -26,23 +26,27 @@ const OVERLAY_STYLES = {
     zIndex:10,
     color: 'rgba(0,0,0)',
 }
+
 const ModalDisplayTraining = props => {
     const [newday,setNewDay] = useState(false)
     const [summary,setSummary] = useState(false)
     const [selectDate,setSelectDate] = useState(new Date())
     const training_date = useRef(null);
-    console.log(props.training)
     const handleMovetoTraining = () =>{
         props.allprops.history.push({pathname:'/training',training:props.alldata});
     }
+    
     const handleDeleteTraining = async() => {
         await props.deleteTraining(props.alldata.id)
         await props.getTrainings()
     }
-    const handleAddtoDate = () => {
+    const handleAddtoDate = async() => {
+        console.log("addToDate")
         let splitdate = training_date.current.input.value.split("/")
         let fullday = splitdate[2] + "-" + splitdate[1] + "-" +  splitdate[0]
-        console.log(fullday)
+        let date = {'date': fullday}
+        await props.updateDateTraining(props.alldata.id,date)
+        await props.getTrainings()
     }
     
     return ReactDOM.createPortal(
@@ -68,11 +72,11 @@ const ModalDisplayTraining = props => {
             <div className="modaldisplaytraining__data__buttons-button">
                 <button onClick={handleMovetoTraining}>Powtórz trening</button>
             </div>
-            <div className="modaldisplaytraining__data__buttons-button">
-                <button>Dodaj trening do innego dnia</button>
+            <div className="modaldisplaytraining__data__buttons-button" onClick={()=>setNewDay(!newday)} >
+                <button>{newday ? "Schowaj formularz " : "Dodaj trening do innego dnia"}</button>
             </div>
             </div>
-            <div className="modaldisplaytraining__data__input">
+            <div className="modaldisplaytraining__data__input" style={{display: newday ? 'flex' : 'none' }}>
                 <span>
                     <DatePicker ref={training_date} locale='pl' dateFormat='dd/MM/yyyy' selected={selectDate} onChange={date => setSelectDate(date)} />
                 </span>
@@ -112,6 +116,7 @@ const mapDispatchToProps = () =>dispatch => {
     return {
       deleteTraining: (x) =>dispatch(deleteTraining(x)),
       getTrainings: () =>dispatch(getTrainings()),
+      updateDateTraining: (x,y) =>dispatch(updateDateTraining(x,y))
     };
   };
 export default connect(mapStateToProps,mapDispatchToProps)(ModalDisplayTraining);

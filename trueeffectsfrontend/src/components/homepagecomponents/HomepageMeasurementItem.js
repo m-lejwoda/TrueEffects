@@ -1,11 +1,14 @@
 import React from 'react';
-
+import { useHistory } from "react-router-dom";
 const HomepageMeasurementItem = (props) => {
-    
+    const history = useHistory()
+    const addNewMeasurements = () =>{
+        history.push('./addmeasurements')
+    }
     return (
         <>      {props.measurement.length>0 ? <>
                 <div className="homepage__measurementcontainer-data">Pomiary na dzień {props.measurement[props.measurement.length-1].date}</div>
-                <div className="homepage__measurementcontainer-add"><button>+ Dodaj nowe pomiary</button></div>
+                <div className="homepage__measurementcontainer-add"><button onClick={addNewMeasurements}>+ Dodaj nowe pomiary</button></div>
                 <div className="homepage__measurementcontainer__container">
                     <div className="homepage__measurementcontainer__container__element">
                         <div className="homepage__measurementcontainer__container__element-name">Prawy biceps</div>

@@ -6,10 +6,16 @@ import {getMeasurements,postTraining,getTrainings,getGoals} from '../redux/actio
 import HomepageTrainingItem from './homepagecomponents/HomepageTrainingItem';
 import HomepageMeasurementItem from './homepagecomponents/HomepageMeasurementItem';
 import HomepageGoalItem from './homepagecomponents/HomepageGoalItem';
-
+import { useHistory } from "react-router-dom";
 const Homepage = (props) => {
+    const history = useHistory()
     const addNewGoals = () => {
         //dodanie dowych celów
+        history.push('./addgoals')
+    }
+    
+    const addNewTraining = () => {
+        history.push('./createtraining')
     }
     return (
         <div className="homepage">
@@ -31,7 +37,7 @@ const Homepage = (props) => {
             </div>
             <div className="homepage__lasttrainingscontainer">
                 <div className="homepage__lasttrainingscontainer-title">Ostatnie wykonane treningi</div>
-                <div className="homepage__lasttrainingscontainer-add"><button>+ Dodaj nowy trening</button></div>
+                <div className="homepage__lasttrainingscontainer-add"><button onClick={addNewTraining}>+ Dodaj nowy trening</button></div>
                 <div className="homepage__lasttrainingscontainer__container">
                     {props.trainings.length>0 ? props.trainings.map((training)=> <HomepageTrainingItem allprops={props} training={training}/>): <p>Nie wykonałeś jeszcze żadnych treningów</p>}
                 </div>

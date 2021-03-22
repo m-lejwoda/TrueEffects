@@ -247,14 +247,11 @@ def deleteGoals(request,pk):
     goal.delete()
     return Response("Cel został usunięty")
 
-
-#createTraining
-#displayTraining
-#createOwnExercise
-#displayOwnExercise
-#createPersonalGoals
-#displayPersonalGoals
-#createPersonalResults
-#displayPersonalResults
-#createpersonalDimensions
-#displaypersonalDimensions
+@api_view(['POST'])
+def updatedateofTraining(request,pk):
+    training = Training.objects.get(id=pk)
+    data = request.data
+    training.date = data.get("date",training.date)
+    training.save()
+    return Response("Data treningu została zaktualizowana")
+    

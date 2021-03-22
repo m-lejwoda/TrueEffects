@@ -27,6 +27,7 @@ urlpatterns=[
     path('delete_goals/<str:pk>',views.deleteGoals,name="delete_goals"),
     path('delete_measurement/<str:pk>',views.deleteMeasurement,name="delete_measurement"),
     path('delete_training/<str:pk>',views.deleteTraining,name="delete_training"),
+    path('update_training_date/<str:pk>',views.updatedateofTraining,name="update_date_of_training"),
     path('overview/',views.apiOverview),
 ]
 #createTraining

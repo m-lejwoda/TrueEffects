@@ -64,24 +64,22 @@ export const getTrainings = () => (dispatch,getState) =>{
         payload: res,
     }));
 }
-export const getGoals = (token) => (dispatch,getState) =>{
+export const getGoals = () => (dispatch,getState) =>{
     dispatch({type: GET_GOALS})
+    let token = getState().authentication.token
     axios.defaults.headers.common['Authorization'] = `Token ${token}`
-    axios.get('http://127.0.0.1:8000/api/display_description_goals/')
+    return axios.get('http://127.0.0.1:8000/api/display_description_goals/')
     .then(res => dispatch({
         type: GET_GOALS_SUCCESS,
         payload: res,
     }));
 }
 export const postGoals = (data) => (dispatch,getState) => {
-    let token = window.localStorage.getItem('token')
-    if (token === null){
-        token = getState().authentication.token
-    }
+    let token = getState().authentication.token
     axios.defaults.headers.common['Authorization'] = `Token ${token}`
-    axios.post('http://127.0.0.1:8000/api/create_description_goals/',data)
+    return axios.post('http://127.0.0.1:8000/api/create_description_goals/',data)
     .then(res=>{
-        console.log(res.data)
+        alert("Dodano cel")
     })
     .catch(err=>{
         console.log(err.response)
@@ -141,7 +139,14 @@ export const deleteGoals = pk =>(dispatch,getState)=>{
     .then(res => {
         alert("Trening został usunięty")
     })
-    .catch(
-        alert("Wystąpił problem z usunięciem treningu"))
-
+    // .catch(
+    //     alert("Wystąpił problem z usunięciem treningu"))
+}
+export const updateDateTraining = (pk,data) =>(dispatch,getState) =>{
+    let token = getState().authentication.token
+    axios.defaults.headers.common['Authorization'] = `Token ${token}`
+    return axios.post(`http://127.0.0.1:8000/api/update_training_date/${pk}`,data)
+    .then(res => {
+        alert("Data treningu została zaktualizowana")
+    })
 }
