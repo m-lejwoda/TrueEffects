@@ -1,10 +1,11 @@
-import React,{useState} from 'react';
+import React,{useState,useRef} from 'react';
 import ReactDOM from 'react-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faTimes,faCheckCircle,faTimesCircle} from '@fortawesome/fontawesome-free-solid';
 import ModalDisplayTrainingItem from './modaldisplaytraining/ModalDisplayTrainingItem';
 import {connect} from 'react-redux';
 import '../sass/modaldisplaytraining.scss';
+import DatePicker,{registerLocale} from "react-datepicker";
 import {deleteTraining,getTrainings} from '../redux/actions/trainingActions';
 const MODAL_STYLES = {
     position: 'fixed',
@@ -26,7 +27,11 @@ const OVERLAY_STYLES = {
     color: 'rgba(0,0,0)',
 }
 const ModalDisplayTraining = props => {
-    
+    const [newday,setNewDay] = useState(false)
+    const [summary,setSummary] = useState(false)
+    const [selectDate,setSelectDate] = useState(new Date())
+    const training_date = useRef(null);
+    console.log(props.training)
     const handleMovetoTraining = () =>{
         props.allprops.history.push({pathname:'/training',training:props.alldata});
     }
@@ -34,6 +39,12 @@ const ModalDisplayTraining = props => {
         await props.deleteTraining(props.alldata.id)
         await props.getTrainings()
     }
+    const handleAddtoDate = () => {
+        let splitdate = training_date.current.input.value.split("/")
+        let fullday = splitdate[2] + "-" + splitdate[1] + "-" +  splitdate[0]
+        console.log(fullday)
+    }
+    
     return ReactDOM.createPortal(
         <div className="modaldisplaytraining" style={OVERLAY_STYLES}>
             <div className="modaldisplaytraining__data" style={MODAL_STYLES}>
@@ -45,7 +56,12 @@ const ModalDisplayTraining = props => {
             </div>
             <div className="modaldisplaytraining__data-completed"></div>
             <div className="modaldisplaytraining__data-description">{props.description}</div>
+            
             <div className="modaldisplaytraining__data__buttons">
+            {/* <div className="modaldisplaytraining__data__buttons-button">
+                <button onClick={handleSummaryTraining}>Podsumowanie treningu</button>
+            </div> */}
+            
             <div className="modaldisplaytraining__data__buttons-button">
                 <button onClick={handleDeleteTraining}>Usuń trening</button>
             </div>
@@ -56,12 +72,20 @@ const ModalDisplayTraining = props => {
                 <button>Dodaj trening do innego dnia</button>
             </div>
             </div>
+            <div className="modaldisplaytraining__data__input">
+                <span>
+                    <DatePicker ref={training_date} locale='pl' dateFormat='dd/MM/yyyy' selected={selectDate} onChange={date => setSelectDate(date)} />
+                </span>
+                <div className="modaldisplaytraining__data__input-button">
+                    <button onClick={handleAddtoDate}>Dodaj trening do podanego dnia</button>
+                </div>
+            </div>
             <div className="modaldisplaytraining__data__elements">
                 <table id="training">
                 <tr>
                     <th>Nazwa Ćwiczenia</th>
                     <th>Liczba Serii</th>
-                    {/* <th>Zakładana liczba Powtórzeń</th> */}
+                    <th>Liczba Powtórzeń</th>
                     <th>Przerwa między seriami</th>
                     <th>Ciężar</th>
                     <th>Fazy</th>

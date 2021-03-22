@@ -8,7 +8,6 @@ import {Provider} from 'react-redux'
 import store from './store';
 import '@trendmicro/react-sidenav/dist/react-sidenav.css';
 import './sass/index.scss';
-console.log("index.js")
 ReactDOM.render(
   
   <Provider store={store}>

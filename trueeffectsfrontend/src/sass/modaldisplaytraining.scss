@@ -1,3 +1,6 @@
+$maincolor: #1D3557;
+$secondcolor: #457B9D;
+$thirdcolor: #db3d44;
 .modaldisplaytraining{
     &__data{
 
@@ -16,9 +19,76 @@
             color: white;
             
         }
+        &__input{
+            display:flex;
+            width:100%;
+            flex-direction: column;
+            align-items: center;
+            &-button{
+                margin-top:1rem;
+                margin-bottom:1rem;
+                button{
+                    background-color: #db3d44;
+                    color:white;
+                    padding: 0.5rem 1rem 0.5rem 1rem;
+                    -webkit-transition: ease-out 0.4s;
+                    -moz-transition: ease-out 0.4s;
+                    transition: ease-out 0.4s;
+                    font-weight: 600;
+                    
+                }
+                button:hover{
+                    cursor:pointer;
+                }
+                button:hover{
+                    box-shadow: inset 400px 0 0 0 $maincolor;
+                }
+            }
+            span:after{
+                content: '';
+                display: block;
+                width: 220px;
+                height: 2px;
+                background-color: white;
+            }
+            input{
+                margin-top:0.5rem;
+                background-color: #457B9D;
+                border: none;
+                color: white;
+                font-size: 1.4rem;
+                font-weight: 600;
+                text-align: center;
+                width: 310px;
+                
+            }
+            input:focus{
+                outline:none;
+            }
+        }
         &__buttons{
             display:flex;
             justify-content: end;
+            &-button{
+                margin-right: 0.5rem;
+                    button{
+                        background-color: #db3d44;
+                        color:white;
+                        padding: 0.5rem 1rem 0.5rem 1rem;
+                        -webkit-transition: ease-out 0.4s;
+                        -moz-transition: ease-out 0.4s;
+                        transition: ease-out 0.4s;
+                        font-weight: 600;
+                        
+                    }
+                    button:hover{
+                        cursor:pointer;
+                    }
+                    button:hover{
+                        box-shadow: inset 400px 0 0 0 $maincolor;
+                    }
+                
+            }
         }
         &-close{
             display:flex;
@@ -53,22 +123,10 @@
                 &-weight{
                     margin-right:0.5rem;
                 }
-                // &-phases{
-                //     margin-right:0.5rem;
-                // }
             }
         }
     }
 }
-// table{
-//     #training{
-//     font-family: Arial, Helvetica, sans-serif;
-//     border-collapse: collapse;
-//     width: 1300px;
-//     color:white;
-//     font-size: 1.3rem;
-//   }
-// }
 table, td, th {
     border: 1px solid white;
   }

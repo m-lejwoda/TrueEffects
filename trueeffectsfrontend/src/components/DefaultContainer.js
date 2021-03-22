@@ -20,6 +20,7 @@ import { useHistory } from "react-router-dom";
 const DefaultContainer = (props) => {
   
   useEffect(()=>{
+    document.title = "TrueEffects"
     if(props.token){
       props.getMeasurements(props.token);
       props.getTrainings(props.token);
