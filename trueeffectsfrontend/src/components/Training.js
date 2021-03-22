@@ -80,10 +80,7 @@ const Training = (props) => {
     const buttonRef = useRef()
     const endbuttonRef = useRef()
     const fromTime = new Date(0, 0, 0, 0, 0, 0, 0);
-    console.log(training.training[`${series}`].reps)
     const goNext = () =>{
-      console.log(training.training[`${series}`].reps[`${singleSeries}`])
-      console.log(inputRef.current.value)
       if (inputRef.current.value !== ""){
         training.training[`${series}`].reps[`${singleSeries}`]= parseInt(inputRef.current.value)
       }
@@ -118,9 +115,7 @@ const Training = (props) => {
       alert("Niepoprawne dane");
     }
   }
-  
   const handleStoper = () => {
-    console.log("handle stoper")
     setStartStoper(!startStoper)
   }
   const handleInput = () => {
@@ -128,7 +123,6 @@ const Training = (props) => {
     
   }
   const handlePause = (pause) =>{
-    console.log("handle pause")
     pause()
 }
   const displayAlert = () => {
@@ -159,15 +153,12 @@ const Training = (props) => {
     setSeconds(s)
   }
   const handleEndTraining = async()=>{
-    // setEndTrainin(true)
     await setStopStoper(true)
     await displayAlert()
   }
   if (seconds !== 0 || minutes !== 0 ||  hours !== 0){
     displayAlert()
  }
- console.log(training)
- console.log(training.training[series])
     return (
         <div className="training">
             <div className="training__top">

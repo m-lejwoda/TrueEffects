@@ -8,7 +8,9 @@ import "react-datepicker/dist/react-datepicker.css";
 import {connect} from 'react-redux';
 import pl from "date-fns/locale/pl";
 import { postTraining,postOwnExercise,getTrainings } from '../redux/actions/trainingActions';
+import { useHistory } from "react-router-dom";
 const CreateTraining = (props) => {
+    const history = useHistory()
     registerLocale('pl',pl)
     const [startDate, setStartDate] = useState(new Date())
     const [ownexerciseActive,setOwnExerciseActive] = useState(false)
@@ -30,6 +32,9 @@ const CreateTraining = (props) => {
     const training_description = useRef(null);
     const training_date = useRef(null);
     const inputOwnExercise = useRef(null);
+    const handlemovetoschedulepage = () =>{
+        history.push('/schedule/')
+    }
     const addElementtoItems = () =>{
         setItems(prevItems => [...prevItems, {
             exercise : {exercise},
@@ -100,6 +105,7 @@ const CreateTraining = (props) => {
         async function fetchData(data){
             await props.postTraining(data)
             await props.getTrainings()
+            await handlemovetoschedulepage()
         }
         let date = new Date(training_date.current.input.value)
         let splitdate = training_date.current.input.value.split("/")

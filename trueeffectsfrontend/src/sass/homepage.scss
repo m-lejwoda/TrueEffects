@@ -17,7 +17,7 @@
     @else if $point == LGdesktop{
       @media screen and (min-width:1401px){@content;}
     }}
-    
+$maincolor: #1D3557;
 $pink2: #db3d44;
 $pink: #1D3557;
 $pink2:#457B9D;
@@ -103,6 +103,24 @@ $pink2:#457B9D;
                     justify-content:center;
                     font-size:1.5rem;
                     font-weight: 600;
+                    
+                    button{
+                        margin-left: 1rem;
+                        background-color: #db3d44;
+                        color:white;
+                        padding: 0.5rem 1rem 0.5rem 1rem;
+                        -webkit-transition: ease-out 0.4s;
+                        -moz-transition: ease-out 0.4s;
+                        transition: ease-out 0.4s;
+                        font-weight: 600;
+                        
+                    }
+                    button:hover{
+                        cursor:pointer;
+                    }
+                    button:hover{
+                        box-shadow: inset 400px 0 0 0 $maincolor;
+                    }
                 }
                 &__time{
                     display:flex;

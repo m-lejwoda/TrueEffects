@@ -16,6 +16,18 @@ const DisplayMeasurements = (props) => {
                 return meas
             })
     },[])
+    useEffect(()=>{
+        setMeasurements(()=>{
+            let meas
+            if(props.measurements.length>8){
+                meas = props.measurements.slice(8)
+                meas.slice(0).reverse()
+                return meas  
+            }else{
+                meas = props.measurements.slice(0).reverse()}
+                return meas
+            })
+    },[props.measurements])
     return (
         <div className="displaymeasurements">
             <div className="displaymeasurements-title">Twoje ostatnie 9 pomiarów</div>

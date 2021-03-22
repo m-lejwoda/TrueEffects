@@ -39,11 +39,11 @@ const HomepageMeasurementItem = (props) => {
                         <div className="homepage__measurementcontainer__container__element-name">Wzrost</div>
                         <div className="homepage__measurementcontainer__container__element-result">{props.measurement[props.measurement.length-1].growth} cm</div>
                     </div>
-                    <div className="homepage__measurementcontainer__container__element">
+                    {/* <div className="homepage__measurementcontainer__container__element">
                         <div className="homepage__measurementcontainer__container__element-name">Tkanka Tłuszczowa</div>
                         <div className="homepage__measurementcontainer__container__element-result">{props.measurement[props.measurement.length-1].bodyfat} %</div>
                 
-                </div>
+                </div> */}
                 </div> </>: <div className="homepage__measurementcontainer__title">
                     <div className="homepage__measurementcontainer-title">Twoje ostatnie pomiary</div>
                     <div className="homepage__measurementcontainer-add"><button>+ Dodaj nowe pomiary</button></div>

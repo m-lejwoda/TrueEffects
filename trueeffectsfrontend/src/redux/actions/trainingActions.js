@@ -1,5 +1,7 @@
 import {POST_LOGOUT,GET_TIME,GET_TIME_SUCCESS,AUTH_ERROR,GET_MEASUREMENTS_SUCCESS,GET_MEASUREMENTS,POST_TRAINING,GET_TRAININGS,
-     GET_TRAININGS_SUCCESS,GET_GOALS,GET_GOALS_SUCCESS,POST_MEASUREMENT,POST_MEASUREMENT_SUCCESS, GET_EXERCISES,GET_EXERCISES_SUCCESS,GET_OWN_EXERCISES_SUCCESS} from './types';
+     GET_TRAININGS_SUCCESS,GET_GOALS,GET_GOALS_SUCCESS,POST_MEASUREMENT,
+     POST_MEASUREMENT_SUCCESS, GET_EXERCISES,DELETE_MEASUREMENT_SUCCESS,
+     GET_EXERCISES_SUCCESS,GET_OWN_EXERCISES_SUCCESS} from './types';
 import axios from 'axios';
 
 export const getTime = (time)=>(dispatch) =>{
@@ -9,7 +11,7 @@ export const getTime = (time)=>(dispatch) =>{
         payload: time
     })
 }
-export const getMeasurements =(token)=>(dispatch,getState) => {
+export const getMeasurements =()=>(dispatch,getState) => {
     dispatch({type: GET_MEASUREMENTS})
     let token = getState().authentication.token
     axios.defaults.headers.common['Authorization'] = `Token ${token}`
@@ -45,10 +47,12 @@ export const postTraining = (data) => async(dispatch,getState) => {
     }
     axios.defaults.headers.common['Authorization'] = `Token ${token}`
     return await axios.post('http://127.0.0.1:8000/api/create_training/',data)
+    .then(res=>{
+        alert("Trening został dodany")
+    })
     .catch(err=>{
         alert("Nieudało się dodać treningu popraw błędy")
     })
-    
 }
 export const getTrainings = () => (dispatch,getState) =>{
     dispatch({type: GET_TRAININGS})
@@ -110,7 +114,7 @@ export const postOwnExercise = (data) => (dispatch,getState) =>{
 export const deleteTraining = pk =>(dispatch,getState)=>{
     let token = getState().authentication.token
     axios.defaults.headers.common['Authorization'] = `Token ${token}`
-    return axios.delete(`http://127.0.0.1:8000/api/deleteTraining/${pk}`)
+    return axios.delete(`http://127.0.0.1:8000/api/delete_training/${pk}`)
     .then(res => {
         alert("Trening został usunięty")
     })
@@ -120,10 +124,24 @@ export const deleteTraining = pk =>(dispatch,getState)=>{
 export const deleteMeasurement = pk =>(dispatch,getState)=>{
     let token = getState().authentication.token
     axios.defaults.headers.common['Authorization'] = `Token ${token}`
-    return axios.delete(`http://127.0.0.1:8000/api/deleteMeasurement/${pk}`)
-    .then(res => {
+    return axios.delete(`http://127.0.0.1:8000/api/delete_measurement/${pk}`)
+    .then(res=>dispatch({
+        type: DELETE_MEASUREMENT_SUCCESS,
+    }))
+    .then(res=>{
         alert("Trening został usunięty")
     })
     .catch("Wystąpił problem z usunięciem treningu")
+}
+
+export const deleteGoals = pk =>(dispatch,getState)=>{
+    let token = getState().authentication.token
+    axios.defaults.headers.common['Authorization'] = `Token ${token}`
+    return axios.delete(`http://127.0.0.1:8000/api/delete_goals/${pk}`)
+    .then(res => {
+        alert("Trening został usunięty")
+    })
+    .catch(
+        alert("Wystąpił problem z usunięciem treningu"))
 
 }

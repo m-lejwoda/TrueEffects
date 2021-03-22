@@ -82,11 +82,21 @@ $pink: #FF5A5A;
         &__button{
             margin-top:1.5rem;
             button{
-                background-color: $pink;
-                padding:0.5rem 1rem 0.5rem 1rem;
+                        
+                background-color: #db3d44;
+                color:white;
+                padding: 0.5rem 1rem 0.5rem 1rem;
+                -webkit-transition: ease-out 0.4s;
+                -moz-transition: ease-out 0.4s;
+                transition: ease-out 0.4s;
+                font-weight: 600;
+                
             }
             button:hover{
-                cursor: pointer;
+                cursor:pointer;
+            }
+            button:hover{
+                box-shadow: inset 400px 0 0 0 $maincolor;
             }
         }
     }

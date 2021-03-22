@@ -174,15 +174,19 @@ $pink1: #FF5A5A;
                         width: 100%;
                         padding:1rem;
                         button{
-                            padding:0.5rem 1rem 0.5rem 1rem;
-                            background-color:white;
-                            color:$secondcolor;
-                            border-color:$secondcolor;
-                            border-width: medium;
-                            font-weight: 600;
+                            background-color: #db3d44;
+                            color:white;
+                            padding: 0.5rem 1rem 0.5rem 1rem;
+                            -webkit-transition: ease-out 0.4s;
+                            -moz-transition: ease-out 0.4s;
+                            transition: ease-out 0.4s;
+                            font-weight: 600; 
                         }
                         button:hover{
                             cursor:pointer;
+                        }
+                        button:hover{
+                            box-shadow: inset 400px 0 0 0 $maincolor;
                         }
                     }
                     &-result{

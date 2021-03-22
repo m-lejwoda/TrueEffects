@@ -27,15 +27,12 @@ const OVERLAY_STYLES = {
 }
 const ModalDisplayTraining = props => {
     
-    console.log(props)
     const handleMovetoTraining = () =>{
         props.allprops.history.push({pathname:'/training',training:props.alldata});
     }
-    const handleDeleteTraining = () => {
-        console.log(props)
-        props.getTrainings()
-        // await props.deleteTraining(props.alldata.id)
-        // props.getTrainings()
+    const handleDeleteTraining = async() => {
+        await props.deleteTraining(props.alldata.id)
+        await props.getTrainings()
     }
     return ReactDOM.createPortal(
         <div className="modaldisplaytraining" style={OVERLAY_STYLES}>
@@ -86,4 +83,11 @@ const mapStateToProps = (state) => {
         loadedexercises: state.training.loadedexercises
     }
   }
-export default connect(mapStateToProps,{deleteTraining,getTrainings})(ModalDisplayTraining);
+
+const mapDispatchToProps = () =>dispatch => {
+    return {
+      deleteTraining: (x) =>dispatch(deleteTraining(x)),
+      getTrainings: () =>dispatch(getTrainings()),
+    };
+  };
+export default connect(mapStateToProps,mapDispatchToProps)(ModalDisplayTraining);

@@ -32,12 +32,8 @@ const AddMeasurements = (props) => {
         let date = new Date(inputdate.current.input.value)
         let splitdate = inputdate.current.input.value.split("/")
         let fullday = splitdate[2] + "-" + splitdate[1] + "-" +  splitdate[0]
-        // let day = date.getDay()
-        // let month = date.getMonth()
-        // let year = date.getFullYear()
-        // let fulldate = year + "-" + month + "-" + day
         setActualDate(fullday)
-        // setStartDate(date)
+        
     }
     const handlePostMeasurement = () => {
         async function fetchData(){
@@ -119,7 +115,6 @@ const AddMeasurements = (props) => {
             <div className="addmeasurements__container__newmeasurementscontainer-title">Aktualny pomiar</div>
                 <div className="addmeasurements__container__newmeasurementscontainer__data">
                     <div className="addmeasurements__container__newmeasurementscontainer__data-input">
-                    {/* <DatePicker ref={inputdate} locale='pl' dateFormat='dd/MM/yyyy' selected={actualDate} onChange={date => handleDate(date)} /> */}
                     <DatePicker ref={inputdate} locale='pl' dateFormat='dd/MM/yyyy' selected={actualDate} onChange={date => setActualDate(date)} /></div>
                     </div>
                 <div className="addmeasurements__container__newmeasurementscontainer__elements">

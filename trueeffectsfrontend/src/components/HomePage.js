@@ -8,10 +8,8 @@ import HomepageMeasurementItem from './homepagecomponents/HomepageMeasurementIte
 import HomepageGoalItem from './homepagecomponents/HomepageGoalItem';
 
 const Homepage = (props) => {
-    console.log(props.goals)
-    const click = () => {
-        console.log("klik")
-        console.log(props)
+    const addNewGoals = () => {
+        //dodanie dowych celów
     }
     return (
         <div className="homepage">
@@ -22,7 +20,7 @@ const Homepage = (props) => {
             <div className="homepage__firstcontainer">
             <div className="homepage__goalscontainer">
                 <div className="homepage__goalscontainer-title">Twoje cele do zrealizowania</div>
-                <div className="homepage__goalscontainer-add"><button onClick={click}>+ Dodaj nowe cele</button></div>
+                <div className="homepage__goalscontainer-add"><button onClick={addNewGoals}>+ Dodaj nowe cele</button></div>
                 <div className="homepage__goalscontainer__elements">
                 {props.goals.length>0 ? props.goals.map((goal)=><HomepageGoalItem goal={goal}/>): <p>Nie masz aktualnie żadnych celów do zrealizowania</p>}
                 </div>

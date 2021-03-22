@@ -10,8 +10,6 @@ import {connect} from 'react-redux';
 const useStyles = makeStyles((theme) => ({
     root: {
       '& .MuiTextField-root': {
-        // margin: theme.spacing(1),
-        // font-weight: 700,
         width: '60ch',
         '& .MuiInputBase-input':{
             fontWeight: '700'
@@ -40,7 +38,6 @@ const Register = (props) => {
     }
     const handleRegister = (e) => {
         e.preventDefault()
-        console.log("hnadle register")
         if(validateEmail(email) !== false){
             let data = {
                 "username": username,

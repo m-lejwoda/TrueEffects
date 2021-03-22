@@ -1,13 +1,19 @@
 import React from 'react';
-
+import {connect} from 'react-redux'
+import {deleteMeasurement,getMeasurements} from '../redux/actions/trainingActions';
 const DisplayMeasurementsItem = (props) => {
-    console.log(props.measurement)
+    
+    const handleDeleteMeasurement = async() => {
+        await props.deleteMeasurement(props.measurement.id)
+        await props.getMeasurements()
+    }
     return (
         <div className="displaymeasurements__containers__container">
-                    
                     <div className="displaymeasurements__containers__container__elements">
                         <div className="displaymeasurements__containers__container__elements-date">Data : {props.measurement.date}</div>
+                        <div className="displaymeasurements__containers__container__elements__element-delete"><button onClick = {handleDeleteMeasurement}>Usuń pomiar</button></div>
                         <div className="displaymeasurements__containers__container__elements__element">
+                            
                             <div className="displaymeasurements__containers__container__elements__element-name">Waga</div>
                             <div className="displaymeasurements__containers__container__elements__element-result">{props.measurement.weight} kg</div>
                         </div>
@@ -43,5 +49,10 @@ const DisplayMeasurementsItem = (props) => {
                 </div>
     );
 };
-
-export default DisplayMeasurementsItem;
+const mapDispatchToProps = () =>dispatch => {
+    return {
+      deleteMeasurement: (x) =>dispatch(deleteMeasurement(x)),
+      getMeasurements: () =>dispatch(getMeasurements()),
+    };
+  };
+export default connect(null,mapDispatchToProps)(DisplayMeasurementsItem);

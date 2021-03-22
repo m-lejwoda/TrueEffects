@@ -1,7 +1,6 @@
 import React from 'react';
 
 const CreateTrainingItem = (props) => {
-    console.log(props.item)
     return (
         
             <tr>

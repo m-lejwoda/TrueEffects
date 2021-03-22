@@ -4,7 +4,6 @@ import 'moment/locale/pl';
 import moment from 'moment';
 moment().locale('pl')
 const HomepageGoalItem = (props) => {
-    console.log(props.goal)
     let firstdate = props.goal
     let currentTime = new Date();
     let dd = currentTime.getDate();
@@ -20,12 +19,10 @@ if(mm<10)
     mm=`0${mm}`;
 } 
 let today = `${yyyy}-${mm}-${dd}`;
-    console.log(today)
     let start = new Date(firstdate)
-    console.log(props.goal.date)
     return (
         <div className="homepage__goalscontainer__elements__element">
-        <div className="homepage__goalscontainer__elements__element-name">{props.goal.description}</div>
+        <div className="homepage__goalscontainer__elements__element-name">{props.goal.description}<button>Usuń cel</button></div>
         <div className="homepage__goalscontainer__elements__element__time">
             <div className="homepage__goalscontainer__elements__element__time-description">Pozostały czas upłynie</div>
             <div className="homepage__goalscontainer__elements__element__time-number">

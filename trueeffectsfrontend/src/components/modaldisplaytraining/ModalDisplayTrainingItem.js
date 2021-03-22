@@ -1,8 +1,6 @@
 import React,{useEffect,useState} from 'react';
 import {connect} from 'react-redux';
 const ModalDisplayTrainingItem = (props) => {
-    console.log(props.training)
-    console.log(props.training.exercise)
     return (
         <>
             <tr>

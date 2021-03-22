@@ -81,11 +81,6 @@ def exerciseCreate(request):
 def createpersonalDimensions(request):
     data = request.data
     data["user"] = request.user.id
-    print(request.user)
-    print(data)
-    
-    # print(request.user.id)
-    # data['user'] = request.user.id
     serializer = PersonalDimensionsSerializer(data=data)
     if serializer.is_valid():
         serializer.save()
@@ -152,7 +147,7 @@ def createOwnExercise(request):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated,])
 def displayTraining(request):
-    training = Training.objects.filter(user=request.user)
+    training = Training.objects.filter(user=request.user).order_by('date')
     print(training)
     serializer = TrainingSerializer(training,many=True)
     return Response(serializer.data)
@@ -160,8 +155,6 @@ def displayTraining(request):
 @api_view(['PUT'])
 def updateTraining(request):
     training = Training.objects.get(id=request.data['id'])
-    print("training")
-    # training.values()
     serializer = TrainingSerializer(instance=training,data=request.data)
     if serializer.is_valid():
             serializer.save()
@@ -240,16 +233,20 @@ def createDescriptionGoals(request):
 def deleteTraining(request,pk):
     training = Training.objects.get(id=pk)
     training.delete()
+    return Response("Trening został usunięty")
 
 @api_view(['DELETE'])
 def deleteMeasurement(request,pk):
     measurement = PersonalDimensions.objects.get(id=pk)
     measurement.delete()
+    return Response("Pomiary zostały usunięty")
 
 @api_view(['DELETE'])
 def deleteGoals(request,pk):
     goal = DescriptionGoals.objects.get(id=pk)
     goal.delete()
+    return Response("Cel został usunięty")
+
 
 #createTraining
 #displayTraining

@@ -21,7 +21,6 @@ if (props.stopstoper === true){
     pause()
 }
 if(props.endtraining === true){
-  console.log("koniec")
   props.setseconds(seconds)
   props.setminutes(minutes)
   props.sethours(hours)
