@@ -9,6 +9,7 @@ import AddGoals from './AddGoals';
 import LoginContainer from './LoginContainer';
 import {connect} from 'react-redux';
 import {getMeasurements,postTraining,getTrainings,getGoals,getExercises} from '../redux/actions/trainingActions';
+import {postLogoutAuth} from '../redux/actions/authenticationActions';
 import DisplayMeasurements from './DisplayMeasurements'
 import AddMeasurements from './AddMeasurements';
 import CreateTraining from './CreateTraining';
@@ -18,18 +19,20 @@ import { BoxLoading } from 'react-loadingg';
 import AddMeasurementsSummary from './AddMeasurementsSummary';
 import { useHistory } from "react-router-dom";
 const DefaultContainer = (props) => {
-  
   useEffect(()=>{
     document.title = "TrueEffects"
-    if(props.token){
-      props.getMeasurements(props.token);
-      props.getTrainings(props.token);
-      props.getGoals(props.token);
-      props.getExercises(props.token);
+    if(props.token === "undefined"){
+      props.postLogoutAuth()
+    }else if(props.token){
+      props.getMeasurements();
+      props.getTrainings();
+      props.getGoals();
+      props.getExercises();
     }else{
       props.history.push('/login')
     }
   },[])
+  
   useEffect(()=>{
     if (props.token === null){
       props.history.push('/login')
@@ -63,4 +66,5 @@ return(
       loadedexercises: state.training.loadedexercises
   }
 }
-export default connect(mapStateToProps,{getMeasurements,getTrainings,getGoals,getExercises})(DefaultContainer);   
+
+export default connect(mapStateToProps,{getMeasurements,getTrainings,getGoals,getExercises,postLogoutAuth})(DefaultContainer);   

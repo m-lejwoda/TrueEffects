@@ -7,6 +7,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import Checkbox from '@material-ui/core/Checkbox';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft,faArrowRight } from '@fortawesome/fontawesome-free-solid';
+import { endTraining,getTrainings } from '../redux/actions/trainingActions';
+import {connect} from 'react-redux';
+import { useHistory } from "react-router-dom";
+
 const useStyles = makeStyles({
   root: {
     '&:hover': {
@@ -65,6 +69,9 @@ function StyledCheckbox(props) {
   );
 }
 const Training = (props) => {
+    console.log("uruchomienie treningu")
+    console.log(props.location.training)
+    const history = useHistory()
     const {training} = props.location
     const [series, setSeries] = useState(0);
     const [singleSeries,setSingleSeries] = useState(0)
@@ -75,10 +82,16 @@ const Training = (props) => {
     const [seconds,setSeconds] = useState(0)
     const [minutes,setMinutes] = useState(0)
     const [hours,setHours] = useState(0)
+    const [actualseconds,setActualSeconds] = useState(0)
+    const [actualminutes,setActualMinutes] = useState(0)
+    const [actualhours,setActualHours] = useState(0)
     const [endtrainin,setEndTrainin] = useState(false)
     const inputRef = useRef()
     const buttonRef = useRef()
     const endbuttonRef = useRef()
+    const secondsRef = useRef()
+    const minutesRef = useRef()
+    const hoursRef = useRef()
     const fromTime = new Date(0, 0, 0, 0, 0, 0, 0);
     const goNext = () =>{
       if (inputRef.current.value !== ""){
@@ -115,12 +128,20 @@ const Training = (props) => {
       alert("Niepoprawne dane");
     }
   }
+  const handlemovetoschedulepage = () =>{
+    history.push('/schedule/')
+}
   const handleStoper = () => {
     setStartStoper(!startStoper)
   }
   const handleInput = () => {
     setInput(inputRef.current.value)
-    
+  }
+  const handleTime = (x,y,z) => {
+    console.log("time")
+    setActualSeconds(x)
+    setActualMinutes(y)
+    setActualHours(z)
   }
   const handlePause = (pause) =>{
     pause()
@@ -148,13 +169,21 @@ const Training = (props) => {
     
   }
   const takeStopwatchData = (h,m,s,) =>{
+    
     setHours(h)
     setMinutes(m)
     setSeconds(s)
   }
   const handleEndTraining = async()=>{
     await setStopStoper(true)
+    console.log(secondsRef)
+    console.log(minutesRef)
+    console.log(hoursRef)
+    // console.log(props.location.training.id)
+    await props.endTraining(props.location.training.id,props.location.training)
+    await props.getTrainings()
     await displayAlert()
+    await handlemovetoschedulepage()
   }
   if (seconds !== 0 || minutes !== 0 ||  hours !== 0){
     displayAlert()
@@ -179,7 +208,7 @@ const Training = (props) => {
                       <img src={logo} alt="logo"  />
                     </div>
                     <div className="training__middle__logotime-time">
-                    <MyStopwatch setseconds={setSeconds} setminutes={setMinutes} sethours={setHours}  endtraining={endtrainin} endbuttonref={endbuttonRef} stopstoper={stopStoper} setStopStoper={setStopStoper}/>
+                    <MyStopwatch setseconds={setSeconds} setminutes={setMinutes} sethours={setHours} handleTime={handleTime} refsec={secondsRef} refmin={minutesRef} refhour={hoursRef} endtraining={endtrainin} endbuttonref={endbuttonRef} stopstoper={stopStoper} setStopStoper={setStopStoper}/>
                   </div>
                 </div>
                 <div className="training__middle__series">
@@ -213,6 +242,10 @@ const Training = (props) => {
                         <div className="training__bottom__phase__allphases-/">/</div>
                         <div className="training__bottom__phase__allphases-phase">{training.training[`${series}`].pause_after_eccentric_phase}</div>
                     </div>
+                    <div className="training__bottom__weight-title">Ciężar dodatkowy</div>
+                    <div className="training__bottom__weight-title2">
+                        {training.training[`${series}`].weight}kg
+                    </div>
                     <div className="training__bottom__phase-title2">Ile powtórzeń wykonałeś w serii</div>
                     <div className="training__bottom__phase__reps">
                         <div className="training__bottom__phase__reps-actualreps"><input ref={inputRef} placeholder={training.training[`${series}`].reps[`${singleSeries}`]} onChange={handleInput} id="actualreps" min="0" max="10000" /></div>
@@ -229,4 +262,4 @@ const Training = (props) => {
     );
 };
 
-export default Training;
+export default connect(null,{getTrainings,endTraining})(Training); 

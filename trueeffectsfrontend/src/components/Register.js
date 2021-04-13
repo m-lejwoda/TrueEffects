@@ -18,6 +18,9 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 const Register = (props) => {
+    if(props.token !== null){
+        props.history.push('/')
+    }
     const [username,setUsername] = useState('')
     const [email,setEmail] = useState('')
     const [password,setPassword] = useState('')
@@ -36,7 +39,7 @@ const Register = (props) => {
     const handleMovetoBack = () => {
         props.history.goBack()
     }
-    const handleRegister = (e) => {
+    const handleRegister = async(e) => {
         e.preventDefault()
         if(validateEmail(email) !== false){
             let data = {
@@ -45,8 +48,8 @@ const Register = (props) => {
                 "password":password,
                 "password2":password2
             }
-            props.postRegister(data)
-            props.history.push('/')
+            await props.postRegister(data)
+            // props.history.push('/')
         }else{
             setEmailError(true)
         }
@@ -75,6 +78,7 @@ const Register = (props) => {
                     <div className="register__secondcontainer__form__username-input">
                     <TextField id="standard-password-input"  onChange={(e)=>setUsername(e.target.value)}  label="Nazwa użytkownika" type="text" autoComplete="current-password"/>
                     </div>
+                    {props.error_register.username !== undefined && <p style={{color:'red'}}>{props.error_register.username}</p>}
                     <div className="register__secondcontainer__form__username-email">
                     <TextField id="standard-password-input"  onChange={(e)=>setEmail(e.target.value)}  label="Email" type="email" autoComplete="current-password"/>
                     </div>
@@ -82,10 +86,12 @@ const Register = (props) => {
                     <div className="register__secondcontainer__form__username-password">
                     <TextField id="standard-password-input" onChange={(e)=>setPassword(e.target.value)}  label="Hasło" type="password" autoComplete="current-password"/>
                     </div>
+                    {props.error_register.password !== undefined && <p style={{color:'red'}}>{props.error_register.password}</p>}
                     <div className="register__secondcontainer__form__username-password">
                     <TextField id="standard-password-input" onChange={(e)=>setPassword2(e.target.value)} label="Powtórz hasło" type="password" autoComplete="current-password"/>
                     </div>
-                    {props.error_register !== '' && <p style={{color:'red'}}>{props.error_register}</p>}
+                    {props.error_register.password2 !== undefined && <p style={{color:'red'}}>{props.error_register.password2}</p>}
+                   
                     </div>
                     <div className="register__secondcontainer__form__button">
                         <button className="register__secondcontainer__form__button-register" onClick={handleRegister}>Zarejestruj się</button>

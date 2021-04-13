@@ -39,7 +39,6 @@ class CreateUserView(CreateAPIView):
         permissions.AllowAny
     ]
     serializer_class = UserSerializer
-
 @api_view(['POST'])
 def registration_view(request):
     if request.method == 'POST':
@@ -52,9 +51,10 @@ def registration_view(request):
             data['username'] = user.username
             token = Token.objects.get(user=user).key
             data['token'] = token
+            return Response(data)
         else:
-            data= serializer.errors
-        return Response(data)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
 @api_view(['GET'])
 def apiOverview(request):
     return Response("Api Base Point")
@@ -250,8 +250,19 @@ def deleteGoals(request,pk):
 @api_view(['POST'])
 def updatedateofTraining(request,pk):
     training = Training.objects.get(id=pk)
+    training.id = None
     data = request.data
     training.date = data.get("date",training.date)
     training.save()
     return Response("Data treningu została zaktualizowana")
-    
+
+@api_view(['POST'])
+def updateTrainingafterEnd(request,pk):
+    training = Training.objects.get(id=pk)
+    training.time = request.data['time']
+    for el in request.data['training']:
+        singleseries = SingleSeries.objects.get(id = el['id'])
+        singleseries.reps = el['reps']
+        singleseries.save()
+    training.save()
+    return Response("Data treningu została zaktualizowana")

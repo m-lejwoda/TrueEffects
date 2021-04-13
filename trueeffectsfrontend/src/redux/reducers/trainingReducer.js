@@ -1,5 +1,5 @@
-import {POST_LOGOUT,GET_MEASUREMENTS,GET_MEASUREMENTS_SUCCESS,POST_TRAINING,GET_TRAININGS,GET_TRAININGS_FAILURE,GET_TRAININGS_SUCCESS,
-    GET_GOALS,GET_GOALS_SUCCESS,POST_MEASUREMENT,POST_MEASUREMENT_SUCCESS,GET_EXERCISES,GET_EXERCISES_SUCCESS,GET_OWN_EXERCISES_SUCCESS} from '../actions/types';
+import {POST_LOGOUT,GET_MEASUREMENTS,GET_MEASUREMENTS_SUCCESS,POST_TRAINING,GET_TRAININGS,GET_TRAININGS_SUCCESS,
+    GET_GOALS,GET_GOALS_SUCCESS,POST_MEASUREMENT,GET_EXERCISES,GET_EXERCISES_SUCCESS,GET_OWN_EXERCISES_SUCCESS,END_TRAINING_SUCCESS,POST_TIME} from '../actions/types';
 
 const initialState = {
     measurements: [],
@@ -16,7 +16,9 @@ const initialState = {
     loadedexercises:false,
     loadedtime :false,
     ownexercises:[],
-    time: []
+    seconds: '',
+    minutes: '',
+    hours: ''
     
 };
 export default function trainreducer(state=initialState,action){
@@ -93,6 +95,19 @@ export default function trainreducer(state=initialState,action){
                 ...state,
                 ownexercises:action.payload
             }
+        case END_TRAINING_SUCCESS:
+            return{
+                ...state,
+                
+            }
+        case POST_TIME:
+            return{
+                ...state,
+                seconds: action.second,
+                minutes: action.minute,
+                hours: action.hour,
+            }
+        
         default: 
             return state;
     }

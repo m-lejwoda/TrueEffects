@@ -5,7 +5,7 @@ from rest_framework.authtoken.views import obtain_auth_token
 urlpatterns=[
     path('display_exercises/',views.exerciseView,name="exercise-view"),
     path('create_exercise/',views.exerciseCreate,name="create_exercise"),
-    path('register/',views.registration_view,name='login'),
+    path('register/',views.registration_view,name='register'),
     # path('login/',obtain_auth_token,name="login"),
     path('login/', views.CustomAuthToken.as_view()),
     path('create_personal_dimensions/',views.createpersonalDimensions,name="createpersonalDimensions"),
@@ -28,6 +28,7 @@ urlpatterns=[
     path('delete_measurement/<str:pk>',views.deleteMeasurement,name="delete_measurement"),
     path('delete_training/<str:pk>',views.deleteTraining,name="delete_training"),
     path('update_training_date/<str:pk>',views.updatedateofTraining,name="update_date_of_training"),
+    path('update_training_after_end/<str:pk>',views.updateTrainingafterEnd,name="update_training_after_end"),
     path('overview/',views.apiOverview),
 ]
 #createTraining

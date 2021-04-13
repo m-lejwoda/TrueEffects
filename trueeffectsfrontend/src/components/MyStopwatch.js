@@ -1,6 +1,7 @@
 import React,{useState,useRef,useEffect} from 'react';
 import { useStopwatch } from 'react-timer-hook';
-
+import {connect} from 'react-redux';
+import { postTime } from '../redux/actions/trainingActions';
 const MyStopwatch=(props) => {
   const {
     seconds,
@@ -28,7 +29,7 @@ if(props.endtraining === true){
   return (
     <div style={{textAlign: 'center'}}>
       <div style={{fontSize: '100px'}}>
-        <span>{hours<10 && 0}{hours}</span>:<span>{minutes<10 && 0}{minutes}</span>:<span>{seconds<10 && 0}{seconds}</span>
+        <span ref={props.refhours}>{hours<10 && 0}{hours}</span>:<span ref={props.refminutes}>{minutes<10 && 0}{minutes}</span>:<span ref={props.refseconds}>{seconds<10 && 0}{seconds}</span>
       </div>
       <div className="stopwatchbuttons">
         <button id="start" onClick={handleStart}>Start</button>
@@ -38,4 +39,4 @@ if(props.endtraining === true){
     </div>
   );
 }
-export default MyStopwatch;
+export default connect(null,{postTime})(MyStopwatch); 

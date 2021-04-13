@@ -18,9 +18,10 @@ class RegisterSerializer(serializers.ModelSerializer):
             password2 = self.validated_data['password2']
             if password != password2:
                 raise serializers.ValidationError({'password': 'Hasła się nie zgadzają'})
-            user.set_password(password)
-            user.save()
-            return user
+            else:
+                user.set_password(password)
+                user.save()
+                return user
 
 class UserSerializer(serializers.ModelSerializer):
     password2 = serializers.CharField(style={'input_type': 'password'}, write_only=True)

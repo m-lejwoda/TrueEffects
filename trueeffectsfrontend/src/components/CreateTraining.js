@@ -107,37 +107,44 @@ const CreateTraining = (props) => {
             await props.getTrainings()
             await handlemovetoschedulepage()
         }
-        let date = new Date(training_date.current.input.value)
-        let splitdate = training_date.current.input.value.split("/")
-        let fullday = splitdate[2] + "-" + splitdate[1] + "-" +  splitdate[0]
-        let array = {
-            name: name_of_training.current.value,
-            description: training_description.current.value,
-            date: fullday,
-            training: []
-        }
-        let allobjects = []
-        let temparray = [...itemsplaceholders]
-        for(let i=0;i<seriesitems.length;i++){
-            let objects = {reps: []}
-            objects["exercise"] = {"name" : seriesitems[i].exercise.exercise.name}
-            objects["pause_after_concentric_phase"]=seriesitems[i].pauseconcentricphase.pauseconcentricphase
-            objects["pause_after_eccentric_phase"]=seriesitems[i].pauseeccentricphase.pauseeccentricphase
-            objects["weight"] = seriesitems[i].weight.weight
-            objects["series"] = seriesitems[i].series.series
-            objects["rest"] = seriesitems[i].rest.rest
-            let secondtemparray = []
-            for(let k=0; k<seriesitems[i].series.series;k++){
-                let temp = temparray.shift();
-                secondtemparray.push(temp)
-                objects['reps'] = secondtemparray  
+        if (name_of_training.current.value === ""){
+            alert("Wprowadź nazwę treningu")
+        }else{
+            if(training_description.current.value === ""){
+                training_description.current.value = name_of_training.current.value
             }
-            array["training"].push(objects)
-            allobjects.push(objects)
-        }
-        fetchData(array)
+            let date = new Date(training_date.current.input.value)
+            let splitdate = training_date.current.input.value.split("/")
+            let fullday = splitdate[2] + "-" + splitdate[1] + "-" +  splitdate[0]
+            let array = {
+                name: name_of_training.current.value,
+                description: training_description.current.value,
+                date: fullday,
+                training: []
+            }
+            let allobjects = []
+            let temparray = [...itemsplaceholders]
+            for(let i=0;i<seriesitems.length;i++){
+                let objects = {reps: []}
+                objects["exercise"] = {"name" : seriesitems[i].exercise.exercise.name}
+                objects["pause_after_concentric_phase"]=seriesitems[i].pauseconcentricphase.pauseconcentricphase
+                objects["pause_after_eccentric_phase"]=seriesitems[i].pauseeccentricphase.pauseeccentricphase
+                objects["weight"] = seriesitems[i].weight.weight
+                objects["series"] = seriesitems[i].series.series
+                objects["rest"] = seriesitems[i].rest.rest
+                let secondtemparray = []
+                for(let k=0; k<seriesitems[i].series.series;k++){
+                    let temp = temparray.shift();
+                    secondtemparray.push(temp)
+                    objects['reps'] = secondtemparray  
+                }
+                array["training"].push(objects)
+                allobjects.push(objects)
+            }
+            fetchData(array)
         // props.postTraining(array)
     }
+}
     return (
         <div className="createtraining">
             <div className="createtraining-title">Kreator treningu</div>

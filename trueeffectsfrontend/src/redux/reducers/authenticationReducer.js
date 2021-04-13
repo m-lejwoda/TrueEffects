@@ -1,11 +1,15 @@
 import {POST_LOGIN,USER_LOADED,AUTH_ERROR,LOGIN_ERROR,POST_REGISTER, REGISTER_ERROR,POST_LOGOUT_AUTH, USER_LOADING} from '../actions/types';
 const initialState = {
-    token: localStorage.getItem('token'),
-    name: localStorage.getItem('name'),
+    token: null,
+    name: null,
     isAuthenticated: null,
     error: '',
-    error_register: '',
-    tokenloaded: false
+    error_register: [],
+    tokenloaded: false,
+    error_register_name: '',
+    seconds: '',
+    minutes: '',
+    hours: ''
 };
 export default function authreducer(state=initialState,action){
     switch(action.type){
@@ -52,7 +56,8 @@ export default function authreducer(state=initialState,action){
                 isLoaded: true,
                 isAuthenticated: true,  
                 token: action.payload.token,
-                name: action.payload.username
+                name: action.payload.username,
+                error: ''
             }
         case AUTH_ERROR:
             localStorage.removeItem('token')
@@ -64,6 +69,7 @@ export default function authreducer(state=initialState,action){
                 isAuthenticated:false,
                 isLoading: false
             }
+        
 
         default: 
             return state;

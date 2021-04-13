@@ -12,19 +12,16 @@ import {getMeasurements,postTraining,getTrainings,getGoals,getExercises} from '.
 const useStyles = makeStyles((theme) => ({
     root: {
       '& .MuiTextField-root': {
-        // margin: theme.spacing(1),
-        // font-weight: 700,
         width: '60ch',
         '& .MuiInputBase-input':{
             fontWeight: '700'
-            
         }
       },
     },
   }));
 
 const Login = (props) => {
-    if(props.token !== null){
+    if(props.token !== null ){
         props.history.push('/')
     }
     const handleMoveToRegister = () => {
@@ -83,7 +80,6 @@ const Login = (props) => {
 };
 const mapStateToProps = (state) => {
     return{
-        // trainings: state.training.trainings.data,
         error: state.authentication.error,
         token: state.authentication.token,
         tokenloaded: state.authentication.tokenloaded

@@ -74,6 +74,20 @@ $pink: #1D3557;
                 cursor:pointer;
             }
         }
+        &__weight{
+            &-title{
+                display:flex;
+                justify-content: center;
+                font-size:1.8rem;
+                font-weight: 600;
+            }
+            &-title2{
+                display:flex;
+                justify-content: center;
+                font-size:1.8rem;
+                font-weight: 600;
+            }
+        }
         &__phase{
             &-title{
                 display:flex;

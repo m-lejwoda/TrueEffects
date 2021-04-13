@@ -28,14 +28,10 @@ export const postRegister = (data) => dispatch =>{
         type: POST_REGISTER,
         payload: res.data
     }))
-    .then(res=>{
-        window.localStorage.setItem('token',res.payload.token)
-        window.localStorage.setItem('name',res.payload.name)
-    })
-    .catch(res=> dispatch(
+    .catch(err=> dispatch(
         {
         type: REGISTER_ERROR,
-        payload: "Niepoprawne dane rejestracji",
+        payload: err.response.data,
     }))}
 export const postLogoutAuth = () => dispatch =>{
     dispatch({
@@ -53,7 +49,8 @@ export const loadUser = (data) => (dispatch,getState) => {
         })
     }).catch(err=>{
         dispatch({
-            type: AUTH_ERROR
+            type: LOGIN_ERROR,
+            payload : "Błąd logowania popraw dane"
         })
     })
 }

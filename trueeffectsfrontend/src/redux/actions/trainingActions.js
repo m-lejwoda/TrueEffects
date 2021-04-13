@@ -1,7 +1,7 @@
 import {POST_LOGOUT,GET_TIME,GET_TIME_SUCCESS,AUTH_ERROR,GET_MEASUREMENTS_SUCCESS,GET_MEASUREMENTS,POST_TRAINING,GET_TRAININGS,
      GET_TRAININGS_SUCCESS,GET_GOALS,GET_GOALS_SUCCESS,POST_MEASUREMENT,
      POST_MEASUREMENT_SUCCESS, GET_EXERCISES,DELETE_MEASUREMENT_SUCCESS,
-     GET_EXERCISES_SUCCESS,GET_OWN_EXERCISES_SUCCESS} from './types';
+     GET_EXERCISES_SUCCESS,GET_OWN_EXERCISES_SUCCESS,END_TRAINING_SUCCESS,POST_TIME} from './types';
 import axios from 'axios';
 
 export const getTime = (time)=>(dispatch) =>{
@@ -22,10 +22,7 @@ export const getMeasurements =()=>(dispatch,getState) => {
     }));
 }
 export const getExercises = () =>(dispatch,getState)=>{
-    let token = window.localStorage.getItem('token')
-    if (token === null){
-        token = getState().authentication.token
-    }
+    let token = getState().authentication.token
     dispatch({type: GET_EXERCISES})
     axios.defaults.headers.common['Authorization'] = `Token ${token}`
     axios.get('http://127.0.0.1:8000/api/display_own_exercise/')
@@ -104,7 +101,7 @@ export const postOwnExercise = (data) => (dispatch,getState) =>{
     let token = getState().authentication.token
     let dictdata = {"name": data}
     axios.defaults.headers.common['Authorization'] = `Token ${token}`
-    axios.post('http://127.0.0.1:8000/api/create_own_exercise/',dictdata)
+    return axios.post('http://127.0.0.1:8000/api/create_own_exercise/',dictdata)
     .catch(err=>{
         alert("Wystąpił błąd")
     })
@@ -139,8 +136,6 @@ export const deleteGoals = pk =>(dispatch,getState)=>{
     .then(res => {
         alert("Trening został usunięty")
     })
-    // .catch(
-    //     alert("Wystąpił problem z usunięciem treningu"))
 }
 export const updateDateTraining = (pk,data) =>(dispatch,getState) =>{
     let token = getState().authentication.token
@@ -148,5 +143,25 @@ export const updateDateTraining = (pk,data) =>(dispatch,getState) =>{
     return axios.post(`http://127.0.0.1:8000/api/update_training_date/${pk}`,data)
     .then(res => {
         alert("Data treningu została zaktualizowana")
+    })
+}
+export const endTraining = (pk,data)=>(dispatch,getState) =>{
+    let token = getState().authentication.token
+    axios.defaults.headers.common['Authorization'] = `Token ${token}`
+    return axios.post(`http://127.0.0.1:8000/api/update_training_after_end/${pk}`,data)
+    .then(res=>dispatch({
+        type: END_TRAINING_SUCCESS,
+    }))
+    .then(res => {
+        alert("Trenining został zakończony")
+    })
+}
+
+export const postTime = (sec,min,hour) => (dispatch) => {
+    dispatch({
+        type: POST_TIME,
+        second: sec,
+        minute: min,
+        hour: hour
     })
 }
