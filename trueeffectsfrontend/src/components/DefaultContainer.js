@@ -1,5 +1,5 @@
-import { BrowserRouter, Route,Redirect } from 'react-router-dom';
-import React, { useState, useEffect } from 'react';
+import {Route} from 'react-router-dom';
+import React, {useEffect} from 'react';
 import Navbar from './Navbar';
 import Navbar2 from './Navbar2';
 import Training from './Training';
@@ -8,7 +8,7 @@ import Homepage from './Homepage';
 import AddGoals from './AddGoals';
 import LoginContainer from './LoginContainer';
 import {connect} from 'react-redux';
-import {getMeasurements,postTraining,getTrainings,getGoals,getExercises} from '../redux/actions/trainingActions';
+import {getMeasurements,getTrainings,getGoals,getExercises} from '../redux/actions/trainingActions';
 import {postLogoutAuth} from '../redux/actions/authenticationActions';
 import DisplayMeasurements from './DisplayMeasurements'
 import AddMeasurements from './AddMeasurements';
@@ -17,7 +17,6 @@ import Register from './Register';
 import '../sass/defaultcontainer.scss';
 import { BoxLoading } from 'react-loadingg';
 import AddMeasurementsSummary from './AddMeasurementsSummary';
-import { useHistory } from "react-router-dom";
 const DefaultContainer = (props) => {
   useEffect(()=>{
     document.title = "TrueEffects"

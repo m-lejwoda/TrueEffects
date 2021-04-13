@@ -1,4 +1,4 @@
-import React,{useState,useRef,useEffect} from 'react';
+import React from 'react';
 import { useStopwatch } from 'react-timer-hook';
 import {connect} from 'react-redux';
 import { postTime } from '../redux/actions/trainingActions';
@@ -7,8 +7,6 @@ const MyStopwatch=(props) => {
     seconds,
     minutes,
     hours,
-    days,
-    isRunning,
     start,
     pause,
     reset,

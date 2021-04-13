@@ -1,5 +1,4 @@
 import React,{useState,useRef} from 'react';
-import CreateTrainingItem from './CreateTrainingItem';
 import '../sass/createtraining.scss';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faArrowRight} from '@fortawesome/fontawesome-free-solid';
@@ -113,7 +112,6 @@ const CreateTraining = (props) => {
             if(training_description.current.value === ""){
                 training_description.current.value = name_of_training.current.value
             }
-            let date = new Date(training_date.current.input.value)
             let splitdate = training_date.current.input.value.split("/")
             let fullday = splitdate[2] + "-" + splitdate[1] + "-" +  splitdate[0]
             let array = {

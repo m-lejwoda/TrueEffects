@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react';
+import React,{useState} from 'react';
 import '../sass/login.scss';
 import {connect} from 'react-redux';
 import {postLogin,loadUser} from '../redux/actions/authenticationActions';
@@ -7,7 +7,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft,faArrowRight } from '@fortawesome/fontawesome-free-solid';
 import AuthenticateLogo from './AuthenticateLogo';
-import { useHistory } from "react-router-dom";
 import {getMeasurements,postTraining,getTrainings,getGoals,getExercises} from '../redux/actions/trainingActions';
 const useStyles = makeStyles((theme) => ({
     root: {

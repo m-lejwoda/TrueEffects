@@ -1,8 +1,7 @@
-import React,{useState,useRef,useEffect} from 'react';
+import React,{useState,useRef} from 'react';
 import MyStopwatch from './MyStopwatch';
 import '../sass/training.scss';
 import logo from '../images/logo.png';
-import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Checkbox from '@material-ui/core/Checkbox';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -10,7 +9,6 @@ import { faArrowLeft,faArrowRight } from '@fortawesome/fontawesome-free-solid';
 import { endTraining,getTrainings } from '../redux/actions/trainingActions';
 import {connect} from 'react-redux';
 import { useHistory } from "react-router-dom";
-
 const useStyles = makeStyles({
   root: {
     '&:hover': {
@@ -54,20 +52,6 @@ const useStyles = makeStyles({
     },
   },
 });
-function StyledCheckbox(props) {
-  const classes = useStyles();
-  return (
-    <Checkbox
-      className={classes.root}
-      disableRipple
-      color="default"
-      checkedIcon={<span className={clsx(classes.icon, classes.checkedIcon)} />}
-      icon={<span className={classes.icon} />}
-      inputProps={{ 'aria-label': 'decorative checkbox' }}
-      {...props}
-    />
-  );
-}
 const Training = (props) => {
     console.log("uruchomienie treningu")
     console.log(props.location.training)
@@ -77,22 +61,17 @@ const Training = (props) => {
     const [singleSeries,setSingleSeries] = useState(0)
     const [endtraining,setEndTraining] = useState(false)
     const [input,setInput] = useState('')
-    const [startStoper,setStartStoper] = useState(false)
     const [stopStoper,setStopStoper] = useState(false)
     const [seconds,setSeconds] = useState(0)
     const [minutes,setMinutes] = useState(0)
     const [hours,setHours] = useState(0)
-    const [actualseconds,setActualSeconds] = useState(0)
-    const [actualminutes,setActualMinutes] = useState(0)
-    const [actualhours,setActualHours] = useState(0)
-    const [endtrainin,setEndTrainin] = useState(false)
+
     const inputRef = useRef()
     const buttonRef = useRef()
     const endbuttonRef = useRef()
     const secondsRef = useRef()
     const minutesRef = useRef()
     const hoursRef = useRef()
-    const fromTime = new Date(0, 0, 0, 0, 0, 0, 0);
     const goNext = () =>{
       if (inputRef.current.value !== ""){
         training.training[`${series}`].reps[`${singleSeries}`]= parseInt(inputRef.current.value)
@@ -131,21 +110,12 @@ const Training = (props) => {
   const handlemovetoschedulepage = () =>{
     history.push('/schedule/')
 }
-  const handleStoper = () => {
-    setStartStoper(!startStoper)
-  }
   const handleInput = () => {
     setInput(inputRef.current.value)
   }
   const handleTime = (x,y,z) => {
     console.log("time")
-    setActualSeconds(x)
-    setActualMinutes(y)
-    setActualHours(z)
   }
-  const handlePause = (pause) =>{
-    pause()
-}
   const displayAlert = () => {
     let sec 
     let min
@@ -168,12 +138,7 @@ const Training = (props) => {
     return alert("Trening zakończony"+ hour +":" + min + ":" + sec)
     
   }
-  const takeStopwatchData = (h,m,s,) =>{
-    
-    setHours(h)
-    setMinutes(m)
-    setSeconds(s)
-  }
+
   const handleEndTraining = async()=>{
     await setStopStoper(true)
     console.log(secondsRef)
@@ -208,7 +173,7 @@ const Training = (props) => {
                       <img src={logo} alt="logo"  />
                     </div>
                     <div className="training__middle__logotime-time">
-                    <MyStopwatch setseconds={setSeconds} setminutes={setMinutes} sethours={setHours} handleTime={handleTime} refsec={secondsRef} refmin={minutesRef} refhour={hoursRef} endtraining={endtrainin} endbuttonref={endbuttonRef} stopstoper={stopStoper} setStopStoper={setStopStoper}/>
+                    <MyStopwatch setseconds={setSeconds} setminutes={setMinutes} sethours={setHours} handleTime={handleTime} refsec={secondsRef} refmin={minutesRef} refhour={hoursRef} endtraining={false} endbuttonref={endbuttonRef} stopstoper={stopStoper} setStopStoper={setStopStoper}/>
                   </div>
                 </div>
                 <div className="training__middle__series">
