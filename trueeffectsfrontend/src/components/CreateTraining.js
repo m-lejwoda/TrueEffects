@@ -14,7 +14,7 @@ const CreateTraining = (props) => {
     const [startDate, setStartDate] = useState(new Date())
     const [ownexerciseActive,setOwnExerciseActive] = useState(false)
     const [activediv , setActivediv] = useState(null)
-    const [ownexercise,setOwnExercise] = useState('')
+    const [ownexercise,setOwnExercise] = useState({id: '', name:''})
     const [exercise,setExercise] = useState({id: '', name:''})
     const [series,setSeries] = useState(1)
     const [assumedreps,setAssumedReps] = useState(1)
@@ -63,7 +63,6 @@ const CreateTraining = (props) => {
           }]);
     }
     const clearState = () =>{
-        
         // Domyślne dane
         setSeries(1)
         // setAssumedReps(1)
@@ -74,7 +73,7 @@ const CreateTraining = (props) => {
         // setEccentricPhase(0)
         // setPauseEccentricPhase(0)
     }
-    
+
     const handleNewOwnExercise = () => {
         props.postOwnExercise(inputOwnExercise.current.value)
     }
@@ -83,17 +82,40 @@ const CreateTraining = (props) => {
             activediv.style.background = "#457B9D"
         }
         setActivediv(e.target)
+        console.log(ownexerciseActive)
+        if (ownexerciseActive == false){
         setExercise({id:element.id})
         setExercise({name:element.name})
-        e.target.style.background = '#db3d44'
+        e.target.style.background = '#db3d44'}
+        else{
+            setOwnExercise({id:element.id})
+            setOwnExercise({name:element.name})
+            e.target.style.background = '#db3d44'
+        }
     }
     const handleClickSelect = (e) =>{
+        if (activediv !== null){
         addElementstoMainItems()
         for(let i=0;i<series;i++){
             setItemsPlaceHolders(oldArray => [...oldArray, assumedreps])
             addElementtoItems()
         }
+        activediv.style.background = "#457B9D"
+        setActivediv(null)
         clearState()
+        }else{
+            alert("Aby kontynuować musisz wybrać ćwiczenie")
+        }
+    }
+    const changeOwnexercisetoExercise = () => {
+        setExercise({id:'',name:''})
+        setOwnExercise({id:'',name:''})
+        setOwnExerciseActive(false)
+    }
+    const changeExercisetoOwnexercise = () => {
+        setExercise({id:'',name:''})
+        setOwnExercise({id:'',name:''})
+        setOwnExerciseActive(true)
     }
     const handleChangeinTrainingItems = (e,element) =>{
         let temp = [...itemsplaceholders];
@@ -124,7 +146,11 @@ const CreateTraining = (props) => {
             let temparray = [...itemsplaceholders]
             for(let i=0;i<seriesitems.length;i++){
                 let objects = {reps: []}
-                objects["exercise"] = {"name" : seriesitems[i].exercise.exercise.name}
+                if(seriesitems[i].exercise.exercise.name !== ""){
+                    objects["exercise"] = {"name" : seriesitems[i].exercise.exercise.name}
+                }else{
+                    objects["ownexercise"] = {"name" : seriesitems[i].ownexercise.ownexercise.name,"user":1}
+                }
                 objects["pause_after_concentric_phase"]=seriesitems[i].pauseconcentricphase.pauseconcentricphase
                 objects["pause_after_eccentric_phase"]=seriesitems[i].pauseeccentricphase.pauseeccentricphase
                 objects["weight"] = seriesitems[i].weight.weight
@@ -139,6 +165,7 @@ const CreateTraining = (props) => {
                 array["training"].push(objects)
                 allobjects.push(objects)
             }
+            console.log(array)
             fetchData(array)
         // props.postTraining(array)
     }
@@ -149,8 +176,8 @@ const CreateTraining = (props) => {
             <div className="createtraining__containers">
                 <div className="createtraining__containers__first">
                     <div className="createtraining__containers__first__selectors">
-                        <div className="createtraining__containers__first__selectors-globalexercise" style={{color: ownexerciseActive ? 'white' : '#db3d44' }} onClick={()=>setOwnExerciseActive(false)}>Ćwiczenia</div>
-                        <div className="createtraining__containers__first__selectors-myexercise" style={{color: ownexerciseActive ? '#db3d44' : 'white' }} onClick={()=>setOwnExerciseActive(true)}>Moje Ćwiczenia</div>
+                        <div className="createtraining__containers__first__selectors-globalexercise" style={{color: ownexerciseActive ? 'white' : '#db3d44' }} onClick={changeOwnexercisetoExercise}>Ćwiczenia</div>
+                        <div className="createtraining__containers__first__selectors-myexercise" style={{color: ownexerciseActive ? '#db3d44' : 'white' }} onClick={changeExercisetoOwnexercise}>Moje Ćwiczenia</div>
                     </div>
                     <div className="createtraining__containers__first__newexercise" style={{display: ownexerciseActive ? 'flex' : 'none' }}>
                         <div className="createtraining__containers__first__newexercise-title">Wprowadź nazwę ćwiczenia lub wyszukaj</div>
@@ -202,7 +229,7 @@ const CreateTraining = (props) => {
                                 {items.length > 0 ? items.map((item,id)=>{
                                     return(
                                     <tr>
-                                        <td>{item.exercise.exercise.name}</td>
+                                        {item.exercise.exercise.name === "" ?<td>{item.ownexercise.ownexercise.name}</td> : <td>{item.exercise.exercise.name}</td> }
                                         <td ><span><input  placeholder={itemsplaceholders[id]} onChange={(e)=>handleChangeinTrainingItems(e,{id})}/></span></td> 
                                     </tr>)
                                 })

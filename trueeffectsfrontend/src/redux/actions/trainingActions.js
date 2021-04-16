@@ -48,6 +48,7 @@ export const postTraining = (data) => async(dispatch,getState) => {
         alert("Trening został dodany")
     })
     .catch(err=>{
+        console.log(err.response)
         alert("Nieudało się dodać treningu popraw błędy")
     })
 }
@@ -140,9 +141,13 @@ export const deleteGoals = pk =>(dispatch,getState)=>{
 export const updateDateTraining = (pk,data) =>(dispatch,getState) =>{
     let token = getState().authentication.token
     axios.defaults.headers.common['Authorization'] = `Token ${token}`
+    console.log(data)
     return axios.post(`http://127.0.0.1:8000/api/update_training_date/${pk}`,data)
     .then(res => {
         alert("Data treningu została zaktualizowana")
+    })
+    .catch(err => {
+        alert("Wystąpił błąd. Spróbuj później")
     })
 }
 export const endTraining = (pk,data)=>(dispatch,getState) =>{

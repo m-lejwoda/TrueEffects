@@ -250,6 +250,12 @@ def deleteGoals(request,pk):
 @api_view(['POST'])
 def updatedateofTraining(request,pk):
     training = Training.objects.get(id=pk)
+    print(training.training.all())
+    for el in training.training.all():
+        print(el.id)
+        SingleSeries.objects.get(id = el.id)
+        
+
     training.id = None
     data = request.data
     training.date = data.get("date",training.date)
