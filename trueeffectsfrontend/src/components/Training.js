@@ -1,4 +1,4 @@
-import React,{useState,useRef} from 'react';
+import React,{useState,useRef,createRef} from 'react';
 import MyStopwatch from './MyStopwatch';
 import '../sass/training.scss';
 import logo from '../images/logo.png';
@@ -53,26 +53,28 @@ const useStyles = makeStyles({
   },
 });
 const Training = (props) => {
-    console.log("uruchomienie treningu")
-    console.log(props.location.training)
     const history = useHistory()
     const {training} = props.location
     const [series, setSeries] = useState(0);
     const [singleSeries,setSingleSeries] = useState(0)
     const [endtraining,setEndTraining] = useState(false)
     const [input,setInput] = useState('')
-    const [stopStoper,setStopStoper] = useState(false)
-    const [seconds,setSeconds] = useState(0)
-    const [minutes,setMinutes] = useState(0)
-    const [hours,setHours] = useState(0)
-
-    const inputRef = useRef()
-    const buttonRef = useRef()
-    const endbuttonRef = useRef()
-    const secondsRef = useRef()
-    const minutesRef = useRef()
-    const hoursRef = useRef()
+    const [seconds,setSeconds] = useState('')
+    const [minutes,setMinutes] = useState('')
+    const [hours,setHours] = useState('')
+    const inputRef = useRef();
+    const buttonRef = useRef();
+    const endbuttonRef = useRef();
+    const childRef = useRef();
     const goNext = () =>{
+
+      // const getdata = (x,y,z) =>{
+      //   setSeconds(x)
+      //   setMinutes(y)
+      //   setHours(z)
+
+      // }
+
       if (inputRef.current.value !== ""){
         training.training[`${series}`].reps[`${singleSeries}`]= parseInt(inputRef.current.value)
       }
@@ -113,46 +115,15 @@ const Training = (props) => {
   const handleInput = () => {
     setInput(inputRef.current.value)
   }
-  const handleTime = (x,y,z) => {
-    console.log("time")
-  }
-  const displayAlert = () => {
-    let sec 
-    let min
-    let hour
-    if (seconds<10){
-      sec = "0"+ seconds 
-    }else{
-      sec = seconds
-    }
-    if (minutes<10){
-      min = "0"+ minutes 
-    }else{
-      min = minutes
-    }
-    if (hours<10){
-      hour = "0"+ hours 
-    }else{
-      hour = hours
-    }
-    return alert("Trening zakończony"+ hour +":" + min + ":" + sec)
-    
-  }
 
   const handleEndTraining = async()=>{
-    await setStopStoper(true)
-    console.log(secondsRef)
-    console.log(minutesRef)
-    console.log(hoursRef)
-    // console.log(props.location.training.id)
-    await props.endTraining(props.location.training.id,props.location.training)
-    await props.getTrainings()
-    await displayAlert()
+    await childRef.current.handleStop()
+    await childRef.current.getAlert()
+    // await props.endTraining(props.location.training.id,props.location.training)
+    await childRef.current.posttrain()
+    // await props.getTrainings()
     await handlemovetoschedulepage()
   }
-  if (seconds !== 0 || minutes !== 0 ||  hours !== 0){
-    displayAlert()
- }
     return (
         <div className="training">
             <div className="training__top">
@@ -172,8 +143,8 @@ const Training = (props) => {
                     <div className="training__middle__logotime-logo">
                       <img src={logo} alt="logo"  />
                     </div>
-                    <div className="training__middle__logotime-time">
-                    <MyStopwatch setseconds={setSeconds} setminutes={setMinutes} sethours={setHours} handleTime={handleTime} refsec={secondsRef} refmin={minutesRef} refhour={hoursRef} endtraining={false} endbuttonref={endbuttonRef} stopstoper={stopStoper} setStopStoper={setStopStoper}/>
+                    <div className="training__middle__logotime-time" >
+                    <MyStopwatch ref={childRef} send={props.endTraining} get={props.getTrainings} id={props.location.training.id} training={props.location.training} />
                   </div>
                 </div>
                 <div className="training__middle__series">

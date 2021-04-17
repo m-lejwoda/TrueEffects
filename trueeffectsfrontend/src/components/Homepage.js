@@ -8,16 +8,15 @@ import HomepageMeasurementItem from './homepagecomponents/HomepageMeasurementIte
 import HomepageGoalItem from './homepagecomponents/HomepageGoalItem';
 import { useHistory } from "react-router-dom";
 const Homepage = (props) => {
-    console.log("test")
     const history = useHistory()
     const addNewGoals = () => {
-        //dodanie dowych celów
         history.push('./addgoals')
     }
     
     const addNewTraining = () => {
         history.push('./createtraining')
     }
+    
     return (
         <div className="homepage">
             <div className="homepage__title">

@@ -39,6 +39,7 @@ const ModalDisplayTraining = props => {
     const handleDeleteTraining = async() => {
         await props.deleteTraining(props.alldata.id)
         await props.getTrainings()
+        await props.back()
     }
     const handleAddtoDate = async() => {
         console.log("addToDate")

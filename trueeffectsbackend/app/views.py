@@ -250,23 +250,14 @@ def deleteGoals(request,pk):
 @api_view(['POST'])
 def updatedateofTraining(request,pk):
     training = Training.objects.get(id=pk)
-    print("update treninigu")
     training_data = training.training.all()
-    print(training.training.all())
     training.id = None
     data = request.data
     training.date = data.get("date",training.date)
-    print("czy działa")
     training.save()
     for el in training_data:
-        print("To jest id")
-        print(el.id)
         series = SingleSeries.objects.get(id = el.id)
-        print(series)
         training.training.add(series)
-    
-    
-    
     return Response("Data treningu została zaktualizowana")
     
 
@@ -279,4 +270,5 @@ def updateTrainingafterEnd(request,pk):
         singleseries.reps = el['reps']
         singleseries.save()
     training.save()
-    return Response("Data treningu została zaktualizowana")
+    return Response("Treninig został'zaktualizowany")
+    

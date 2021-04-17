@@ -6,7 +6,7 @@ import DatePicker,{registerLocale} from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import {connect} from 'react-redux';
 import pl from "date-fns/locale/pl";
-import { postTraining,postOwnExercise,getTrainings } from '../redux/actions/trainingActions';
+import { postTraining,postOwnExercise,getTrainings,getExercises } from '../redux/actions/trainingActions';
 import { useHistory } from "react-router-dom";
 const CreateTraining = (props) => {
     const history = useHistory()
@@ -74,8 +74,10 @@ const CreateTraining = (props) => {
         // setPauseEccentricPhase(0)
     }
 
-    const handleNewOwnExercise = () => {
-        props.postOwnExercise(inputOwnExercise.current.value)
+    const handleNewOwnExercise = async() => {
+        await props.postOwnExercise(inputOwnExercise.current.value)
+        await props.getExercises()
+        
     }
     const handleClickExercise = (e,element) =>{
         if(activediv !== null){
@@ -254,4 +256,4 @@ const mapStateToProps = (state) => {
         ownexercises: state.training.ownexercises
     }
 }
-export default connect(mapStateToProps,{postTraining,postOwnExercise,getTrainings})(CreateTraining); 
+export default connect(mapStateToProps,{postTraining,postOwnExercise,getTrainings,getExercises})(CreateTraining); 
