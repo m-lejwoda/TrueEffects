@@ -1,1 +1,1 @@
-web: gunicorn trueeffectsbackend.backend.wsgi --log-file -
+web: gunicorn trueeffectsbackend.backend.wsgi:application --log-file -
